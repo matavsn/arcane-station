@@ -31,7 +31,7 @@
         Heat: 3
   - type: Speech
     speechVerb: LargeMob
-    allowedEmotes: [ 'Hisses', 'Roars', 'Rumbles', 'Growl', 'Scream' ]
+    allowedEmotes: [ 'Hiss', 'Roars', 'Rumbles', 'Growl', 'Scream' ]
   - type: MeleeWeapon
     hidden: true
     soundHit:

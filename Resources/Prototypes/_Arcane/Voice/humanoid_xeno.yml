@@ -18,7 +18,7 @@
       collection: HumanoidXenoScreams
     Cough:
       collection: HumanoidXenoScreams
-    Hisses:
+    Hiss:
       collection: HumanoidXenoHisses
     Roars:
       collection: HumanoidXenoRoars
@@ -30,20 +30,6 @@
       collection: HumanoidXenoCry
     DefaultDeathgasp:
       collection: HumanoidXenoDeathgasp
-
-- type: emote
-  id: Hisses
-  name: chat-emote-name-hisses
-  category: Vocal
-  available: false
-  icon: Interface/Emotes/vocal.png
-  whitelist:
-    components:
-    - Vocal
-  chatMessages: ["chat-emote-msg-hisses"]
-  chatTriggers:
-  - hisses
-  - hissing
 
 - type: emote
   id: Roars

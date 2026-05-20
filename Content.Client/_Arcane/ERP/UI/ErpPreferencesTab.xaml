@@ -1,0 +1,16 @@
+<BoxContainer xmlns="https://spacestation14.io"
+             Orientation="Vertical"
+             SeparationOverride="6"
+             Margin="8">
+
+    <!-- Organ configuration header -->
+    <Label Text="{Loc 'erp-preferences-tab-organs-header'}"
+           StyleClasses="LabelSubText"
+           Margin="0 4 0 2" />
+
+    <!-- Organ rows injected from code-behind -->
+    <BoxContainer Name="OrgansContainer"
+                  Orientation="Vertical"
+                  SeparationOverride="4" />
+
+</BoxContainer>

@@ -148,6 +148,7 @@ using Content.Shared.Administration.Managers;
 using Content.Shared.Chat;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Players.RateLimiting;
+using Content.Client._Arcane.ERP.Preferences; // Arcane-edit
 
 namespace Content.Client.IoC
 {
@@ -186,6 +187,7 @@ namespace Content.Client.IoC
             collection.Register<TitleWindowManager>();
             collection.Register<LinkAccountManager>(); // RMC14
             collection.Register<ClientsidePlaytimeTrackingManager>();
+            collection.Register<ClientErpOrganPreferencesManager>(); // Arcane-edit
         }
     }
 }

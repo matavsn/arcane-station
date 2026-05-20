@@ -200,6 +200,7 @@ using Content.Shared.Chat;
 using Content.Shared.Kitchen;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Players.RateLimiting;
+using Content.Server._Arcane.ERP.Preferences; // Arcane-edit
 
 namespace Content.Server.IoC
 {
@@ -257,6 +258,7 @@ namespace Content.Server.IoC
             IoCManager.Register<EmoteProtectionSystem>();
             IoCManager.Register<AdminActionProtectionSystem>();
             // Orion-End
+            IoCManager.Register<ErpOrganPreferencesManager>(); // Arcane-edit
         }
     }
 }

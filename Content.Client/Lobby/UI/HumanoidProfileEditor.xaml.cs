@@ -196,6 +196,9 @@ using Direction = Robust.Shared.Maths.Direction;
 using Content.Goobstation.Common.CCVar; // Goob Station - Barks
 using Content.Goobstation.Common.Barks; // Goob Station - Barks
 using Content.Shared._Arcane.ERP; // Arcane-edit
+using Content.Client._Arcane.ERP.UI; // Arcane-edit
+using Content.Client._Arcane.ERP.Preferences; // Arcane-edit
+using Content.Shared._Arcane.ERP.Preferences; // Arcane-edit
 namespace Content.Client.Lobby.UI
 {
     [GenerateTypedNameReferences]
@@ -235,6 +238,10 @@ namespace Content.Client.Lobby.UI
         private TextEdit? _nsfwOOCTextEdit;
         private TextEdit? _nsfwTagsTextEdit;
         // Orion-End
+
+        // Arcane-Start
+        private ErpPreferencesTab? _erpTab;
+        // Arcane-End
 
         // One at a time.
         private LoadoutWindow? _loadoutWindow;
@@ -345,6 +352,10 @@ namespace Content.Client.Lobby.UI
 
             SaveButton.OnPressed += args =>
             {
+                // Arcane-Start
+                if (CharacterSlot != null)
+                    IoCManager.Resolve<ClientErpOrganPreferencesManager>().SaveSlot(CharacterSlot.Value, _erpOrganPrefs);
+                // Arcane-End
                 Save?.Invoke();
             };
 
@@ -840,6 +851,36 @@ namespace Content.Client.Lobby.UI
                 _flavorText = null;
             }
         }
+
+        // Arcane-Start
+        private void RefreshErpTab()
+        {
+            if (_erpTab != null)
+                return;
+
+            _erpTab = new ErpPreferencesTab();
+            TabContainer.AddChild(_erpTab);
+            TabContainer.SetTabTitle(TabContainer.ChildCount - 1, Loc.GetString("humanoid-profile-editor-erp-tab"));
+
+            _erpTab.OnPreferencesChanged += prefs =>
+            {
+                if (Profile == null || CharacterSlot == null)
+                    return;
+                _erpOrganPrefs = prefs;
+                IsDirty = true;
+            };
+        }
+
+        private void UpdateErpTabData()
+        {
+            if (_erpTab == null || Profile == null)
+                return;
+
+            _erpTab.SetPreferences(_erpOrganPrefs);
+        }
+
+        private ErpOrganPreferences _erpOrganPrefs = ErpOrganPreferences.Default();
+        // Arcane-End
 
         // Orion-Start
         private void UpdateFlavorPreview()
@@ -1360,6 +1401,11 @@ namespace Content.Client.Lobby.UI
             IsDirty = false;
             JobOverride = null;
 
+            // Arcane-Start
+            if (slot != null)
+                _erpOrganPrefs = IoCManager.Resolve<ClientErpOrganPreferencesManager>().GetSlot(slot.Value);
+            // Arcane-End
+
             UpdateNameEdit();
             UpdateFlavorTextEdit();
             UpdateFlavorPreview(); // Orion
@@ -1368,6 +1414,7 @@ namespace Content.Client.Lobby.UI
             UpdateSkinColor();
             UpdateSpawnPriorityControls();
             UpdateErpPreferenceControls(); // Arcane-edit
+            UpdateErpTabData(); // Arcane-edit
             UpdateAgeEdit();
             UpdateEyePickers();
             UpdateSaveButton();
@@ -1385,6 +1432,7 @@ namespace Content.Client.Lobby.UI
             RefreshSpecies();
             RefreshTraits();
             RefreshFlavorText();
+            RefreshErpTab(); // Arcane-edit
             ReloadPreview();
 
             if (Profile != null)

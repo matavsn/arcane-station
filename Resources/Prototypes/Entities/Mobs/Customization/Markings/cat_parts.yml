@@ -15,7 +15,7 @@
   id: CatEars
   bodyPart: Special
   markingCategory: Special
-  speciesRestriction: []
+  speciesRestriction: [Human, Dwarf, Demon, Felinid]
   coloring:
     default:
       type:

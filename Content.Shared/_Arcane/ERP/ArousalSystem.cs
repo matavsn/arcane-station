@@ -4,7 +4,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared._Arcane.ERP;
 
-public sealed class SharedArousalSystem : EntitySystem
+public sealed class ArousalSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;

@@ -1,0 +1,67 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made by bulbo44kkey (Discord)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "predalien_hair",
+            "directions": 4
+        },
+        {
+            "name": "predalien_head",
+            "directions": 4
+        },
+        {
+            "name": "predalien_mandibles",
+            "directions": 4
+        },
+        {
+            "name": "predalien_shine",
+            "directions": 4
+        },
+        {
+            "name": "predalien_teeth",
+            "directions": 4
+        },
+        {
+            "name": "pretor_head",
+            "directions": 4
+        },
+        {
+            "name": "pretor_shine",
+            "directions": 4
+        },
+        {
+            "name": "pretor_teeth",
+            "directions": 4
+        },
+        {
+            "name": "ravager_head",
+            "directions": 4
+        },
+        {
+            "name": "ravager_shine",
+            "directions": 4
+        },
+        {
+            "name": "ravager_teeth",
+            "directions": 4
+        },
+        {
+            "name": "runner_head",
+            "directions": 4
+        },
+        {
+            "name": "runner_shine",
+            "directions": 4
+        },
+        {
+            "name": "runner_teeth",
+            "directions": 4
+        }
+    ]
+}

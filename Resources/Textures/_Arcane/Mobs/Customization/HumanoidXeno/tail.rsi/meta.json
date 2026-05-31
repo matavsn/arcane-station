@@ -1,0 +1,59 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made by bulbo44kkey (Discord)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "predalien_tail",
+            "directions": 4
+        },
+        {
+            "name": "ravager_tail",
+            "directions": 4
+        },
+        {
+            "name": "pretor_tail",
+            "directions": 4
+        },
+        {
+            "name": "queen_tail",
+            "directions": 4
+        },
+        {
+            "name": "runner_tail",
+            "directions": 4
+        },
+        {
+            "name": "spitter_tail",
+            "directions": 4
+        },
+        {
+            "name": "spitter_tail_grad",
+            "directions": 4
+        },
+        {
+            "name": "predalien_tail_grad",
+            "directions": 4
+        },
+        {
+            "name": "pretor_tail_grad",
+            "directions": 4
+        },
+        {
+            "name": "queen_tail_grad",
+            "directions": 4
+        },
+        {
+            "name": "runner_tail_grad",
+            "directions": 4
+        },
+        {
+            "name": "ravager_tail_grad",
+            "directions": 4
+        }
+    ]
+}

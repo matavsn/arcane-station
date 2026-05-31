@@ -46,6 +46,8 @@ namespace Content.Shared.Humanoid.Markings
 //        Undershirt, // Orion-Edit: Removed
         Tail,
         Overlay,
+
+        Tracheas, // Arcane
     }
 
     public static class MarkingCategoriesConversion
@@ -75,6 +77,7 @@ namespace Content.Shared.Humanoid.Markings
                 HumanoidVisualLayers.LFoot => MarkingCategories.LeftFoot,
                 HumanoidVisualLayers.RFoot => MarkingCategories.RightFoot,
                 HumanoidVisualLayers.Wings => MarkingCategories.Wings,
+                HumanoidVisualLayers.Tracheas => MarkingCategories.Tracheas, // Arcane
                 HumanoidVisualLayers.Tail => MarkingCategories.Tail,
                 _ => MarkingCategories.Overlay,
             };

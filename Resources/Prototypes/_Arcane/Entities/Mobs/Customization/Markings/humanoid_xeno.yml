@@ -9,6 +9,72 @@
   - sprite: _Arcane/Mobs/Species/HumanoidXeno/parts.rsi
     state: tail_drone
 
+- type: marking
+  id: HumanoidXenoTailPredalien
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [HumanoidXeno]
+  sprites:
+  - sprite: _Arcane/Mobs/Customization/HumanoidXeno/tail.rsi
+    state: predalien_tail
+  - sprite: _Arcane/Mobs/Customization/HumanoidXeno/tail.rsi
+    state: predalien_tail_grad
+
+- type: marking
+  id: HumanoidXenoTailPretor
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [HumanoidXeno]
+  sprites:
+  - sprite: _Arcane/Mobs/Customization/HumanoidXeno/tail.rsi
+    state: pretor_tail
+  - sprite: _Arcane/Mobs/Customization/HumanoidXeno/tail.rsi
+    state: pretor_tail_grad
+
+- type: marking
+  id: HumanoidXenoTailQueen
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [HumanoidXeno]
+  sprites:
+  - sprite: _Arcane/Mobs/Customization/HumanoidXeno/tail.rsi
+    state: queen_tail
+  - sprite: _Arcane/Mobs/Customization/HumanoidXeno/tail.rsi
+    state: queen_tail_grad
+
+- type: marking
+  id: HumanoidXenoTailRavager
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [HumanoidXeno]
+  sprites:
+  - sprite: _Arcane/Mobs/Customization/HumanoidXeno/tail.rsi
+    state: ravager_tail
+  - sprite: _Arcane/Mobs/Customization/HumanoidXeno/tail.rsi
+    state: ravager_tail_grad
+
+- type: marking
+  id: HumanoidXenoTailSpitter
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [HumanoidXeno]
+  sprites:
+  - sprite: _Arcane/Mobs/Customization/HumanoidXeno/tail.rsi
+    state: spitter_tail
+  - sprite: _Arcane/Mobs/Customization/HumanoidXeno/tail.rsi
+    state: spitter_tail_grad
+
+- type: marking
+  id: HumanoidXenoTailRunner
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [HumanoidXeno]
+  sprites:
+  - sprite: _Arcane/Mobs/Customization/HumanoidXeno/tail.rsi
+    state: runner_tail
+  - sprite: _Arcane/Mobs/Customization/HumanoidXeno/tail.rsi
+    state: runner_tail_grad
+
 # Head
 
 - type: marking
@@ -21,6 +87,8 @@
     state: head_m
   - sprite: _Arcane/Mobs/Species/HumanoidXeno/parts.rsi
     state: teeth_drone
+  - sprite: _Arcane/Mobs/Species/HumanoidXeno/parts.rsi
+    state: shine
 
 - type: marking
   id: HumanoidXenoHeadSpitter
@@ -61,22 +129,143 @@
   - sprite: _Arcane/Mobs/Species/HumanoidXeno/parts.rsi
     state: queen_shine
 
-# Chest overlays
-
 - type: marking
-  id: HumanoidXenoHeadShine
+  id: HumanoidXenoHeadPredalien
   bodyPart: Head
-  markingCategory: HeadTop
+  markingCategory: Head
   speciesRestriction: [HumanoidXeno]
   sprites:
-  - sprite: _Arcane/Mobs/Species/HumanoidXeno/parts.rsi
-    state: shine
+  - sprite: _Arcane/Mobs/Customization/HumanoidXeno/head.rsi
+    state: predalien_head
+  - sprite: _Arcane/Mobs/Customization/HumanoidXeno/head.rsi
+    state: predalien_teeth
+  - sprite: _Arcane/Mobs/Customization/HumanoidXeno/head.rsi
+    state: predalien_shine
+  - sprite: _Arcane/Mobs/Customization/HumanoidXeno/head.rsi
+    state: predalien_hair
+  - sprite: _Arcane/Mobs/Customization/HumanoidXeno/head.rsi
+    state: predalien_mandibles
 
 - type: marking
-  id: HumanoidXenoChestTubes
+  id: HumanoidXenoHeadRavager
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [HumanoidXeno]
+  sprites:
+  - sprite: _Arcane/Mobs/Customization/HumanoidXeno/head.rsi
+    state: ravager_head
+  - sprite: _Arcane/Mobs/Customization/HumanoidXeno/head.rsi
+    state: ravager_teeth
+  - sprite: _Arcane/Mobs/Customization/HumanoidXeno/head.rsi
+    state: ravager_shine
+
+- type: marking
+  id: HumanoidXenoHeadRunner
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [HumanoidXeno]
+  sprites:
+  - sprite: _Arcane/Mobs/Customization/HumanoidXeno/head.rsi
+    state: runner_head
+  - sprite: _Arcane/Mobs/Customization/HumanoidXeno/head.rsi
+    state: runner_teeth
+  - sprite: _Arcane/Mobs/Customization/HumanoidXeno/head.rsi
+    state: runner_shine
+
+# Chest
+
+- type: marking
+  id: HumanoidXenoChestPredalien
   bodyPart: Chest
   markingCategory: Chest
   speciesRestriction: [HumanoidXeno]
   sprites:
+  - sprite: _Arcane/Mobs/Customization/HumanoidXeno/chest.rsi
+    state: predalien_chest
+
+- type: marking
+  id: HumanoidXenoChestSpitter
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [HumanoidXeno]
+  sprites:
+  - sprite: _Arcane/Mobs/Customization/HumanoidXeno/chest.rsi
+    state: spitter_chest
+
+# Tracheas
+
+- type: marking
+  id: HumanoidXenoTracheasDrone
+  bodyPart: Chest
+  markingCategory: Tracheas
+  speciesRestriction: [HumanoidXeno]
+  sprites:
   - sprite: _Arcane/Mobs/Species/HumanoidXeno/parts.rsi
     state: tubes_drone
+
+- type: marking
+  id: HumanoidXenoTracheasPredalien
+  bodyPart: Chest
+  markingCategory: Tracheas
+  speciesRestriction: [HumanoidXeno]
+  sprites:
+  - sprite: _Arcane/Mobs/Customization/HumanoidXeno/tracheas.rsi
+    state: predalien_tubes
+
+- type: marking
+  id: HumanoidXenoTracheasPretor
+  bodyPart: Chest
+  markingCategory: Tracheas
+  speciesRestriction: [HumanoidXeno]
+  sprites:
+  - sprite: _Arcane/Mobs/Customization/HumanoidXeno/tracheas.rsi
+    state: pretor_tubes
+
+- type: marking
+  id: HumanoidXenoTracheasQueen
+  bodyPart: Chest
+  markingCategory: Tracheas
+  speciesRestriction: [HumanoidXeno]
+  sprites:
+  - sprite: _Arcane/Mobs/Customization/HumanoidXeno/tracheas.rsi
+    state: queen_tubes
+
+- type: marking
+  id: HumanoidXenoTracheasRavager
+  bodyPart: Chest
+  markingCategory: Tracheas
+  speciesRestriction: [HumanoidXeno]
+  sprites:
+  - sprite: _Arcane/Mobs/Customization/HumanoidXeno/tracheas.rsi
+    state: ravager_tubes
+
+# Legs
+
+- type: marking
+  id: HumanoidXenoLegsPredalien
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [HumanoidXeno]
+  sprites:
+  - sprite: _Arcane/Mobs/Customization/HumanoidXeno/legs.rsi
+    state: predalien_legs
+
+# Arms
+
+- type: marking
+  id: HumanoidXenoArmsPredalien
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [HumanoidXeno]
+  sprites:
+  - sprite: _Arcane/Mobs/Customization/HumanoidXeno/arms.rsi
+    state: predalien_arms
+
+- type: marking
+  id: HumanoidXenoArmsRavager
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [HumanoidXeno]
+  sprites:
+  - sprite: _Arcane/Mobs/Customization/HumanoidXeno/arms.rsi
+    state: ravager_arms

@@ -61,7 +61,7 @@ public sealed class OrgasmSystem : EntitySystem
     {
         Spawn(HeartsProto, _transform.GetMapCoordinates(uid));
         PlayOrgasmSound(uid, gender);
-        _chat.TrySendInGameICMessage(uid, Loc.GetString(_random.Pick(OrgasmMessages)), InGameICChatType.Emote, true);
+        _chat.TrySendInGameICMessage(uid, Loc.GetString(_random.Pick(OrgasmMessages)), InGameICChatType.Emote, false);
         _popup.PopupEntity(Loc.GetString("orgasm-popup-self"), uid, uid, PopupType.MediumCaution);
 
         if (TryComp<HumanoidAppearanceComponent>(uid, out var humanoid)

@@ -3,13 +3,14 @@ using Content.Shared._Arcane.ERP;
 using Content.Shared.Chat;
 using Content.Shared.Humanoid;
 using Content.Shared.Popups;
+using System.Numerics;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Enums;
-using System.Numerics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server._Arcane.ERP;
 
@@ -20,6 +21,7 @@ public sealed class OrgasmSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
 
     private static readonly EntProtoId HeartsProto = new("EffectHearts");
@@ -64,6 +66,10 @@ public sealed class OrgasmSystem : EntitySystem
 
         if (gender == Gender.Male)
             SpawnEjaculation(uid);
+
+        var weakness = EnsureComp<OrgasmWeaknessComponent>(uid);
+        weakness.ExpiresAt = _timing.CurTime + TimeSpan.FromSeconds(2.5);
+        Dirty(uid, weakness);
     }
 
     private void SpawnEjaculation(EntityUid uid)

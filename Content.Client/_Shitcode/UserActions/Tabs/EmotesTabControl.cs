@@ -28,7 +28,7 @@ public sealed partial class EmotesTabControl : BaseTabControl
     [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     private TimeSpan _lastEmoteTime;
-    private static readonly TimeSpan EmoteCooldown = TimeSpan.FromSeconds(0);
+    private static readonly TimeSpan EmoteCooldown = TimeSpan.FromSeconds(2); // Arcane-edit
 
     public EmotesTabControl()
     {

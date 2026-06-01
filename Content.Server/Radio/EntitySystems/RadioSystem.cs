@@ -43,13 +43,13 @@ using System.Linq;
 using Content.Goobstation.Shared.Communications;
 using Content.Goobstation.Shared.Loudspeaker.Events;
 using Content.Server._EinsteinEngines.Language;
-using Content.Server._Art.TTS; // Orion-Edit
+using Content.Server._Art.TTS; // Art-TTS
 using Content.Server._Orion.ServerProtection.Chat;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Radio.Components;
-using Content.Shared._Art.TTS; // Orion-Edit
+using Content.Shared._Art.TTS; // Art-TTS
 using Content.Shared._EinsteinEngines.Language;
 using Content.Shared.Chat;
 using Content.Shared.Database;
@@ -95,7 +95,7 @@ public sealed partial class RadioSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<IntrinsicRadioReceiverComponent, RadioReceiveEvent>(OnIntrinsicReceive);
-        SubscribeLocalEvent<IntrinsicRadioTransmitterComponent, EntitySpokeEvent>(OnIntrinsicSpeak, before: [typeof(TTSSystem)]); // Orion-Edit
+        SubscribeLocalEvent<IntrinsicRadioTransmitterComponent, EntitySpokeEvent>(OnIntrinsicSpeak, before: [typeof(TTSSystem)]); // Art-TTS
         SubscribeLocalEvent<IntrinsicRadioReceiverComponent, RadioReceiveAttemptEvent>(OnIntrinsicReceiveAttempt); // Goobstation
 
         _exemptQuery = GetEntityQuery<TelecomExemptComponent>();
@@ -107,13 +107,13 @@ public sealed partial class RadioSystem : EntitySystem
             && component.Channels.Contains(args.Channel.ID)
             && _whitelist.IsWhitelistPassOrNull(args.Channel.SendWhitelist, uid)) // Goobstation - Whitelisted radio channels
         {
-            // Orion-Edit-Start
+            // Art-TTS Start
             if (SendRadioMessage(uid, args.Message, args.Channel, uid, args.Language)) // Einstein Engines - Language
             {
                 args.RadioMessageSent = true;
                 args.Channel = null; // prevent duplicate messages from other listeners.
             }
-            // Orion-Edit-End
+            // Art-TTS End
         }
     }
 
@@ -124,18 +124,18 @@ public sealed partial class RadioSystem : EntitySystem
             // Einstein Engines - Languages begin
             var listener = component.Owner;
             var msg = args.OriginalChatMsg;
-            var canUnderstand = listener == null || _language.CanUnderstand(listener, args.Language.ID); // Orion-Edit
+            var canUnderstand = listener == null || _language.CanUnderstand(listener, args.Language.ID); // Art-TTS
 
-            if (!canUnderstand)
+            if (!canUnderstand) // Art-TTS
                 msg = args.LanguageObfuscatedChatMsg;
 
-            // Orion-Edit-Start
+            // Art-TTS Start
             if (canUnderstand && args.Voice is { } voice)
             {
                 var ev = new TTSRadioPlayEvent(args.OriginalChatMsg, args.OriginalChatMsg.Message, args.Language, voice);
                 RaiseLocalEvent(uid, ev);
             }
-            // Orion-Edit-End
+            // Art-TTS End
             _netMan.ServerSendMessage(new MsgChatMessage { Message = msg }, actor.PlayerSession.Channel);
             // Einstein Engines - Languages end
         }
@@ -246,7 +246,7 @@ public sealed partial class RadioSystem : EntitySystem
         // Added GetNetEntity(messageSource), to source
         var obfuscatedWrapped = WrapRadioMessage(messageSource, channel, name, obfuscated, language, jobIcon, jobName);
         var notUdsMsg = new ChatMessage(ChatChannel.Radio, obfuscated, obfuscatedWrapped, GetNetEntity(messageSource), null);
-        // Orion-Edit-Start
+        // Art-TTS Start
         string? voice = null;
         if (TryComp<TTSComponent>(messageSource, out var ttsComponent)
             && ttsComponent.VoicePrototype is { } voiceId
@@ -254,8 +254,8 @@ public sealed partial class RadioSystem : EntitySystem
         {
             voice = voicePrototype.Speaker;
         }
-        // Orion-Edit-End
-        var ev = new RadioReceiveEvent(messageSource, channel, msg, notUdsMsg, language, radioSource, voice); // Orion-Edit
+        // Art-TTS End
+        var ev = new RadioReceiveEvent(messageSource, channel, msg, notUdsMsg, language, radioSource, voice); // Art-TTS: language + voice
         // Einstein Engines - Language end
 
         var sendAttemptEv = new RadioSendAttemptEvent(channel, radioSource);
@@ -268,7 +268,7 @@ public sealed partial class RadioSystem : EntitySystem
         var sourceServerExempt = _exemptQuery.HasComp(radioSource);
 
         var radioQuery = EntityQueryEnumerator<ActiveRadioComponent, TransformComponent>();
-        var sent = false; // Orion-Edit
+        var sent = false; // Art-TTS
         while (canSend && radioQuery.MoveNext(out var receiver, out var radio, out var transform))
         {
             if (!radio.ReceiveAllChannels)
@@ -296,7 +296,7 @@ public sealed partial class RadioSystem : EntitySystem
 
             // send the message
             RaiseLocalEvent(receiver, ref ev);
-            sent = true; // Orion-Edit
+            sent = true; // Art-TTS
         }
 
         if (name != Name(messageSource))

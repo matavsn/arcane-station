@@ -31,7 +31,7 @@ public sealed partial class TTSSystem : EntitySystem
     {
         _cfg.OnValueChanged(ArtCVars.TTSEnabled, v => _isEnabled = v, true);
 
-        SubscribeLocalEvent<TTSComponent, EntitySpokeEvent>(OnEntitySpoke, after: [typeof(RadioSystem), typeof(HeadsetSystem)]); // Orion-Edit
+        SubscribeLocalEvent<TTSComponent, EntitySpokeEvent>(OnEntitySpoke, after: [typeof(RadioSystem), typeof(HeadsetSystem)]);
 
         SubscribeLocalEvent<TransformSpeechEvent>(OnTransformSpeech);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(_ => _ttsManager.ResetCache());

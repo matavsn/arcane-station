@@ -46,6 +46,13 @@ public sealed partial class PanelInteractionPrototype : IPrototype
 
     [DataField]
     public List<ErpRequirement>? TargetRequirements;
+
+    /// <summary>
+    /// Semantic tags for this interaction (e.g. kiss, touch, tease, verbal, public, aftercare).
+    /// Used by tag-based fetishes via <see cref="Content.Shared._Arcane.ERP.Fetishes.ErpInteractionOccurredEvent"/>.
+    /// </summary>
+    [DataField]
+    public HashSet<string> Tags = new();
 }
 
 [Prototype]

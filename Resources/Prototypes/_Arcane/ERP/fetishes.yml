@@ -1,0 +1,134 @@
+﻿# ── Body ──────────────────────────────────────────────────────────────────────
+
+- type: fetish
+  id: Nudity
+  name: fetish-nudity-name
+  desc: fetish-nudity-desc
+  category: body
+  passiveRate: 0.8
+  condition:
+    !type: ProximityOrganCondition
+    range: 6.0
+    requiresLoS: true
+    organType: Any
+
+- type: fetish
+  id: BreastFetish
+  name: fetish-breast-name
+  desc: fetish-breast-desc
+  category: body
+  passiveRate: 0.7
+  condition:
+    !type: ProximityOrganCondition
+    range: 6.0
+    requiresLoS: true
+    organType: Breasts
+
+- type: fetish
+  id: PenisFetish
+  name: fetish-penis-name
+  desc: fetish-penis-desc
+  category: body
+  passiveRate: 0.7
+  condition:
+    !type: ProximityOrganCondition
+    range: 6.0
+    requiresLoS: true
+    organType: Penis
+
+- type: fetish
+  id: VaginaFetish
+  name: fetish-vagina-name
+  desc: fetish-vagina-desc
+  category: body
+  passiveRate: 0.7
+  condition:
+    !type: ProximityOrganCondition
+    range: 6.0
+    requiresLoS: true
+    organType: Vagina
+
+- type: fetish
+  id: LargeSize
+  name: fetish-large-size-name
+  desc: fetish-large-size-desc
+  category: body
+  passiveRate: 0.6
+  condition:
+    !type: OrganSizeCondition
+    range: 6.0
+    requiresLoS: true
+    organType: Any
+    minSize: 1.5
+
+- type: fetish
+  id: SmallSize
+  name: fetish-small-size-name
+  desc: fetish-small-size-desc
+  category: body
+  passiveRate: 0.6
+  condition:
+    !type: OrganSizeCondition
+    range: 6.0
+    requiresLoS: true
+    organType: Any
+    maxSize: 0.7
+
+- type: fetish
+  id: Exhibitionism
+  name: fetish-exhibitionism-name
+  desc: fetish-exhibitionism-desc
+  category: body
+  passiveRate: 0.8
+  condition:
+    !type: SelfNudityCondition
+    witnessRange: 6.0
+
+# ── Attraction ────────────────────────────────────────────────────────────────
+
+- type: fetish
+  id: AttractionMale
+  name: fetish-attraction-male-name
+  desc: fetish-attraction-male-desc
+  category: attraction
+  passiveRate: 0.6
+  condition:
+    !type: ProximitySexCondition
+    range: 6.0
+    requiresLoS: false
+    sex: Male
+
+- type: fetish
+  id: AttractionFemale
+  name: fetish-attraction-female-name
+  desc: fetish-attraction-female-desc
+  category: attraction
+  passiveRate: 0.6
+  condition:
+    !type: ProximitySexCondition
+    range: 6.0
+    requiresLoS: false
+    sex: Female
+
+- type: fetish
+  id: AttractionFutanari
+  name: fetish-attraction-futanari-name
+  desc: fetish-attraction-futanari-desc
+  category: attraction
+  passiveRate: 0.6
+  condition:
+    !type: ProximitySexCondition
+    range: 6.0
+    requiresLoS: false
+    sex: Futanari
+
+- type: fetish
+  id: SameGender
+  name: fetish-same-gender-name
+  desc: fetish-same-gender-desc
+  category: attraction
+  passiveRate: 0.5
+  condition:
+    !type: SameSexCondition
+    range: 6.0
+    requiresLoS: false

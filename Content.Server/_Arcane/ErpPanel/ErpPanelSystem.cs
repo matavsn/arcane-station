@@ -1,6 +1,7 @@
 ﻿using Content.Server.Chat.Systems;
 using Content.Server.Interaction;
 using Content.Shared._Arcane.ERP;
+using Content.Shared._Arcane.ERP.Fetishes;
 using Content.Shared._Arcane.ErpPanel;
 using Content.Shared.Chat;
 using Content.Shared.Humanoid;
@@ -140,10 +141,17 @@ public sealed partial class ErpPanelSystem : EntitySystem
         ProccessMoan(target, customMoaning);
 
         if (user == target)
+        {
+            var selfEv = new ErpInteractionOccurredEvent(user, target, interaction.Tags, Transform(user).Coordinates);
+            RaiseLocalEvent(ref selfEv);
             return;
+        }
 
         _arousal.AddArousal(user, interaction.UserArouse * customArousal / 100);
         ProccessMoan(user, customMoaning);
+
+        var ev = new ErpInteractionOccurredEvent(user, target, interaction.Tags, Transform(target).Coordinates);
+        RaiseLocalEvent(ref ev);
     }
 
     private void ProccessMoan(EntityUid uid, float customMoaning)

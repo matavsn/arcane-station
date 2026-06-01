@@ -12,4 +12,8 @@ public sealed partial class ErpOrganVisualsComponent : Component
 {
     [AutoNetworkedField]
     public Dictionary<string, ErpOrganConfig> Organs { get; set; } = [];
+
+    /// <summary>Slots whose covering clothing is currently worn. Managed by EroticCoverageSystem.</summary>
+    [AutoNetworkedField]
+    public HashSet<string> CoveredSlots { get; set; } = [];
 }

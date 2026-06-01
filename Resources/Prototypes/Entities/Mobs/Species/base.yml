@@ -271,18 +271,6 @@
     - map: [ "enum.HumanoidVisualLayers.LArm" ]
     - map: [ "enum.HumanoidVisualLayers.RLeg" ]
     - map: [ "enum.HumanoidVisualLayers.LLeg" ]
-    # Arcane-start: ERP organ layers — must stay before clothing layers
-    - map: [ "erp_penis" ]
-      visible: false
-    - map: [ "erp_vagina" ]
-      visible: false
-    - map: [ "erp_breasts" ]
-      visible: false
-    - map: [ "erp_testicles" ]
-      visible: false
-    - map: [ "erp_anus" ]
-      visible: false
-    # Arcane-end
 #    - map: [ "enum.HumanoidVisualLayers.Underwear" ] # Goob 3370 | Orion-Edit: Replaced with clothes
 #    - map: [ "enum.HumanoidVisualLayers.Undershirt" ] # Goob 3370 | Orion-Edit: Replaced with clothes
     # Orion-Start
@@ -660,18 +648,6 @@
     - map: [ "enum.HumanoidVisualLayers.LArm" ]
     - map: [ "enum.HumanoidVisualLayers.RLeg" ]
     - map: [ "enum.HumanoidVisualLayers.LLeg" ]
-    # Arcane-start: ERP organ layers — must stay before clothing layers
-    - map: [ "erp_penis" ]
-      visible: false
-    - map: [ "erp_vagina" ]
-      visible: false
-    - map: [ "erp_breasts" ]
-      visible: false
-    - map: [ "erp_testicles" ]
-      visible: false
-    - map: [ "erp_anus" ]
-      visible: false
-    # Arcane-end
 #    - map: [ "enum.HumanoidVisualLayers.Underwear" ] # Goob 3370 | Orion-Edit: Replaced with clothes
 #    - map: [ "enum.HumanoidVisualLayers.Undershirt" ] # Goob 3370 | Orion-Edit: Replaced with clothes
     # Orion-Start

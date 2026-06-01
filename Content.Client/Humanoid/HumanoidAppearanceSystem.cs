@@ -21,6 +21,7 @@
 using System.Numerics;
 using Content.Client.DisplacementMap;
 using Content.Shared._Arcane.ERP.OrgansAppearance; // Arcane-edit
+using Content.Shared._Shitmed.Humanoid.Events; // Arcane-edit
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
@@ -265,6 +266,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         humanoid.Width = profile.Width; // Goobstation: port EE height/width sliders
 
         UpdateSprite((uid, humanoid, Comp<SpriteComponent>(uid)));
+        RaiseLocalEvent(uid, new ProfileLoadFinishedEvent()); // Arcane-edit
     }
 
     private void ApplyMarkingSet(Entity<HumanoidAppearanceComponent, SpriteComponent> entity)

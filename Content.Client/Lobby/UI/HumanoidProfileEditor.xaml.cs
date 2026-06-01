@@ -242,6 +242,7 @@ namespace Content.Client.Lobby.UI
 
         // Arcane-Start
         private ErpOrganSection? _erpOrganSection;
+        private Action<int, ErpOrganPreferences>? _erpPrefsReceivedHandler;
         // Arcane-End
 
         // One at a time.
@@ -716,7 +717,7 @@ namespace Content.Client.Lobby.UI
             Markings.OnMarkingRankChange += OnMarkingChange;
 
             // Arcane-Start: refresh ERP organ section when server sends updated prefs
-            IoCManager.Resolve<ClientErpOrganPreferencesManager>().OnPreferencesReceived += (slot, prefs) =>
+            _erpPrefsReceivedHandler = (slot, prefs) =>
             {
                 if (slot != CharacterSlot)
                     return;
@@ -724,6 +725,7 @@ namespace Content.Client.Lobby.UI
                 UpdateErpOrganSection();
                 _entManager.System<ErpOrganVisualsSystem>().RefreshPreview(PreviewDummy, prefs);
             };
+            IoCManager.Resolve<ClientErpOrganPreferencesManager>().OnPreferencesReceived += _erpPrefsReceivedHandler;
             // Arcane-End
 
             #endregion Markings
@@ -1432,7 +1434,6 @@ namespace Content.Client.Lobby.UI
             UpdateSkinColor();
             UpdateSpawnPriorityControls();
             UpdateErpPreferenceControls(); // Arcane-edit
-            UpdateErpOrganSection(); // Arcane-edit
             UpdateAgeEdit();
             UpdateEyePickers();
             UpdateSaveButton();
@@ -1451,6 +1452,7 @@ namespace Content.Client.Lobby.UI
             RefreshTraits();
             RefreshFlavorText();
             InitErpOrganSection(); // Arcane-edit
+            UpdateErpOrganSection(); // Arcane-edit
             ReloadPreview();
 
             if (Profile != null)
@@ -1956,6 +1958,14 @@ namespace Content.Client.Lobby.UI
 
             _loadoutWindow?.Dispose();
             _loadoutWindow = null;
+
+            // Arcane-Start
+            if (_erpPrefsReceivedHandler != null)
+            {
+                IoCManager.Resolve<ClientErpOrganPreferencesManager>().OnPreferencesReceived -= _erpPrefsReceivedHandler;
+                _erpPrefsReceivedHandler = null;
+            }
+            // Arcane-End
         }
 
         protected override void EnteredTree()

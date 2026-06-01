@@ -1,5 +1,8 @@
 using Content.Shared._Arcane.ERP;
 using Content.Shared._Arcane.ERP.Organs;
+using Content.Shared._Arcane.ERP.OrgansAppearance;
+using Content.Shared._Arcane.ERP.Preferences;
+using Content.Shared.Body.Organ;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Systems;
 using Content.Shared.Clothing;
@@ -25,24 +28,23 @@ public sealed class EroticCoverageSystem : EntitySystem
         SubscribeLocalEvent<HumanoidAppearanceComponent, EroticOrgansSpawnedEvent>(OnOrgansSpawned);
         SubscribeLocalEvent<HumanoidAppearanceComponent, ClothingDidEquippedEvent>(OnEquipped);
         SubscribeLocalEvent<HumanoidAppearanceComponent, ClothingDidUnequippedEvent>(OnUnequipped);
+        // Re-run coverage when the visual component arrives (may lag behind the organs spawn event).
+        SubscribeLocalEvent<ErpOrganVisualsComponent, ComponentStartup>(OnVisualsStartup);
     }
 
     private void OnOrgansSpawned(Entity<HumanoidAppearanceComponent> ent, ref EroticOrgansSpawnedEvent args)
-    {
-        RefreshOrganVisibility(ent);
-    }
+        => RefreshCoverage(ent);
 
     private void OnEquipped(Entity<HumanoidAppearanceComponent> ent, ref ClothingDidEquippedEvent args)
-    {
-        RefreshOrganVisibility(ent);
-    }
+        => RefreshCoverage(ent);
 
     private void OnUnequipped(Entity<HumanoidAppearanceComponent> ent, ref ClothingDidUnequippedEvent args)
-    {
-        RefreshOrganVisibility(ent);
-    }
+        => RefreshCoverage(ent);
 
-    private void RefreshOrganVisibility(EntityUid uid)
+    private void OnVisualsStartup(Entity<ErpOrganVisualsComponent> ent, ref ComponentStartup args)
+        => RefreshCoverage(ent);
+
+    public void RefreshCoverage(EntityUid uid)
     {
         var coverage = SlotFlags.NONE;
         var enumerator = _inventory.GetSlotEnumerator(uid, GroinCovering | ChestCovering);
@@ -55,6 +57,8 @@ public sealed class EroticCoverageSystem : EntitySystem
         var groinCovered = (coverage & GroinCovering) != SlotFlags.NONE;
         var chestCovered = (coverage & ChestCovering) != SlotFlags.NONE;
 
+        var newCovered = new HashSet<string>();
+
         foreach (var organ in _body.GetBodyOrganEntityComps<EroticOrganComponent>((uid, null)))
         {
             if (!_containers.TryGetContainingContainer(organ.Owner, out var container))
@@ -63,18 +67,26 @@ public sealed class EroticCoverageSystem : EntitySystem
             if (!TryComp<BodyPartComponent>(container.Owner, out var part))
                 continue;
 
-            var visible = part.PartType switch
+            var covered = part.PartType switch
             {
-                BodyPartType.Groin => !groinCovered,
-                BodyPartType.Chest => !chestCovered,
-                _ => true,
+                BodyPartType.Groin => groinCovered,
+                BodyPartType.Chest => chestCovered,
+                _ => false,
             };
 
-            if (organ.Comp1.Visible == visible)
-                continue;
+            organ.Comp1.Visible = !covered;
 
-            organ.Comp1.Visible = visible;
-            Dirty(organ.Owner, organ.Comp1);
+            if (covered)
+                newCovered.Add(organ.Comp2.SlotId);
         }
+
+        if (!TryComp<ErpOrganVisualsComponent>(uid, out var visuals))
+            return;
+
+        if (visuals.CoveredSlots.SetEquals(newCovered))
+            return;
+
+        visuals.CoveredSlots = newCovered;
+        Dirty(uid, visuals);
     }
 }

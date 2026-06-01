@@ -19,6 +19,8 @@ public sealed class ErpOrganPreferencesManager : IPostInjectInit
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly UserDbDataManager _userDb = default!;
 
+    private readonly ISawmill _log = Logger.GetSawmill("erp.prefs");
+
     private readonly Dictionary<NetUserId, Dictionary<int, ErpOrganPreferences>> _cache = new();
 
     private static readonly JsonSerializerOptions JsonOpts = new() { IncludeFields = true };
@@ -78,21 +80,37 @@ public sealed class ErpOrganPreferencesManager : IPostInjectInit
         return null;
     }
 
-    private async void HandleUpdate(MsgUpdateErpOrganPreferences msg)
+    private void HandleUpdate(MsgUpdateErpOrganPreferences msg)
     {
         if (!_players.TryGetSessionByChannel(msg.MsgChannel, out var session))
             return;
 
-        var prefs = msg.Preferences;
+        var maxSlots = _cfg.GetCVar(CCVars.GameMaxCharacterSlots);
         var slot = msg.Slot;
+        if (slot < 0 || slot >= maxSlots)
+            return;
+
+        var prefs = msg.Preferences;
 
         if (!_cache.TryGetValue(session.UserId, out var slots))
             _cache[session.UserId] = slots = new Dictionary<int, ErpOrganPreferences>();
 
         slots[slot] = prefs;
 
-        var json = Serialize(prefs);
-        await _db.SaveErpOrganPreferencesAsync(session.UserId, slot, json);
+        SaveAsync(session.UserId, slot, prefs);
+    }
+
+    private async void SaveAsync(NetUserId userId, int slot, ErpOrganPreferences prefs)
+    {
+        try
+        {
+            var json = Serialize(prefs);
+            await _db.SaveErpOrganPreferencesAsync(userId, slot, json);
+        }
+        catch (Exception e)
+        {
+            _log.Error($"Failed to save ERP organ preferences for {userId} slot {slot}: {e}");
+        }
     }
 
     private static string Serialize(ErpOrganPreferences prefs)

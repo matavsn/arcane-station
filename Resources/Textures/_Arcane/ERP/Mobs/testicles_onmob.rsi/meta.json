@@ -1,9 +1,0 @@
-﻿{
-  "version": 1,
-  "license": "TODO",
-  "copyright": "",
-  "size": { "x": 32, "y": 32 },
-  "states": [
-    { "name": "testicles_single_2_0_FRONT", "directions": 4 }
-  ]
-}

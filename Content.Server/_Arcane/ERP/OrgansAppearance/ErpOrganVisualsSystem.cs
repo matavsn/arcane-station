@@ -1,5 +1,6 @@
 using Content.Server._Arcane.ERP.Preferences;
 using Content.Server.Preferences.Managers;
+using Content.Shared._Arcane.ERP;
 using Content.Shared._Arcane.ERP.Organs;
 using Content.Shared._Arcane.ERP.OrgansAppearance;
 using Content.Shared._Arcane.ERP.Preferences;
@@ -7,6 +8,7 @@ using Content.Shared.Body.Events;
 using Content.Shared.Body.Organ;
 using Content.Shared.Body.Systems;
 using Content.Shared.Humanoid;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 
 namespace Content.Server._Arcane.ERP.OrgansAppearance;
@@ -24,6 +26,7 @@ public sealed class ErpOrganVisualsSystem : EntitySystem
         base.Initialize();
         _log = Logger.GetSawmill("erp.visuals");
         SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
+        SubscribeLocalEvent<EroticOrgansComponent, EroticOrgansSpawnedEvent>(OnOrgansSpawned);
         SubscribeLocalEvent<EroticOrganComponent, OrganRemovedFromBodyEvent>(OnOrganRemoved);
     }
 
@@ -34,24 +37,22 @@ public sealed class ErpOrganVisualsSystem : EntitySystem
 
         var userId = args.Player.UserId;
         var slot = _prefs.GetPreferences(userId).SelectedCharacterIndex;
-        var organPrefs = _erpPrefs.GetCached(userId, slot) ?? ErpOrganPreferences.Default();
+        RebuildOrganVisuals(args.Entity, userId, slot);
+    }
 
-        // Build visuals only for organs physically present on the body
-        var organs = new Dictionary<string, ErpOrganConfig>();
-        foreach (var (_, _, organComp) in _body.GetBodyOrganEntityComps<EroticOrganComponent>((args.Entity, null)))
-        {
-            var slotId = organComp.SlotId;
-            if (string.IsNullOrEmpty(slotId))
-                continue;
+    private void OnOrgansSpawned(Entity<EroticOrgansComponent> ent, ref EroticOrgansSpawnedEvent args)
+    {
+        if (!HasComp<HumanoidAppearanceComponent>(ent))
+            return;
 
-            organs[slotId] = organPrefs.Organs.TryGetValue(slotId, out var cfg) ? cfg : new ErpOrganConfig();
-        }
+        // Only rebuild if a player is already controlling this entity.
+        // If not, PlayerAttached will handle it later.
+        if (!TryComp<ActorComponent>(ent, out var actor))
+            return;
 
-        _log.Debug($"{args.Entity} — {organs.Count} organs present, {organPrefs.Organs.Count} prefs");
-
-        var visuals = EnsureComp<ErpOrganVisualsComponent>(args.Entity);
-        visuals.Organs = organs;
-        Dirty(args.Entity, visuals);
+        var userId = actor.PlayerSession.UserId;
+        var slot = _prefs.GetPreferences(userId).SelectedCharacterIndex;
+        RebuildOrganVisuals(ent, userId, slot);
     }
 
     private void OnOrganRemoved(Entity<EroticOrganComponent> ent, ref OrganRemovedFromBodyEvent args)
@@ -64,5 +65,26 @@ public sealed class ErpOrganVisualsSystem : EntitySystem
 
         visuals.Organs.Remove(organ.SlotId);
         Dirty(args.OldBody, visuals);
+    }
+
+    private void RebuildOrganVisuals(EntityUid uid, NetUserId userId, int slot)
+    {
+        var organPrefs = _erpPrefs.GetCached(userId, slot) ?? ErpOrganPreferences.Default();
+
+        var organs = new Dictionary<string, ErpOrganConfig>();
+        foreach (var organ in _body.GetBodyOrganEntityComps<EroticOrganComponent>((uid, null)))
+        {
+            var slotId = organ.Comp2.SlotId;
+            if (string.IsNullOrEmpty(slotId))
+                continue;
+
+            organs[slotId] = organPrefs.Organs.TryGetValue(slotId, out var cfg) ? cfg : new ErpOrganConfig();
+        }
+
+        _log.Debug($"{uid} — {organs.Count} organs present, {organPrefs.Organs.Count} prefs");
+
+        var visuals = EnsureComp<ErpOrganVisualsComponent>(uid);
+        visuals.Organs = organs;
+        Dirty(uid, visuals);
     }
 }

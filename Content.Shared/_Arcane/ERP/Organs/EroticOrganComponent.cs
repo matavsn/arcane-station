@@ -19,8 +19,7 @@ public sealed partial class EroticOrganComponent : Component
 
     /// <summary>
     /// Whether this organ is currently exposed (not covered by clothing).
-    /// Managed by the clothing coverage system.
+    /// Managed server-side by the clothing coverage system for interaction checks.
     /// </summary>
-    [AutoNetworkedField]
     public bool Visible = true;
 }

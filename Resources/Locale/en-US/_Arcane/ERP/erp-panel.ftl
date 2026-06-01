@@ -1,4 +1,4 @@
-﻿erp-panel-open-verb = Interactions
+erp-panel-open-verb = Interactions
 
 erp-panel-title = Interaction Panel
 
@@ -12,8 +12,6 @@ erp-panel-custom-moaning-button-tooltip = Moan chance multiplier after an intera
 
 moan-message = moans!
 orgasm-popup-self = You climaxed. Give yourself a moment to recover.
-erp-refractory-self = You're still recovering — arousal isn't building up yet.
-erp-refractory-target = They're not ready yet...
 orgasm-message-1 = climaxes!
 orgasm-message-2 = reaches orgasm!
 orgasm-message-3 = shudders from orgasm!

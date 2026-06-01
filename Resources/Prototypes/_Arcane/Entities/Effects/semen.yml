@@ -1,6 +1,6 @@
 - type: entity
-  id: PuddleSemen
   parent: PuddleTemporary
+  id: PuddleSemen
   suffix: semen
   components:
   - type: SolutionContainerManager

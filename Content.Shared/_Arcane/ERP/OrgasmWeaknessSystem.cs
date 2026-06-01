@@ -1,10 +1,14 @@
 ﻿using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
+using Robust.Shared.Network;
+using Robust.Shared.Timing;
 
 namespace Content.Shared._Arcane.ERP;
 
 public sealed class OrgasmWeaknessSystem : EntitySystem
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _speed = default!;
 
     public override void Initialize()
@@ -13,6 +17,22 @@ public sealed class OrgasmWeaknessSystem : EntitySystem
         SubscribeLocalEvent<OrgasmWeaknessComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<OrgasmWeaknessComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshSpeed);
         SubscribeLocalEvent<OrgasmWeaknessComponent, ComponentShutdown>(OnShutdown);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        if (!_net.IsServer)
+            return;
+
+        var now = _timing.CurTime;
+        var query = EntityQueryEnumerator<OrgasmWeaknessComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            if (now >= comp.ExpiresAt)
+                RemCompDeferred<OrgasmWeaknessComponent>(uid);
+        }
     }
 
     private void OnInit(Entity<OrgasmWeaknessComponent> ent, ref ComponentInit args)

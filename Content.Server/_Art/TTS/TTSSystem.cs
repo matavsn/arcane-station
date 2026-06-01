@@ -22,7 +22,7 @@ public sealed partial class TTSSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _xforms = default!;
     [Dependency] private readonly LanguageSystem _language = default!;
 
-    private const int MaxMessageChars = 400;
+    private const int MaxMessageChars = 200;
     private bool _isEnabled;
 
 
@@ -34,6 +34,7 @@ public sealed partial class TTSSystem : EntitySystem
 
         SubscribeLocalEvent<TransformSpeechEvent>(OnTransformSpeech);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(_ => _ttsManager.ResetCache());
+        SubscribeLocalEvent<ActorComponent, TTSRadioPlayEvent>(OnTTSRadioPlayEvent);
 
         SubscribeNetworkEvent<RequestPreviewTTSEvent>(OnRequestPreviewTTS);
     }
@@ -61,6 +62,40 @@ public sealed partial class TTSSystem : EntitySystem
         }
 
         HandleSay(uid, args.Message, args.Language, protoVoice.Speaker);
+    }
+
+    private void OnTTSRadioPlayEvent(EntityUid uid, ActorComponent comp, TTSRadioPlayEvent args)
+    {
+        if (!_isEnabled || args.Message.Length > MaxMessageChars)
+            return;
+
+        HandleReceiveRadio(uid, args.Message, args.Language, args.Voice);
+    }
+
+    private async void HandleReceiveRadio(EntityUid uid, string message, LanguagePrototype language, string speaker)
+    {
+        var recipients = Filter.Empty();
+        var hasRecipients = false;
+
+        foreach (var session in Filter.Pvs(uid).Recipients)
+        {
+            if (!session.AttachedEntity.HasValue)
+                continue;
+
+            EntityManager.TryGetComponent(session.AttachedEntity.Value, out LanguageSpeakerComponent? lang);
+            if (!_language.CanUnderstand(new(session.AttachedEntity.Value, lang), language.ID))
+                continue;
+
+            recipients.AddPlayer(session);
+            hasRecipients = true;
+        }
+
+        if (!hasRecipients)
+            return;
+
+        var soundData = await GenerateTTS(message, speaker, "radio");
+        if (soundData is null) return;
+        RaiseNetworkEvent(new PlayTTSEvent(soundData, GetNetEntity(uid)), recipients);
     }
 
     private async void HandleSay(EntityUid uid, string message, LanguagePrototype language, string speaker)
@@ -93,11 +128,11 @@ public sealed partial class TTSSystem : EntitySystem
 
     private async void HandleWhisper(EntityUid uid, string message, LanguagePrototype language, string speaker)
     {
-        var normal = await GenerateTTS(message, speaker, true);
+        var normal = await GenerateTTS(message, speaker);
         if (normal is null)
             return;
 
-        // var obfuscated = await GenerateTTS(_language.ObfuscateSpeech(message, language), speaker, true);
+        // var obfuscated = await GenerateTTS(message, speaker);
         // if (obfuscated is null)
         //     return;
 
@@ -132,7 +167,7 @@ public sealed partial class TTSSystem : EntitySystem
     private readonly SemaphoreSlim _lock = new(1, 1);
 
     // ReSharper disable once InconsistentNaming
-    private async Task<byte[]?> GenerateTTS(string text, string speaker, bool isWhisper = false)
+    private async Task<byte[]?> GenerateTTS(string text, string speaker, string? effect = null)
     {
         var textSanitized = Sanitize(text);
         if (string.IsNullOrEmpty(textSanitized))
@@ -141,37 +176,38 @@ public sealed partial class TTSSystem : EntitySystem
         if (char.IsLetter(textSanitized[^1]))
             textSanitized += ".";
 
-        var taskKey = $"{textSanitized}_{speaker}_{isWhisper}";
+        return await _ttsManager.ConvertTextToSpeech(speaker, textSanitized, effect);
+        // var taskKey = $"{textSanitized}_{speaker}_{effect}";
 
-        await _lock.WaitAsync();
-        try
-        {
-            if (_ttsTasks.TryGetValue(taskKey, out var existingTask))
-                return await existingTask;
+        // await _lock.WaitAsync();
+        // try
+        // {
+        //     if (_ttsTasks.TryGetValue(taskKey, out var existingTask))
+        //         return await existingTask;
 
-            var newTask = _ttsManager.ConvertTextToSpeech(speaker, textSanitized);
-            _ttsTasks[taskKey] = newTask;
-        }
-        finally
-        {
-            _lock.Release();
-        }
+        //     var newTask = _ttsManager.ConvertTextToSpeech(speaker, textSanitized);
+        //     _ttsTasks[taskKey] = newTask;
+        // }
+        // finally
+        // {
+        //     _lock.Release();
+        // }
 
-        try
-        {
-            return await _ttsTasks[taskKey];
-        }
-        finally
-        {
-            await _lock.WaitAsync();
-            try
-            {
-                _ttsTasks.Remove(taskKey);
-            }
-            finally
-            {
-                _lock.Release();
-            }
-        }
+        // try
+        // {
+        //     return await _ttsTasks[taskKey];
+        // }
+        // finally
+        // {
+        //     await _lock.WaitAsync();
+        //     try
+        //     {
+        //         _ttsTasks.Remove(taskKey);
+        //     }
+        //     finally
+        //     {
+        //         _lock.Release();
+        //     }
+        // }
     }
 }

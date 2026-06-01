@@ -48,6 +48,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Radio.Components;
+using Content.Shared._Art.TTS; // Orion-Edit
 using Content.Shared._EinsteinEngines.Language;
 using Content.Shared.Chat;
 using Content.Shared.Database;
@@ -121,6 +122,13 @@ public sealed partial class RadioSystem : EntitySystem
             if (listener != null && !_language.CanUnderstand(listener, args.Language.ID))
                 msg = args.LanguageObfuscatedChatMsg;
 
+            // Orion-Edit-Start
+            if (args.Voice is { } voice)
+            {
+                var ev = new TTSRadioPlayEvent(args.OriginalChatMsg, args.OriginalChatMsg.Message, args.Language, voice);
+                RaiseLocalEvent(uid, ev);
+            }
+            // Orion-Edit-End
             _netMan.ServerSendMessage(new MsgChatMessage { Message = msg }, actor.PlayerSession.Channel);
             // Einstein Engines - Languages end
         }
@@ -231,7 +239,16 @@ public sealed partial class RadioSystem : EntitySystem
         // Added GetNetEntity(messageSource), to source
         var obfuscatedWrapped = WrapRadioMessage(messageSource, channel, name, obfuscated, language, jobIcon, jobName);
         var notUdsMsg = new ChatMessage(ChatChannel.Radio, obfuscated, obfuscatedWrapped, GetNetEntity(messageSource), null);
-        var ev = new RadioReceiveEvent(messageSource, channel, msg, notUdsMsg, language, radioSource);
+        // Orion-Edit-Start
+        string? voice = null;
+        if (TryComp<TTSComponent>(messageSource, out var ttsComponent)
+            && ttsComponent.VoicePrototype is { } voiceId
+            && _prototype.TryIndex(voiceId, out var voicePrototype))
+        {
+            voice = voicePrototype.Speaker;
+        }
+        // Orion-Edit-End
+        var ev = new RadioReceiveEvent(messageSource, channel, msg, notUdsMsg, language, radioSource, voice); // Orion-Edit
         // Einstein Engines - Language end
 
         var sendAttemptEv = new RadioSendAttemptEvent(channel, radioSource);

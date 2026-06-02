@@ -83,11 +83,11 @@
   markingCategory: Head
   speciesRestriction: [HumanoidXeno]
   sprites:
-  - sprite: _Arcane/Mobs/Species/HumanoidXeno/parts.rsi
-    state: head_m
-  - sprite: _Arcane/Mobs/Species/HumanoidXeno/parts.rsi
+  - sprite: _Arcane/Mobs/Customization/HumanoidXeno/head.rsi
+    state: drone_head
+  - sprite: _Arcane/Mobs/Customization/HumanoidXeno/head.rsi
     state: teeth_drone
-  - sprite: _Arcane/Mobs/Species/HumanoidXeno/parts.rsi
+  - sprite: _Arcane/Mobs/Customization/HumanoidXeno/head.rsi
     state: shine
 
 - type: marking

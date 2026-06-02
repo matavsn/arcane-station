@@ -62,6 +62,18 @@
         {
             "name": "runner_teeth",
             "directions": 4
+        },
+        {
+            "name": "drone_head",
+            "directions": 4
+        },
+        {
+            "name": "teeth_drone",
+            "directions": 4
+        },
+        {
+            "name": "shine",
+            "directions": 4
         }
     ]
 }

@@ -193,3 +193,8 @@
     species: Rodentia
   - type: Inventory
     speciesId: rodentia
+  # Arcane-start: species default organ variant
+  - type: EroticOrgans
+    defaultVariants:
+      penis: tapered
+  # Arcane-end

@@ -2006,6 +2006,7 @@ namespace Content.Client.Lobby.UI
 
             UpdateGenderControls();
             Markings.SetSex(newSex);
+            UpdateErpOrganSection(); // Arcane-edit
             ReloadPreview();
         }
 

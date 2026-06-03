@@ -512,3 +512,8 @@
         32:
           sprite: Mobs/Species/Vox/displacement.rsi
           state: hand_r
+  # Arcane-start: species default organ variant
+  - type: EroticOrgans
+    defaultVariants:
+      penis: hemi
+  # Arcane-end

@@ -70,6 +70,7 @@ public sealed class ErpOrganVisualsSystem : EntitySystem
     private void RebuildOrganVisuals(EntityUid uid, NetUserId userId, int slot)
     {
         var organPrefs = _erpPrefs.GetCached(userId, slot) ?? ErpOrganPreferences.Default();
+        var eroticComp = CompOrNull<EroticOrgansComponent>(uid);
 
         var organs = new Dictionary<string, ErpOrganConfig>();
         foreach (var organ in _body.GetBodyOrganEntityComps<EroticOrganComponent>((uid, null)))
@@ -78,13 +79,23 @@ public sealed class ErpOrganVisualsSystem : EntitySystem
             if (string.IsNullOrEmpty(slotId))
                 continue;
 
-            organs[slotId] = organPrefs.Organs.TryGetValue(slotId, out var cfg) ? cfg : new ErpOrganConfig();
+            if (organPrefs.Organs.TryGetValue(slotId, out var cfg))
+            {
+                organs[slotId] = cfg;
+            }
+            else
+            {
+                // No saved preference: use species default variant if defined, otherwise generic default.
+                var defaultVariant = eroticComp?.DefaultVariants.GetValueOrDefault(slotId) ?? "human";
+                organs[slotId] = new ErpOrganConfig { Variant = defaultVariant };
+            }
         }
 
         _log.Debug($"{uid} — {organs.Count} organs present, {organPrefs.Organs.Count} prefs");
 
         var visuals = EnsureComp<ErpOrganVisualsComponent>(uid);
         visuals.Organs = organs;
+        visuals.HideWhenFlaccid = eroticComp?.HideWhenFlaccid ?? [];
         Dirty(uid, visuals);
     }
 }

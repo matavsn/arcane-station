@@ -27,24 +27,56 @@ public sealed class ErpOrganVisualsSystem : EntitySystem
         [ErpOrganSlots.Butt]      = "erp_butt",
     };
 
-    private static readonly Dictionary<string, string> OrganRsiPath = new()
-    {
-        [ErpOrganSlots.Penis] = "/Textures/_Arcane/ERP/Mobs/penis_onmob.rsi",
-    };
+    // Populated as per-organ RSI assets become available.
+    private static readonly Dictionary<string, string> OrganRsiPath = new();
 
     private const string BreastsRsiBase = "/Textures/_Arcane/ERP/Mobs/Breasts/";
     private const string BreastsRsiFallback = BreastsRsiBase + "human.rsi";
 
     private static readonly Dictionary<string, string> SpeciesBreastRsi = new()
     {
-        ["Human"]        = BreastsRsiBase + "human.rsi",
-        ["Dwarf"]        = BreastsRsiBase + "human.rsi",
-        ["Reptilian"]    = BreastsRsiBase + "lizard.rsi",
-        ["Moth"]         = BreastsRsiBase + "moth.rsi",
-        ["Tajaran"]      = BreastsRsiBase + "tajaran.rsi",
-        ["Arachnid"]     = BreastsRsiBase + "arachnid.rsi",
-        ["Demon"]        = BreastsRsiBase + "demon.rsi",
-        ["HumanoidXeno"] = BreastsRsiBase + "xenos.rsi",
+        ["Human"]       = BreastsRsiBase + "human.rsi",
+        ["Dwarf"]       = BreastsRsiBase + "human.rsi",
+        ["Reptilian"]   = BreastsRsiBase + "lizard.rsi",
+        ["Moth"]        = BreastsRsiBase + "moth.rsi",
+        ["Tajaran"]     = BreastsRsiBase + "tajaran.rsi",
+        ["Arachnid"]    = BreastsRsiBase + "arachnid.rsi",
+        ["Demon"]       = BreastsRsiBase + "demon.rsi",
+        ["HumanoidXeno"]= BreastsRsiBase + "xenos.rsi",
+        ["Chitinid"]    = BreastsRsiBase + "chitinid.rsi",
+        ["Diona"]       = BreastsRsiBase + "diona.rsi",
+        ["Kobold"]      = BreastsRsiBase + "kobold.rsi",
+        ["Rodentia"]    = BreastsRsiBase + "rodentia.rsi",
+        ["SlimePerson"] = BreastsRsiBase + "slime.rsi",
+        ["Vox"]         = BreastsRsiBase + "vox.rsi",
+        ["Vulpkanin"]   = BreastsRsiBase + "vulpkanin.rsi",
+        ["Yowie"]       = BreastsRsiBase + "yowie.rsi",
+    };
+
+    private const string PenisRsiBase = "/Textures/_Arcane/ERP/Mobs/Penis/";
+    private const string PenisRsiFallback = PenisRsiBase + "human.rsi";
+
+    private static readonly Dictionary<string, string> SpeciesPenisRsi = new()
+    {
+        ["Human"]       = PenisRsiBase + "human.rsi",
+        ["Dwarf"]       = PenisRsiBase + "dwarf.rsi",
+        ["Felinid"]     = PenisRsiBase + "human.rsi",
+        ["Reptilian"]   = PenisRsiBase + "lizard.rsi",
+        ["Moth"]        = PenisRsiBase + "moth.rsi",
+        ["Tajaran"]     = PenisRsiBase + "tajaran.rsi",
+        ["Arachnid"]    = PenisRsiBase + "arachnid.rsi",
+        ["Demon"]       = PenisRsiBase + "demon.rsi",
+        ["HumanoidXeno"]= PenisRsiBase + "xenos.rsi",
+        ["Chitinid"]    = PenisRsiBase + "chitinid.rsi",
+        ["Diona"]       = PenisRsiBase + "diona.rsi",
+        ["Kobold"]      = PenisRsiBase + "kobold.rsi",
+        ["Rodentia"]    = PenisRsiBase + "rodentia.rsi",
+        ["SlimePerson"] = PenisRsiBase + "slime.rsi",
+        ["Vox"]         = PenisRsiBase + "vox.rsi",
+        ["Vulpkanin"]   = PenisRsiBase + "vulpkanin.rsi",
+        ["Yowie"]       = PenisRsiBase + "yowie.rsi",
+        ["Harpy"]       = PenisRsiBase + "harpy.rsi",
+        ["IPC"]         = PenisRsiBase + "ipc.rsi",
     };
 
     // First clothing layer key in the humanoid sprite stack — organ layers insert before it.
@@ -164,6 +196,11 @@ public sealed class ErpOrganVisualsSystem : EntitySystem
                 var species = humanoid?.Species ?? string.Empty;
                 rsiPath = SpeciesBreastRsi.TryGetValue(species, out var r) ? r : BreastsRsiFallback;
             }
+            else if (slotId == ErpOrganSlots.Penis)
+            {
+                var species = humanoid?.Species ?? string.Empty;
+                rsiPath = SpeciesPenisRsi.TryGetValue(species, out var r) ? r : PenisRsiFallback;
+            }
             else if (!OrganRsiPath.TryGetValue(slotId, out rsiPath!))
             {
                 // No RSI yet — if a stale layer exists, remove it.
@@ -183,7 +220,8 @@ public sealed class ErpOrganVisualsSystem : EntitySystem
             }
 
             var stateName = BuildStateName(slotId, cfg, humanoid?.Species);
-            var visible = !ent.Comp.CoveredSlots.Contains(slotId);
+            var visible = !ent.Comp.CoveredSlots.Contains(slotId)
+                       && !ent.Comp.HideWhenFlaccid.Contains(slotId);
 
             if (!_sprite.LayerMapTryGet((ent, sprite), layerKey, out var index, false))
             {
@@ -212,9 +250,10 @@ public sealed class ErpOrganVisualsSystem : EntitySystem
     {
         return slotId switch
         {
-            ErpOrganSlots.Breasts   => species == "HumanoidXeno"
-                                         ? cfg.Size switch { 1 => "a", 2 => "b", _ => "c" }
-                                         : cfg.Size switch { 1 => "aa", 2 => "b", 3 => "c", _ => "d" },
+            ErpOrganSlots.Breasts => species == "HumanoidXeno"
+                ? cfg.Size switch { 1 => "a", 2 => "b", _ => "c" }
+                : cfg.Size switch { 1 => "aa", 2 => "b", 3 => "c", _ => "d" },
+            ErpOrganSlots.Penis => "flaccid",
             ErpOrganSlots.Butt      => $"{Math.Clamp(cfg.Size, 1, 5)}",
             ErpOrganSlots.Testicles => "single",
             ErpOrganSlots.Anus      => cfg.Variant is "" or "human" ? "donut" : cfg.Variant,

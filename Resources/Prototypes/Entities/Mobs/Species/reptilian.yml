@@ -330,3 +330,8 @@
     # WWDP-Edit-End
 
 #Weh
+  # Arcane-start: species default organ variant
+  - type: EroticOrgans
+    defaultVariants:
+      penis: hemi
+  # Arcane-end

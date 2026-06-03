@@ -186,3 +186,8 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
+  # Arcane-start: species default organ variant
+  - type: EroticOrgans
+    defaultVariants:
+      penis: tentacle
+  # Arcane-end

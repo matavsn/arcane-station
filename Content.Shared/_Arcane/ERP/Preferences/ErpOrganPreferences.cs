@@ -61,7 +61,6 @@ public static class ErpOrganSlots
     public static readonly IReadOnlyDictionary<string, string[]> Variants =
         new Dictionary<string, string[]>
         {
-            [Penis]     = ["human", "knotted", "barbknot", "flared", "tentacle", "hemi", "hemiknot", "tapered", "thick"],
             [Vagina]    = ["human", "gaping", "tentacle", "dentata", "hairy", "furred", "spade", "cloaca"],
             [Testicles] = ["single"],
             [Anus]      = ["donut", "squished"],
@@ -71,10 +70,9 @@ public static class ErpOrganSlots
     public static readonly IReadOnlyDictionary<string, int> MaxSize =
         new Dictionary<string, int>
         {
-            [Penis]     = 5,
             [Breasts]   = 4,
             [Testicles] = 5,
             [Butt]      = 5,
-            [Anus]      = 9,
+            [Anus]      = 8,
         };
 }

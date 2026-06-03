@@ -232,3 +232,8 @@
             sprite: _White/Mobs/Species/displacement.rsi
             state: shoes
   # Orion-End
+  # Arcane-start: species default organ variant
+  - type: EroticOrgans
+    defaultVariants:
+      penis: barbknot
+  # Arcane-end

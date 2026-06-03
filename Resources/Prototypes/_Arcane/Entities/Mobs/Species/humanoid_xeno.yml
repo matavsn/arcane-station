@@ -224,3 +224,8 @@
     - names_xeno_first
     - names_xeno_last
     nameFormat: name-format-standard
+  # Arcane-start: xenos have retracted genitals when not aroused
+  - type: EroticOrgans
+    hideWhenFlaccid:
+    - penis
+  # Arcane-end

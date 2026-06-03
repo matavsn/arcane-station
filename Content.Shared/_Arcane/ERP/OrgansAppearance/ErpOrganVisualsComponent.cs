@@ -16,4 +16,8 @@ public sealed partial class ErpOrganVisualsComponent : Component
     /// <summary>Slots whose covering clothing is currently worn. Managed by EroticCoverageSystem.</summary>
     [AutoNetworkedField]
     public HashSet<string> CoveredSlots { get; set; } = [];
+
+    /// <summary>Slots hidden when not aroused. Set from EroticOrgansComponent.HideWhenFlaccid.</summary>
+    [AutoNetworkedField]
+    public HashSet<string> HideWhenFlaccid { get; set; } = [];
 }

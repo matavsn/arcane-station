@@ -89,6 +89,7 @@
       methods: [Touch]
       effects:
       - !type:WashCreamPieReaction
+      - !type:WashCumOverlayReaction # Arcane
   # Damage (Self)
   - type: Bloodstream
     bloodReagent: CopperBlood

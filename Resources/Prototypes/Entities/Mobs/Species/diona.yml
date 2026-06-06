@@ -89,6 +89,7 @@
       methods: [Touch]
       effects:
       - !type:WashCreamPieReaction
+      - !type:WashCumOverlayReaction # Arcane
     - reagents: [ PlantBGone ]
       methods: [ Touch ]
       effects:

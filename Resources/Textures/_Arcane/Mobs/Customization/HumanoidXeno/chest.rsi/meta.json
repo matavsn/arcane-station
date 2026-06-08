@@ -14,6 +14,18 @@
         {
             "name": "spitter_chest",
             "directions": 4
+        },
+        {
+            "name": "muscles_belly",
+            "directions": 4
+        },
+        {
+            "name": "neomorph_body",
+            "directions": 4
+        },
+        {
+            "name": "unnatural_muscles_body",
+            "directions": 4
         }
     ]
 }

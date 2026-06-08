@@ -54,6 +54,34 @@
         {
             "name": "ravager_tail_grad",
             "directions": 4
+        },
+        {
+            "name": "boiler_tail",
+            "directions": 4
+        },
+        {
+            "name": "boiler_tail_grad",
+            "directions": 4
+        },
+        {
+            "name": "crusher_tail",
+            "directions": 4
+        },
+        {
+            "name": "crusher_tail_grad",
+            "directions": 4
+        },
+        {
+            "name": "neomorph_tail",
+            "directions": 4
+        },
+        {
+            "name": "queen_long_tail",
+            "directions": 4
+        },
+        {
+            "name": "queen_long_tail_grad",
+            "directions": 4
         }
     ]
 }

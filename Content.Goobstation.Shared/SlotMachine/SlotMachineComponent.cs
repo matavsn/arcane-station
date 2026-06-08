@@ -39,16 +39,16 @@ public sealed partial class SlotMachineComponent : Component
     public float SmallWinChance = .20f;
 
     [DataField, AutoNetworkedField]
-    public float MediumWinChance = .10f;
+    public float MediumWinChance = .08f; // Arcane-edit
 
     [DataField, AutoNetworkedField]
-    public float BigWinChance = .05f;
+    public float BigWinChance = .015f; // Arcane-edit
 
     [DataField, AutoNetworkedField]
-    public float JackPotWinChance = .01f;
+    public float JackPotWinChance = .001f; // Arcane-edit
 
     [DataField, AutoNetworkedField]
-    public float GodPotWinChance = .0001f;
+    public float GodPotWinChance = .00002f; // Arcane-edit
 
     #endregion
 
@@ -61,19 +61,19 @@ public sealed partial class SlotMachineComponent : Component
     #region Prize Amounts
 
     [DataField, AutoNetworkedField]
-    public int SpinCost = 250;
+    public int SpinCost = 25; // Arcane-edit
 
     [DataField, AutoNetworkedField]
-    public int SmallPrizeAmount = 250;
+    public int SmallPrizeAmount = 25; // Arcane-edit
 
     [DataField, AutoNetworkedField]
-    public int MediumPrizeAmount = 500;
+    public int MediumPrizeAmount = 50; // Arcane-edit
 
     [DataField, AutoNetworkedField]
-    public int BigPrizeAmount = 5000;
+    public int BigPrizeAmount = 250; // Arcane-edit
 
     [DataField, AutoNetworkedField]
-    public int JackPotPrizeAmount = 20000;
+    public int JackPotPrizeAmount = 2500; // Arcane-edit
 
     #endregion
 

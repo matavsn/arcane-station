@@ -10,3 +10,5 @@ ent-ClothingUnderwearboxermaidwithsuspenders = боксеры горничной
     .desc = Боксеры для настоящих мужчин.
 ent-ClothingUnderwearWarmThongs = тёплые стринги
     .desc = Тёплые стринги с шерстяной прокладкой.
+ent-ClothingUnderwearPussystickers = наклейка на киску
+    .desc = Наклейка на самое интимное место для ваших самых извращенных утех.

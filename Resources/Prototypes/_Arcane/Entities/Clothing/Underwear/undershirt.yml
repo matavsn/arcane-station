@@ -24,3 +24,12 @@
   components:
   - type: Sprite
     sprite: _Arcane/Clothing/Underwear/undershirt/nipple_stickers.rsi
+
+- type: entity
+  parent: ClothingBraBase
+  id: ClothingUndershirtHeart-ShapedNippleStickers
+  name: heart-shaped nipple stickers
+  description: Heart-shaped stickers for your most percerse pleasures.
+  components:
+  - type: Sprite
+    sprite: _Arcane/Clothing/Underwear/undershirt/heart-shaped_nipple_stickers.rsi

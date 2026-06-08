@@ -49,17 +49,19 @@ namespace Content.Goobstation.Shared.SlotMachine
             args.Handled = true;
             comp.Emagged = true;
 
-            comp.SpinCost = _random.Next(50, 100000);
-            comp.SmallPrizeAmount = _random.Next(-500, 5000);
-            comp.MediumPrizeAmount = _random.Next(-500, 10000);
-            comp.BigPrizeAmount = _random.Next(-500, 50000);
-            comp.JackPotPrizeAmount = _random.Next(-500, 100000);
+            // Arcane-edit-Start
+            comp.SpinCost = _random.Next(25, 2500);
+            comp.SmallPrizeAmount = _random.Next(-50, 250);
+            comp.MediumPrizeAmount = _random.Next(-50, 500);
+            comp.BigPrizeAmount = _random.Next(-50, 2500);
+            comp.JackPotPrizeAmount = _random.Next(-50, 5000);
 
-            comp.SmallWinChance  = _random.NextFloat(0, 0.6f);
-            comp.MediumWinChance  = _random.NextFloat(0, 0.35f);
-            comp.BigWinChance  = _random.NextFloat(0f, 0.2f);
-            comp.JackPotWinChance  = _random.NextFloat(0, 0.1f);
-            comp.GodPotWinChance =  _random.NextFloat(0, 0.05f);
+            comp.SmallWinChance  = _random.NextFloat(0, 0.25f);
+            comp.MediumWinChance  = _random.NextFloat(0, 0.15f);
+            comp.BigWinChance  = _random.NextFloat(0f, 0.03f);
+            comp.JackPotWinChance  = _random.NextFloat(0, 0.005f);
+            comp.GodPotWinChance =  _random.NextFloat(0, 0.0005f);
+            // Arcane-edit-End
 
             // lord have mercy...
             var allProtos = _proto.EnumeratePrototypes<EntityPrototype>().ToList();

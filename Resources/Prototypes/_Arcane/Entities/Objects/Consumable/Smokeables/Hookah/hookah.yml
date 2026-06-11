@@ -10,7 +10,7 @@
   - type: Item
     size: Huge
   - type: ContainerContainer
-      hookahp: !type:ContainerSlot
+    hookahp: !type:ContainerSlot
         showEnts: False
         occludes: True
         ent: null

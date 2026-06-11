@@ -18,6 +18,7 @@
       Male: XenoHumanoid
       Female: XenoHumanoid
       Unsexed: XenoHumanoid
+      Futanari: XenoHumanoid
   - type: PressureImmunity
   - type: TypingIndicator
     proto: alien

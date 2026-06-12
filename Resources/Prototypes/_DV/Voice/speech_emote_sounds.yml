@@ -299,7 +299,7 @@
     variation: 0.125
   sounds:
     Growl:
-      collection: MaleVulpkaninGrowls # Arcane-Edit
+      collection: VulpkaninGrowls
     Snarl:
       collection: VulpkaninSnarls
     Bark:
@@ -307,9 +307,9 @@
     Whine:
       collection: VulpkaninWhines
     Howl:
-      collection: MaleVulpkaninHowls # Arcane-Edit
+      collection: VulpkaninHowls
     Awoo:
-      collection: MaleVulpkaninHowls # Arcane-Edit
+      collection: VulpkaninHowls
 
 - type: emoteSounds
   id: MaleRodentia

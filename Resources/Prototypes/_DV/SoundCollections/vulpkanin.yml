@@ -10,52 +10,42 @@
 - type: soundCollection
   id: VulpkaninBarks
   files:
-    - /Audio/_DV/Voice/Vulpkanin/dog_bark1.ogg
-    - /Audio/_DV/Voice/Vulpkanin/dog_bark2.ogg
-    - /Audio/_DV/Voice/Vulpkanin/dog_bark3.ogg
+  - /Audio/_DV/Voice/Vulpkanin/dog_bark1.ogg
+  - /Audio/_DV/Voice/Vulpkanin/dog_bark2.ogg
+  - /Audio/_DV/Voice/Vulpkanin/dog_bark3.ogg
 
 - type: soundCollection
-  # Arcane-Edit-Start
-  id: MaleVulpkaninGrowls
+  id: VulpkaninGrowls
   files:
-    - /Audio/_DV/Voice/Vulpkanin/dog_growl1.ogg
-    - /Audio/_DV/Voice/Vulpkanin/dog_growl2.ogg
-    - /Audio/_DV/Voice/Vulpkanin/dog_growl3.ogg
-    - /Audio/_DV/Voice/Vulpkanin/dog_growl4.ogg
-    - /Audio/_DV/Voice/Vulpkanin/dog_growl5.ogg
-    - /Audio/_DV/Voice/Vulpkanin/dog_growl6.ogg
-    - /Audio/_Arcane/Voice/Vulpcanin/male_wolf_growl.ogg
-  # Arcane-Edit-End
+  - /Audio/_DV/Voice/Vulpkanin/dog_growl1.ogg
+  - /Audio/_DV/Voice/Vulpkanin/dog_growl2.ogg
+  - /Audio/_DV/Voice/Vulpkanin/dog_growl3.ogg
+  - /Audio/_DV/Voice/Vulpkanin/dog_growl4.ogg
+  - /Audio/_DV/Voice/Vulpkanin/dog_growl5.ogg
+  - /Audio/_DV/Voice/Vulpkanin/dog_growl6.ogg
 
 - type: soundCollection
   id: VulpkaninSnarls
   files:
-    - /Audio/_DV/Voice/Vulpkanin/dog_snarl1.ogg
-    - /Audio/_DV/Voice/Vulpkanin/dog_snarl2.ogg
-    - /Audio/_DV/Voice/Vulpkanin/dog_snarl3.ogg
+  - /Audio/_DV/Voice/Vulpkanin/dog_snarl1.ogg
+  - /Audio/_DV/Voice/Vulpkanin/dog_snarl2.ogg
+  - /Audio/_DV/Voice/Vulpkanin/dog_snarl3.ogg
 
 - type: soundCollection
   id: VulpkaninWhines
   files:
-    - /Audio/_DV/Voice/Vulpkanin/dog_whine.ogg
+  - /Audio/_DV/Voice/Vulpkanin/dog_whine.ogg
 
 - type: soundCollection
-  # Arcane-Edit-Start
-  id: MaleVulpkaninHowls
+  id: VulpkaninHowls
   files:
-    - /Audio/_DV/Voice/Vulpkanin/howl.ogg
-    - /Audio/_Arcane/Voice/Vulpcanin/male_wolf_howl.ogg
-  # Arcane-Edit-End
+  - /Audio/_DV/Voice/Vulpkanin/howl.ogg
 
 - type: soundCollection # EE
-  # Arcane-Edit-Start
-  id: MaleVulpkaninScreams
+  id: VulpkaninScreams
   files:
-    - /Audio/_EinsteinEngines/Voice/Vulpkanin/vulpscream1.ogg
-    - /Audio/_EinsteinEngines/Voice/Vulpkanin/vulpscream2.ogg
-    - /Audio/_EinsteinEngines/Voice/Vulpkanin/vulpscream3.ogg
-    - /Audio/_EinsteinEngines/Voice/Vulpkanin/vulpscream4.ogg
-    - /Audio/_EinsteinEngines/Voice/Vulpkanin/vulpscream5.ogg
-    - /Audio/_Arcane/Voice/Vulpcanin/male_fox_scream1.ogg
-    - /Audio/_Arcane/Voice/Vulpcanin/male_fox_scream2.ogg
-  # Arcane-Edit-End
+  - /Audio/_EinsteinEngines/Voice/Vulpkanin/vulpscream1.ogg
+  - /Audio/_EinsteinEngines/Voice/Vulpkanin/vulpscream2.ogg
+  - /Audio/_EinsteinEngines/Voice/Vulpkanin/vulpscream3.ogg
+  - /Audio/_EinsteinEngines/Voice/Vulpkanin/vulpscream4.ogg
+  - /Audio/_EinsteinEngines/Voice/Vulpkanin/vulpscream5.ogg

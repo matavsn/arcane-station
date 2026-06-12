@@ -64,6 +64,7 @@
 
 using Content.Client.Administration.Managers;
 using Content.Client.Audio;
+using Content.Shared._Art.CVars; // Art-TTS
 using Content.Shared.CCVar;
 using Content.Goobstation.Common.CCVar; // Goob Station - Barks
 using Robust.Client.Audio;
@@ -99,6 +100,13 @@ public sealed partial class AudioTab : Control
             SliderVolumeBarks,
             scale: ContentAudioSystem.BarksMultiplier);
         // Goob Station - Barks-end
+
+        // Art-TTS Start
+        Control.AddOptionPercentSlider(
+            ArtCVars.TTSVolume,
+            SliderVolumeTTS,
+            scale: ContentAudioSystem.TTSMultiplier);
+        // Art-TTS End
 
         Control.AddOptionPercentSlider(
             CVars.MidiVolume,

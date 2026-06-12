@@ -296,6 +296,8 @@
     defaultPrice: 25
     extraPrice: 50
   # Orion-End
+  - type: TTS
+    voice: AdventureCore  # Art-TTS
 
 - type: entity
   id: VendingMachineWallmount

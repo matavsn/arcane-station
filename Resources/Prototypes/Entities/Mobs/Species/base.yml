@@ -513,6 +513,7 @@
   - type: Posing # Orion
   - type: MomentumSteering # Goobstation - No steer
   - type: ErpPanelOwner # Arcane
+  - type: TTS # Art-TTS
 
 - type: entity
   save: false

@@ -257,7 +257,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             Loc.GetString(val ? "chat-manager-crit-looc-chat-enabled-message" : "chat-manager-crit-looc-chat-disabled-message"));
     }
 
-        private void OnDeadChatEnabledChanged(bool val)
+    private void OnDeadChatEnabledChanged(bool val)
     {
         if (_DeadchatEnabled == val)
             return;
@@ -1434,7 +1434,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     }
 
     // Einstein Engines - Language begin
-       /// <summary>
+    /// <summary>
     ///     Wraps a message sent by the specified entity into an "x says y" string.
     /// </summary>
     public string WrapPublicMessage(EntityUid source, string name, string message, LanguagePrototype? language = null, Color? colorOverride = null)
@@ -1657,6 +1657,8 @@ public sealed class EntitySpokeEvent : EntityEventArgs
     ///     message gets sent on this channel, this should be set to null to prevent duplicate messages.
     /// </summary>
     public RadioChannelPrototype? Channel;
+
+    public bool RadioMessageSent; // Art-TTS
 
     public EntitySpokeEvent(EntityUid source, string message, RadioChannelPrototype? channel, bool isWhisper, LanguagePrototype language) // Einstein Engines - Language
     {

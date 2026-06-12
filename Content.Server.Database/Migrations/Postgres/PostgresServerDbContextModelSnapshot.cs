@@ -1152,6 +1152,11 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("text")
                         .HasColumnName("tags_flavor_text");
 
+                    b.Property<string>("Voice")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("voice");
+
                     b.Property<float>("Width")
                         .HasColumnType("real")
                         .HasColumnName("width");

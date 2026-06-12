@@ -15,9 +15,11 @@
 // SPDX-License-Identifier: MIT
 
 using Content.Server._EinsteinEngines.Language;
+using Content.Server._Art.TTS; // Art-TTS
 using Content.Server.Chat.Systems;
 using Content.Server.Emp;
 using Content.Server.Radio.Components;
+using Content.Shared._Art.TTS; // Art-TTS
 using Content.Shared.Chat;
 using Content.Shared.Examine;
 using Content.Shared.Inventory;
@@ -37,7 +39,7 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
     [Dependency] private readonly RadioSystem _radio = default!;
     [Dependency] private readonly LanguageSystem _language = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!; // Goobstation
-    [Dependency] private readonly InventorySystem _inventory = default!; // Orion
+    [Dependency] private readonly InventorySystem _inventory = default!; // Art-TTS
 
     public override void Initialize()
     {
@@ -45,9 +47,9 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
         SubscribeLocalEvent<HeadsetComponent, RadioReceiveEvent>(OnHeadsetReceive);
         SubscribeLocalEvent<HeadsetComponent, EncryptionChannelsChangedEvent>(OnKeysChanged);
 
-//        SubscribeLocalEvent<WearingHeadsetComponent, EntitySpokeEvent>(OnSpeak); // Orion-Edit: Removed
+        //        SubscribeLocalEvent<WearingHeadsetComponent, EntitySpokeEvent>(OnSpeak); // Art-TTS - Удалили
         // Orion-Start
-        SubscribeLocalEvent<ActorComponent, EntitySpokeEvent>(OnEntitySpoke);
+        SubscribeLocalEvent<ActorComponent, EntitySpokeEvent>(OnEntitySpoke, before: [typeof(TTSSystem)]); // Art-TTS
         SubscribeLocalEvent<InventoryComponent, ExaminedEvent>(OnInventoryExamined);
         // Orion-End
         SubscribeLocalEvent<HeadsetComponent, RadioReceiveAttemptEvent>(OnHeadsetReceiveAttempt); // Goobstation - Whitelisted radio channel
@@ -75,19 +77,19 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
             EnsureComp<ActiveRadioComponent>(uid).Channels = new(keyHolder.Channels);
     }
 
-/* // Orion-Edit: Removed
-    private void OnSpeak(EntityUid uid, WearingHeadsetComponent component, EntitySpokeEvent args)
-    {
-        if (args.Channel != null
-            && TryComp(component.Headset, out EncryptionKeyHolderComponent? keys)
-            && keys.Channels.Contains(args.Channel.ID)
-            && _whitelist.IsWhitelistPassOrNull(args.Channel.SendWhitelist, uid)) // Goobstation - Whitelisted channels
+    /* // Orion-Edit: Removed
+        private void OnSpeak(EntityUid uid, WearingHeadsetComponent component, EntitySpokeEvent args)
         {
-            _radio.SendRadioMessage(uid, args.Message, args.Channel, component.Headset);
-            args.Channel = null; // prevent duplicate messages from other listeners.
+            if (args.Channel != null
+                && TryComp(component.Headset, out EncryptionKeyHolderComponent? keys)
+                && keys.Channels.Contains(args.Channel.ID)
+                && _whitelist.IsWhitelistPassOrNull(args.Channel.SendWhitelist, uid)) // Goobstation - Whitelisted channels
+            {
+                _radio.SendRadioMessage(uid, args.Message, args.Channel, component.Headset);
+                args.Channel = null; // prevent duplicate messages from other listeners.
+            }
         }
-    }
-*/
+    */
 
     // Orion-Start
     private void OnInventoryExamined(EntityUid uid, InventoryComponent component, ExaminedEvent args)
@@ -177,14 +179,19 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
             if (!_whitelist.IsWhitelistPassOrNull(args.Channel.SendWhitelist, uid))
                 continue;
 
-            _radio.SendRadioMessage(
+            // Art-TTS Start
+            if (_radio.SendRadioMessage(
                 uid,
                 args.Message,
                 args.Channel,
                 headsetEntity.Value
-            );
+            ))
+            {
+                args.RadioMessageSent = true;
+                args.Channel = null;
+            }
+            // Art-TTS End
 
-            args.Channel = null;
             break;
         }
     }
@@ -236,10 +243,20 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
         if (TryComp(parent, out ActorComponent? actor))
         {
             var canUnderstand = _language.CanUnderstand(parent, args.Language.ID);
+            var chatMessage = canUnderstand ? args.OriginalChatMsg : args.LanguageObfuscatedChatMsg;
             var msg = new MsgChatMessage
             {
-                Message = canUnderstand ? args.OriginalChatMsg : args.LanguageObfuscatedChatMsg
+                Message = chatMessage
             };
+
+            // Art-TTS Start
+            if (canUnderstand && args.Voice is { } voice)
+            {
+                var ev = new TTSRadioPlayEvent(args.OriginalChatMsg, args.OriginalChatMsg.Message, args.Language, voice);
+                RaiseLocalEvent(parent, ev);
+            }
+            // Art-TTS End
+
             _netMan.ServerSendMessage(msg, actor.PlayerSession.Channel);
         }
         // Einstein Engines - Language end

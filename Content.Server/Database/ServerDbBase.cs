@@ -364,6 +364,12 @@ namespace Content.Server.Database
             if (Enum.TryParse<Gender>(profile.Gender, true, out var genderVal))
                 gender = genderVal;
 
+            // Art-TTS Start
+            var voice = profile.Voice;
+            if (voice == string.Empty)
+                voice = SharedHumanoidAppearanceSystem.DefaultSexVoice[sex];
+            // Art-TTS End
+
             // ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
             var markingsRaw = profile.Markings?.Deserialize<List<string>>();
 
@@ -427,6 +433,7 @@ namespace Content.Server.Database
                 profile.Width, // Goobstation: port EE height/width sliders
                 profile.Age,
                 sex,
+                voice, // Art-TTS
                 gender,
                 new HumanoidCharacterAppearance
                 (
@@ -479,6 +486,7 @@ namespace Content.Server.Database
             profile.Width = humanoid.Width; // Goobstation: port EE height/width sliders
             profile.Age = humanoid.Age;
             profile.Sex = humanoid.Sex.ToString();
+            profile.Voice = humanoid.Voice; // Art-TTS
             profile.Gender = humanoid.Gender.ToString();
             profile.HairName = appearance.HairStyleId;
             profile.HairColor = appearance.HairColor.ToHex();

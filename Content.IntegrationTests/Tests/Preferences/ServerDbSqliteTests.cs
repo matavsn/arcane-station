@@ -65,6 +65,7 @@ namespace Content.IntegrationTests.Tests.Preferences
                 FlavorText = "The biggest boy around.",
                 Species = "Human",
                 Age = 21,
+                Voice = "gman",
                 Appearance = new(
                     "Afro",
                     Color.Aqua,

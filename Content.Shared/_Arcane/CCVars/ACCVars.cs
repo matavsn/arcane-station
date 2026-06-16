@@ -12,12 +12,6 @@ public sealed partial class ACCVars
         CVarDef.Create("vote.auto_voting_enabled", false, CVar.SERVERONLY | CVar.ARCHIVE);
 
     /// <summary>
-    /// Включена ли автоматическая очистка мусора.
-    /// </summary>
-    public static readonly CVarDef<bool> AutoCleaningEnabled =
-        CVarDef.Create("optimization.auto_cleaning", false, CVar.SERVERONLY | CVar.ARCHIVE);
-
-    /// <summary>
     /// Должен ли клиент использовать ТТС вместо барков.
     /// </summary>
     public static readonly CVarDef<bool> UseTTS =

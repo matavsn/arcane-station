@@ -261,12 +261,15 @@ namespace Content.Server.Database
                 .Where(p => p.Preference.UserId == userId.UserId && p.Slot == slot)
                 .SingleOrDefaultAsync();
 
-            if (profile == null)
-            {
-                return;
-            }
+            if (profile != null)
+                db.Profile.Remove(profile);
 
-            db.Profile.Remove(profile);
+            // Arcane-Start — always clean ERP prefs for the slot, even if no profile row exists.
+            var erpRow = await db.ErpOrganPreferences
+                .FirstOrDefaultAsync(e => e.UserId == userId.UserId && e.Slot == slot);
+            if (erpRow != null)
+                db.ErpOrganPreferences.Remove(erpRow);
+            // Arcane-End
         }
 
         public async Task<PlayerPreferences> InitPrefsAsync(NetUserId userId, ICharacterProfile defaultProfile)

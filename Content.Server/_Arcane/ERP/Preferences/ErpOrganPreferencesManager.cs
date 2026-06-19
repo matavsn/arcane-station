@@ -45,7 +45,7 @@ public sealed class ErpOrganPreferencesManager : IPostInjectInit
         {
             cancel.ThrowIfCancellationRequested();
             var json = await _db.GetErpOrganPreferencesAsync(session.UserId, slot);
-            slots[slot] = Deserialize(json);
+            slots[slot] = Normalize(Deserialize(json));
         }
     }
 
@@ -90,7 +90,7 @@ public sealed class ErpOrganPreferencesManager : IPostInjectInit
         if (slot < 0 || slot >= maxSlots)
             return;
 
-        var prefs = msg.Preferences;
+        var prefs = Normalize(msg.Preferences);
 
         if (!_cache.TryGetValue(session.UserId, out var slots))
             _cache[session.UserId] = slots = new Dictionary<int, ErpOrganPreferences>();
@@ -99,6 +99,9 @@ public sealed class ErpOrganPreferencesManager : IPostInjectInit
 
         SaveAsync(session.UserId, slot, prefs);
     }
+
+    private static ErpOrganPreferences Normalize(ErpOrganPreferences? input)
+        => ErpOrganPreferencesNormalizer.Normalize(input);
 
     private async void SaveAsync(NetUserId userId, int slot, ErpOrganPreferences prefs)
     {

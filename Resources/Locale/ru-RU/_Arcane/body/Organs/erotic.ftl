@@ -15,3 +15,6 @@ ent-OrganUterus = матка
 
 ent-OrganBreasts = грудь
     .desc = Молочные железы.
+
+ent-OrganButt = ягодицы
+    .desc = Пара ягодиц.

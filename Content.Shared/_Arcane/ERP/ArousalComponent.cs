@@ -12,7 +12,7 @@ public enum ArousalPhase : byte
     Peak,
 }
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(raiseAfterAutoHandleState: true), AutoGenerateComponentPause]
 public sealed partial class ArousalComponent : Component
 {
     /// <summary>

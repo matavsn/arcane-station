@@ -27,6 +27,7 @@ public sealed class ErpOrganVisualsSystem : EntitySystem
         _log = Logger.GetSawmill("erp.visuals");
         SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<EroticOrgansComponent, EroticOrgansSpawnedEvent>(OnOrgansSpawned);
+        SubscribeLocalEvent<EroticOrganComponent, OrganAddedToBodyEvent>(OnOrganAdded);
         SubscribeLocalEvent<EroticOrganComponent, OrganRemovedFromBodyEvent>(OnOrganRemoved);
     }
 
@@ -53,6 +54,37 @@ public sealed class ErpOrganVisualsSystem : EntitySystem
         var userId = actor.PlayerSession.UserId;
         var slot = _prefs.GetPreferences(userId).SelectedCharacterIndex;
         RebuildOrganVisuals(ent, userId, slot);
+    }
+
+    private void OnOrganAdded(Entity<EroticOrganComponent> ent, ref OrganAddedToBodyEvent args)
+    {
+        if (!TryComp<OrganComponent>(ent, out var organ))
+            return;
+
+        var slotId = organ.SlotId;
+        if (string.IsNullOrEmpty(slotId))
+            return;
+
+        var visuals = EnsureComp<ErpOrganVisualsComponent>(args.Body);
+        var eroticComp = CompOrNull<EroticOrgansComponent>(args.Body);
+
+        ErpOrganConfig cfg;
+        if (TryComp<ActorComponent>(args.Body, out var actor))
+        {
+            var userId = actor.PlayerSession.UserId;
+            var slot = _prefs.GetPreferences(userId).SelectedCharacterIndex;
+            var organPrefs = _erpPrefs.GetCached(userId, slot) ?? ErpOrganPreferences.Default();
+            cfg = organPrefs.Organs.TryGetValue(slotId, out var saved)
+                ? saved
+                : new ErpOrganConfig { Variant = eroticComp?.DefaultVariants.GetValueOrDefault(slotId) ?? "human" };
+        }
+        else
+        {
+            cfg = new ErpOrganConfig { Variant = eroticComp?.DefaultVariants.GetValueOrDefault(slotId) ?? "human" };
+        }
+
+        visuals.Organs[slotId] = cfg;
+        Dirty(args.Body, visuals);
     }
 
     private void OnOrganRemoved(Entity<EroticOrganComponent> ent, ref OrganRemovedFromBodyEvent args)

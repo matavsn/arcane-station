@@ -1,5 +1,6 @@
 using Content.Client._Arcane.ERP.Preferences;
 using Content.Client.Lobby;
+using Content.Shared._Arcane.ERP;
 using Content.Shared._Arcane.ERP.Organs;
 using Content.Shared._Arcane.ERP.OrgansAppearance;
 using Content.Shared._Arcane.ERP.Preferences;
@@ -7,6 +8,7 @@ using Content.Shared._Shitmed.Humanoid.Events;
 using Content.Shared.Humanoid;
 using Robust.Client.GameObjects;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Client._Arcane.ERP.OrgansAppearance;
@@ -16,68 +18,14 @@ public sealed class ErpOrganVisualsSystem : EntitySystem
     [Dependency] private readonly SpriteSystem _sprite = default!;
     [Dependency] private readonly ClientErpOrganPreferencesManager _erpPrefs = default!;
     [Dependency] private readonly IClientPreferencesManager _prefs = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
 
-    private static readonly Dictionary<string, string> SlotToLayer = new()
-    {
-        [ErpOrganSlots.Penis]     = "erp_penis",
-        [ErpOrganSlots.Vagina]    = "erp_vagina",
-        [ErpOrganSlots.Breasts]   = "erp_breasts",
-        [ErpOrganSlots.Testicles] = "erp_testicles",
-        [ErpOrganSlots.Anus]      = "erp_anus",
-        [ErpOrganSlots.Butt]      = "erp_butt",
-    };
-
-    // Populated as per-organ RSI assets become available.
-    private static readonly Dictionary<string, string> OrganRsiPath = new();
-
-    private const string BreastsRsiBase = "/Textures/_Arcane/ERP/Mobs/Breasts/";
-    private const string BreastsRsiFallback = BreastsRsiBase + "human.rsi";
-
-    private static readonly Dictionary<string, string> SpeciesBreastRsi = new()
-    {
-        ["Human"]       = BreastsRsiBase + "human.rsi",
-        ["Dwarf"]       = BreastsRsiBase + "human.rsi",
-        ["Reptilian"]   = BreastsRsiBase + "lizard.rsi",
-        ["Moth"]        = BreastsRsiBase + "moth.rsi",
-        ["Tajaran"]     = BreastsRsiBase + "tajaran.rsi",
-        ["Arachnid"]    = BreastsRsiBase + "arachnid.rsi",
-        ["Demon"]       = BreastsRsiBase + "demon.rsi",
-        ["HumanoidXeno"]= BreastsRsiBase + "xenos.rsi",
-        ["Chitinid"]    = BreastsRsiBase + "chitinid.rsi",
-        ["Diona"]       = BreastsRsiBase + "diona.rsi",
-        ["Kobold"]      = BreastsRsiBase + "kobold.rsi",
-        ["Rodentia"]    = BreastsRsiBase + "rodentia.rsi",
-        ["SlimePerson"] = BreastsRsiBase + "slime.rsi",
-        ["Vox"]         = BreastsRsiBase + "vox.rsi",
-        ["Vulpkanin"]   = BreastsRsiBase + "vulpkanin.rsi",
-        ["Yowie"]       = BreastsRsiBase + "yowie.rsi",
-    };
-
-    private const string PenisRsiBase = "/Textures/_Arcane/ERP/Mobs/Penis/";
-    private const string PenisRsiFallback = PenisRsiBase + "human.rsi";
-
-    private static readonly Dictionary<string, string> SpeciesPenisRsi = new()
-    {
-        ["Human"]       = PenisRsiBase + "human.rsi",
-        ["Dwarf"]       = PenisRsiBase + "dwarf.rsi",
-        ["Felinid"]     = PenisRsiBase + "human.rsi",
-        ["Reptilian"]   = PenisRsiBase + "lizard.rsi",
-        ["Moth"]        = PenisRsiBase + "moth.rsi",
-        ["Tajaran"]     = PenisRsiBase + "tajaran.rsi",
-        ["Arachnid"]    = PenisRsiBase + "arachnid.rsi",
-        ["Demon"]       = PenisRsiBase + "demon.rsi",
-        ["HumanoidXeno"]= PenisRsiBase + "xenos.rsi",
-        ["Chitinid"]    = PenisRsiBase + "chitinid.rsi",
-        ["Diona"]       = PenisRsiBase + "diona.rsi",
-        ["Kobold"]      = PenisRsiBase + "kobold.rsi",
-        ["Rodentia"]    = PenisRsiBase + "rodentia.rsi",
-        ["SlimePerson"] = PenisRsiBase + "slime.rsi",
-        ["Vox"]         = PenisRsiBase + "vox.rsi",
-        ["Vulpkanin"]   = PenisRsiBase + "vulpkanin.rsi",
-        ["Yowie"]       = PenisRsiBase + "yowie.rsi",
-        ["Harpy"]       = PenisRsiBase + "harpy.rsi",
-        ["IPC"]         = PenisRsiBase + "ipc.rsi",
-    };
+    // (slot, species) → prototype; built from erpOrganVisual prototypes at Initialize.
+    private readonly Dictionary<(string slot, string species), ErpOrganVisualPrototype> _speciesLookup = new();
+    // slot → fallback prototype (species list was empty).
+    private readonly Dictionary<string, ErpOrganVisualPrototype> _fallbackLookup = new();
+    // slot → layer key ("erp_{slot}"); derived from prototypes so new slots need no C#.
+    private readonly Dictionary<string, string> _slotToLayerKey = new();
 
     // First clothing layer key in the humanoid sprite stack — organ layers insert before it.
     private const string FirstClothingLayer = "underwear";
@@ -89,13 +37,44 @@ public sealed class ErpOrganVisualsSystem : EntitySystem
         base.Initialize();
         _log = Logger.GetSawmill("erp.visuals.cl");
 
+        BuildLookupTables();
+        _proto.PrototypesReloaded += _ => BuildLookupTables();
+
         SubscribeLocalEvent<ErpOrganVisualsComponent, AfterAutoHandleStateEvent>(OnOrganState);
         SubscribeLocalEvent<ErpOrganVisualsComponent, ComponentShutdown>(OnOrganShutdown);
 
         SubscribeLocalEvent<HumanoidAppearanceComponent, HumanoidVisualStateUpdatedEvent>(OnHumanoidState);
+        SubscribeLocalEvent<ArousalComponent, AfterAutoHandleStateEvent>(OnArousalState);
 
-        // Editor preview: client-side dummy entity, no server state
+        // Editor preview: client-side dummy entity, no server state.
         SubscribeLocalEvent<HumanoidAppearanceComponent, ProfileLoadFinishedEvent>(OnPreviewProfileLoaded);
+    }
+
+    private void BuildLookupTables()
+    {
+        _speciesLookup.Clear();
+        _fallbackLookup.Clear();
+        _slotToLayerKey.Clear();
+
+        foreach (var proto in _proto.EnumeratePrototypes<ErpOrganVisualPrototype>())
+        {
+            _slotToLayerKey.TryAdd(proto.Slot, proto.LayerKey);
+
+            if (proto.Species.Count == 0)
+                _fallbackLookup[proto.Slot] = proto;
+            else
+                foreach (var species in proto.Species)
+                    _speciesLookup[(proto.Slot, species)] = proto;
+        }
+    }
+
+    private ErpOrganVisualPrototype? GetProto(string slot, string species)
+    {
+        if (_speciesLookup.TryGetValue((slot, species), out var proto))
+            return proto;
+
+        _fallbackLookup.TryGetValue(slot, out var fallback);
+        return fallback;
     }
 
     public void RefreshPreview(EntityUid uid, ErpOrganPreferences prefs)
@@ -158,7 +137,6 @@ public sealed class ErpOrganVisualsSystem : EntitySystem
 
     private void OnHumanoidState(Entity<HumanoidAppearanceComponent> ent, ref HumanoidVisualStateUpdatedEvent args)
     {
-        // Skin color changed — refresh organ colors. Coverage already in the networked component.
         if (!TryComp<ErpOrganVisualsComponent>(ent, out var visuals))
             return;
 
@@ -168,42 +146,49 @@ public sealed class ErpOrganVisualsSystem : EntitySystem
         ApplyOrganLayers((ent, visuals), ent.Comp, sprite);
     }
 
+    private void OnArousalState(Entity<ArousalComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        if (!TryComp<ErpOrganVisualsComponent>(ent, out var visuals))
+            return;
+
+        if (!TryComp<SpriteComponent>(ent, out var sprite))
+            return;
+
+        ApplyOrganLayers((ent, visuals), CompOrNull<HumanoidAppearanceComponent>(ent), sprite);
+    }
+
     private void OnOrganShutdown(Entity<ErpOrganVisualsComponent> ent, ref ComponentShutdown args)
     {
         if (!TryComp<SpriteComponent>(ent, out var sprite))
             return;
 
-        foreach (var layerKey in SlotToLayer.Values)
+        foreach (var layerKey in _slotToLayerKey.Values)
         {
             if (!_sprite.LayerMapTryGet((ent, sprite), layerKey, out var index, false))
                 continue;
 
             _sprite.LayerSetVisible((ent, sprite), index, false);
-            _sprite.RemoveLayer((ent, sprite), index); // also removes key from LayerMap
+            _sprite.RemoveLayer((ent, sprite), index);
         }
     }
 
-    private void ApplyOrganLayers(Entity<ErpOrganVisualsComponent> ent, HumanoidAppearanceComponent? humanoid, SpriteComponent sprite)
+    private void ApplyOrganLayers(
+        Entity<ErpOrganVisualsComponent> ent,
+        HumanoidAppearanceComponent? humanoid,
+        SpriteComponent sprite)
     {
+        var phase   = CompOrNull<ArousalComponent>(ent)?.CurrentPhase ?? ArousalPhase.Calm;
+        var species = humanoid?.Species ?? string.Empty;
+
         foreach (var slotId in ErpOrganSlots.All)
         {
-            if (!SlotToLayer.TryGetValue(slotId, out var layerKey))
+            if (!_slotToLayerKey.TryGetValue(slotId, out var layerKey))
                 continue;
 
-            string rsiPath;
-            if (slotId == ErpOrganSlots.Breasts)
+            var proto = GetProto(slotId, species);
+            if (proto == null)
             {
-                var species = humanoid?.Species ?? string.Empty;
-                rsiPath = SpeciesBreastRsi.TryGetValue(species, out var r) ? r : BreastsRsiFallback;
-            }
-            else if (slotId == ErpOrganSlots.Penis)
-            {
-                var species = humanoid?.Species ?? string.Empty;
-                rsiPath = SpeciesPenisRsi.TryGetValue(species, out var r) ? r : PenisRsiFallback;
-            }
-            else if (!OrganRsiPath.TryGetValue(slotId, out rsiPath!))
-            {
-                // No RSI yet — if a stale layer exists, remove it.
+                // No RSI registered — remove any stale layer.
                 if (_sprite.LayerMapTryGet((ent, sprite), layerKey, out var staleIdx, false))
                 {
                     _sprite.LayerSetVisible((ent, sprite), staleIdx, false);
@@ -219,15 +204,13 @@ public sealed class ErpOrganVisualsSystem : EntitySystem
                 continue;
             }
 
-            var stateName = BuildStateName(slotId, cfg, humanoid?.Species);
-            var visible = !ent.Comp.CoveredSlots.Contains(slotId)
-                       && !ent.Comp.HideWhenFlaccid.Contains(slotId);
+            var rsiPath   = proto.Rsi;
+            var stateName = ResolveStateName(proto, cfg, phase);
+            var visible   = !ent.Comp.CoveredSlots.Contains(slotId)
+                         && (!ent.Comp.HideWhenFlaccid.Contains(slotId) || phase >= ArousalPhase.Aroused);
 
             if (!_sprite.LayerMapTryGet((ent, sprite), layerKey, out var index, false))
             {
-                // Insert before the first clothing layer so organs render under clothing.
-                // Each insertion pushes FirstClothingLayer up by one, so reading its index
-                // fresh each time naturally queues organs in declaration order.
                 int? insertIdx = null;
                 if (_sprite.LayerMapTryGet((ent, sprite), FirstClothingLayer, out var clothingIdx, false))
                     insertIdx = clothingIdx;
@@ -246,18 +229,31 @@ public sealed class ErpOrganVisualsSystem : EntitySystem
         }
     }
 
-    private static string BuildStateName(string slotId, ErpOrganConfig cfg, string? species = null)
+    private static string ResolveStateName(ErpOrganVisualPrototype proto, ErpOrganConfig cfg, ArousalPhase phase)
     {
-        return slotId switch
+        return proto.StateMode switch
         {
-            ErpOrganSlots.Breasts => species == "HumanoidXeno"
-                ? cfg.Size switch { 1 => "a", 2 => "b", _ => "c" }
-                : cfg.Size switch { 1 => "aa", 2 => "b", 3 => "c", _ => "d" },
-            ErpOrganSlots.Penis => "flaccid",
-            ErpOrganSlots.Butt      => $"{Math.Clamp(cfg.Size, 1, 5)}",
-            ErpOrganSlots.Testicles => "single",
-            ErpOrganSlots.Anus      => cfg.Variant is "" or "human" ? "donut" : cfg.Variant,
-            _                       => cfg.Variant,
+            ErpStateMode.Fixed => proto.FixedState,
+
+            ErpStateMode.SizeString => Math.Clamp(cfg.Size, 1, 99).ToString(),
+
+            ErpStateMode.SizeIndexed when proto.SizeStates.Count > 0 =>
+                proto.SizeStates[Math.Clamp(cfg.Size - 1, 0, proto.SizeStates.Count - 1)],
+
+            ErpStateMode.Arousal =>
+                phase >= ArousalPhase.Aroused && proto.ArousalStates.TryGetValue(phase.ToString(), out var aroused)
+                    ? aroused
+                    : proto.FlaccidState,
+
+            ErpStateMode.Variant =>
+                proto.VariantAliases.TryGetValue(cfg.Variant, out var alias) ? alias : cfg.Variant,
+
+            ErpStateMode.SizeIndexedArousal when proto.SizeStates.Count > 0 =>
+                phase >= ArousalPhase.Aroused
+                    ? proto.SizeStates[Math.Clamp(cfg.Size - 1, 0, proto.SizeStates.Count - 1)]
+                    : proto.FlaccidState,
+
+            _ => cfg.Variant,
         };
     }
 }

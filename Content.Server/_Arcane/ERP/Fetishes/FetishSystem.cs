@@ -1,5 +1,6 @@
 ﻿using Content.Shared._Arcane.ERP;
 using Content.Shared._Arcane.ERP.Fetishes;
+using Content.Shared.Body.Systems;
 using Content.Shared.Humanoid;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
@@ -12,6 +13,7 @@ public sealed class FetishSystem : EntitySystem
 {
     [Dependency] private readonly ArousalSystem _arousal = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly SharedBodySystem _body = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
@@ -21,6 +23,8 @@ public sealed class FetishSystem : EntitySystem
     private const float TickInterval = 4f;
     private const float MaxTotalPassiveRate = 3.0f;
     private const float FatigueFullDuration = 120f; // seconds until rate → 0
+
+    private static readonly IReadOnlySet<string> EmptyInteractionTags = new HashSet<string>();
 
     private float _accumulator;
 
@@ -63,7 +67,7 @@ public sealed class FetishSystem : EntitySystem
 
     private void TickEntity(EntityUid uid, FetishComponent fetish, TimeSpan now)
     {
-        var ctx = BuildContext(uid);
+        var ctx = BuildContext(uid, fetish);
         var newSources = new Dictionary<string, float>();
         var totalPositive = 0f;
 
@@ -79,7 +83,7 @@ public sealed class FetishSystem : EntitySystem
             if (totalPositive >= MaxTotalPassiveRate)
                 break;
 
-            if (!EvaluateCondition(proto, uid, ctx))
+            if (!TryFetish(proto, uid, fetish, ctx, isLimit: false))
                 continue;
 
             var rate = Math.Min(proto.PassiveRate, MaxTotalPassiveRate - totalPositive);
@@ -100,7 +104,7 @@ public sealed class FetishSystem : EntitySystem
             if (proto.IsEventBased || proto.Condition == null)
                 continue;
 
-            if (!EvaluateCondition(proto, uid, ctx))
+            if (!TryFetish(proto, uid, fetish, ctx, isLimit: true))
                 continue;
 
             if (proto.IsPersistent)
@@ -114,9 +118,10 @@ public sealed class FetishSystem : EntitySystem
 
     // ── Condition evaluation ─────────────────────────────────────────────────
 
-    private bool EvaluateCondition(FetishPrototype proto, EntityUid uid, FetishConditionContext ctx)
+    private bool TryFetish(FetishPrototype proto, EntityUid uid, FetishComponent fetish, FetishConditionContext ctx, bool isLimit)
     {
         var cond = proto.Condition!;
+        ctx = ctx with { IsLimit = isLimit };
 
         if (!cond.RequiresTarget)
             return cond.Check(ctx with { Target = null });
@@ -136,6 +141,9 @@ public sealed class FetishSystem : EntitySystem
                 continue;
 
             if (!IsErpConsenting(target))
+                continue;
+
+            if (!PassesTargetFilter(target, fetish, isLimit))
                 continue;
 
             if (requiresLoS && !_interaction.InRangeUnobstructed(uid, target, range))
@@ -191,9 +199,67 @@ public sealed class FetishSystem : EntitySystem
 
     private void OnErpInteraction(ref ErpInteractionOccurredEvent args)
     {
-        // TODO: Voyeurism — find watchers in range, give impulse
-        // TODO: BeingWatched — give impulse to args.Target if watched
-        // TODO: InteractionTagCondition — check tags against tag-based fetishes
+        if (args.Tags.Count == 0)
+            return;
+
+        TryApplyEventFetishes(args.User, args.Target, args.Tags);
+
+        if (args.Target != args.User)
+            TryApplyEventFetishes(args.Target, args.User, args.Tags);
+    }
+
+    private void TryApplyEventFetishes(EntityUid uid, EntityUid target, IReadOnlySet<string> tags)
+    {
+        if (!TryComp<FetishComponent>(uid, out var fetish))
+            return;
+
+        if (!HasComp<ArousalComponent>(uid))
+            return;
+
+        if (IsErpDisabled(uid) || !IsErpConsenting(target))
+            return;
+
+        var ctx = BuildContext(uid, fetish, tags) with { Target = target };
+
+        foreach (var protoId in fetish.Fetishes)
+        {
+            if (!_proto.TryIndex(protoId, out var proto))
+                continue;
+
+            if (!proto.IsEventBased || proto.Condition == null)
+                continue;
+
+            if (!PassesTargetFilter(target, fetish, isLimit: false))
+                continue;
+
+            if (!proto.Condition.Check(ctx with { IsLimit = false }))
+                continue;
+
+            AddEventArousal(uid, proto);
+        }
+
+        foreach (var limitId in fetish.Limits)
+        {
+            if (!_proto.TryIndex(limitId, out var proto))
+                continue;
+
+            if (!proto.IsEventBased || proto.Condition == null)
+                continue;
+
+            if (!proto.Condition.Check(ctx with { IsLimit = true }))
+                continue;
+
+            AddEventArousal(uid, proto);
+        }
+    }
+
+    private void AddEventArousal(EntityUid uid, FetishPrototype proto)
+    {
+        var amount = proto.Impulse != 0f ? proto.Impulse : proto.PassiveRate;
+        if (amount == 0f)
+            return;
+
+        _arousal.AddArousal(uid, amount);
     }
 
     // ── Cleanup ───────────────────────────────────────────────────────────────
@@ -215,8 +281,33 @@ public sealed class FetishSystem : EntitySystem
 
     // ── Helpers ───────────────────────────────────────────────────────────────
 
-    private FetishConditionContext BuildContext(EntityUid uid) =>
-        new(uid, null, EntityManager, _lookup, _transform, _interaction, _inventory);
+    private FetishConditionContext BuildContext(EntityUid uid, FetishComponent fetish, IReadOnlySet<string>? interactionTags = null) =>
+        new(uid, null, EntityManager, _lookup, _body, _transform, _interaction, _inventory,
+            interactionTags ?? EmptyInteractionTags, false,
+            fetish.LikedSexes, fetish.DislikedSexes, fetish.LikedSpecies, fetish.DislikedSpecies);
+
+    private bool PassesTargetFilter(EntityUid target, FetishComponent fetish, bool isLimit)
+    {
+        if (!TryComp<HumanoidAppearanceComponent>(target, out var humanoid))
+            return false;
+
+        if (isLimit)
+            return true;
+
+        if (fetish.DislikedSexes.Contains(humanoid.Sex))
+            return false;
+
+        if (fetish.LikedSexes.Count > 0 && !fetish.LikedSexes.Contains(humanoid.Sex))
+            return false;
+
+        if (fetish.DislikedSpecies.Contains(humanoid.Species))
+            return false;
+
+        if (fetish.LikedSpecies.Count > 0 && !fetish.LikedSpecies.Contains(humanoid.Species))
+            return false;
+
+        return true;
+    }
 
     private bool IsErpDisabled(EntityUid uid) =>
         TryComp<ErpStatusComponent>(uid, out var s) && s.Preference == ErpPreference.No;

@@ -1,4 +1,6 @@
 ﻿using Content.Shared._Arcane.ERP.Fetishes;
+using Content.Shared.Humanoid;
+using Content.Shared.Humanoid.Prototypes;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server._Arcane.ERP.Fetishes;
@@ -18,6 +20,22 @@ public sealed partial class FetishComponent : Component
     /// <summary>Limits/turn-offs that reduce arousal when their condition is met (passiveRate is negative).</summary>
     [DataField]
     public List<ProtoId<FetishPrototype>> Limits = new();
+
+    /// <summary>If non-empty, target sex must be one of these values for target-based fetishes to trigger.</summary>
+    [DataField]
+    public HashSet<Sex> LikedSexes = new();
+
+    /// <summary>Target sex values that block target-based fetishes even when otherwise liked.</summary>
+    [DataField]
+    public HashSet<Sex> DislikedSexes = new();
+
+    /// <summary>If non-empty, target species must be one of these values for target-based fetishes to trigger.</summary>
+    [DataField]
+    public HashSet<ProtoId<SpeciesPrototype>> LikedSpecies = new();
+
+    /// <summary>Target species values that block target-based fetishes even when otherwise liked.</summary>
+    [DataField]
+    public HashSet<ProtoId<SpeciesPrototype>> DislikedSpecies = new();
 
     // Runtime state (not serialized)
 

@@ -84,43 +84,99 @@
     !type: SelfNudityCondition
     witnessRange: 6.0
 
-# ── Attraction ────────────────────────────────────────────────────────────────
+# ── Interaction tags ─────────────────────────────────────────────────────────
 
 - type: fetish
-  id: AttractionMale
-  name: fetish-attraction-male-name
-  desc: fetish-attraction-male-desc
-  category: attraction
-  passiveRate: 0.6
+  id: OralInteraction
+  name: fetish-oral-interaction-name
+  desc: fetish-oral-interaction-desc
+  category: interaction
+  isEventBased: true
+  isPersistent: false
+  impulse: 4.0
   condition:
-    !type: ProximitySexCondition
-    range: 6.0
-    requiresLoS: false
-    sex: Male
+    !type: InteractionTagCondition
+    anyTags:
+    - interaction:suckcock
+    - interaction:pussylicking
+    - interaction:anuslick
+    - interaction:lickneck
 
 - type: fetish
-  id: AttractionFemale
-  name: fetish-attraction-female-name
-  desc: fetish-attraction-female-desc
-  category: attraction
-  passiveRate: 0.6
+  id: FootInteraction
+  name: fetish-foot-interaction-name
+  desc: fetish-foot-interaction-desc
+  category: interaction
+  isEventBased: true
+  isPersistent: false
+  impulse: 3.0
   condition:
-    !type: ProximitySexCondition
-    range: 6.0
-    requiresLoS: false
-    sex: Female
+    !type: InteractionTagCondition
+    anyTags:
+    - interaction:cockfootjob
 
 - type: fetish
-  id: AttractionFutanari
-  name: fetish-attraction-futanari-name
-  desc: fetish-attraction-futanari-desc
-  category: attraction
-  passiveRate: 0.6
+  id: RoughInteraction
+  name: fetish-rough-interaction-name
+  desc: fetish-rough-interaction-desc
+  category: interaction
+  isEventBased: true
+  isPersistent: false
+  impulse: 3.0
   condition:
-    !type: ProximitySexCondition
-    range: 6.0
-    requiresLoS: false
-    sex: Futanari
+    !type: InteractionTagCondition
+    anyTags:
+    - interaction:biteneck
+    - interaction:biteears
+    - interaction:boobsslap
+
+- type: fetish
+  id: TailInteraction
+  name: fetish-tail-interaction-name
+  desc: fetish-tail-interaction-desc
+  category: interaction
+  isEventBased: true
+  isPersistent: false
+  impulse: 3.0
+  condition:
+    !type: InteractionTagCondition
+    anyTags:
+    - interaction:tailpat
+    - interaction:tailhug
+    - interaction:boobstail
+    - interaction:cockfaptail
+    - interaction:anustailfuck
+
+- type: fetish
+  id: NeckInteraction
+  name: fetish-neck-interaction-name
+  desc: fetish-neck-interaction-desc
+  category: interaction
+  isEventBased: true
+  isPersistent: false
+  impulse: 2.5
+  condition:
+    !type: InteractionTagCondition
+    anyTags:
+    - "category:neck"
+
+- type: fetish
+  id: IntimateTouchInteraction
+  name: fetish-intimate-touch-interaction-name
+  desc: fetish-intimate-touch-interaction-desc
+  category: interaction
+  isEventBased: true
+  isPersistent: false
+  impulse: 3.0
+  condition:
+    !type: InteractionTagCondition
+    anyTags:
+    - "category:penis"
+    - "category:pussy"
+    - "category:anus"
+    - "category:boobs"
+
+# ── Attraction modifiers ──────────────────────────────────────────────────────
 
 - type: fetish
   id: SameGender

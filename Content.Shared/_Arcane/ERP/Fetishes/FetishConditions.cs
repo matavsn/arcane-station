@@ -15,6 +15,47 @@ public enum OrganFetishType : byte
 }
 
 /// <summary>
+/// Triggers from ERP panel interaction tags.
+/// Event-based fetishes should use this condition with isEventBased: true.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed partial class InteractionTagCondition : FetishCondition
+{
+    /// <summary>At least one of these tags must be present. Empty = ignored.</summary>
+    [DataField]
+    public HashSet<string> AnyTags = new();
+
+    /// <summary>All of these tags must be present. Empty = ignored.</summary>
+    [DataField]
+    public HashSet<string> AllTags = new();
+
+    /// <summary>If any of these tags is present, the condition fails.</summary>
+    [DataField]
+    public HashSet<string> ExcludedTags = new();
+
+    public override bool RequiresTarget => false;
+
+    public override bool IsPersistent => false;
+
+    public override bool Check(FetishConditionContext ctx)
+    {
+        if (ctx.InteractionTags.Count == 0)
+            return false;
+
+        if (ExcludedTags.Overlaps(ctx.InteractionTags))
+            return false;
+
+        if (AllTags.Count > 0 && !AllTags.IsSubsetOf(ctx.InteractionTags))
+            return false;
+
+        if (AnyTags.Count > 0 && !AnyTags.Overlaps(ctx.InteractionTags))
+            return false;
+
+        return AnyTags.Count > 0 || AllTags.Count > 0;
+    }
+}
+
+/// <summary>
 /// Triggers when the target has a visible (un-covered) erotic organ of the given type.
 /// Uses <see cref="EroticOrganComponent.Visible"/> which is managed by the clothing coverage system.
 /// </summary>
@@ -46,14 +87,16 @@ public sealed partial class ProximityOrganCondition : ProximityFetishCondition
     private static bool HasVisibleOrgan<T>(FetishConditionContext ctx, EntityUid target)
         where T : Component
     {
-        // We look for an organ entity that has both T (type marker) and EroticOrganComponent (with Visible).
-        // Body organs are child entities, so we query child entities of target.
-        // For now: check via EroticOrganComponent children (body system required for full traversal;
-        // simplified: check if target entity itself has the marker + visible — covers edge cases).
-        // TODO: traverse actual body children when SharedBodySystem is wired into context.
-        return ctx.EntMan.TryGetComponent<T>(target, out _)
-            && ctx.EntMan.TryGetComponent<EroticOrganComponent>(target, out var organ)
-            && organ.Visible;
+        foreach (var organ in ctx.Body.GetBodyOrganEntityComps<EroticOrganComponent>((target, null)))
+        {
+            if (!ctx.EntMan.HasComponent<T>(organ.Owner))
+                continue;
+
+            if (organ.Comp1.Visible)
+                return true;
+        }
+
+        return false;
     }
 }
 
@@ -80,20 +123,36 @@ public sealed partial class OrganSizeCondition : ProximityFetishCondition
         if (ctx.Target is not { } target)
             return false;
 
-        // Simplified: target carries the organ component directly (see TODO in ProximityOrganCondition).
-        if (!ctx.EntMan.TryGetComponent<EroticOrganComponent>(target, out var organ))
-            return false;
+        foreach (var organ in ctx.Body.GetBodyOrganEntityComps<EroticOrganComponent>((target, null)))
+        {
+            if (!MatchesOrganType(ctx, organ.Owner))
+                continue;
 
-        if (!organ.Visible)
-            return false;
+            if (!organ.Comp1.Visible)
+                continue;
 
-        if (MinSize.HasValue && organ.Size < MinSize.Value)
-            return false;
+            if (MinSize.HasValue && organ.Comp1.Size < MinSize.Value)
+                continue;
 
-        if (MaxSize.HasValue && organ.Size > MaxSize.Value)
-            return false;
+            if (MaxSize.HasValue && organ.Comp1.Size > MaxSize.Value)
+                continue;
 
-        return true;
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool MatchesOrganType(FetishConditionContext ctx, EntityUid organ)
+    {
+        return OrganType switch
+        {
+            OrganFetishType.Any => true,
+            OrganFetishType.Breasts => ctx.EntMan.HasComponent<BreastsOrganComponent>(organ),
+            OrganFetishType.Penis => ctx.EntMan.HasComponent<PenisOrganComponent>(organ),
+            OrganFetishType.Vagina => ctx.EntMan.HasComponent<VaginaOrganComponent>(organ),
+            _ => false,
+        };
     }
 }
 
@@ -166,7 +225,7 @@ public sealed partial class SelfNudityCondition : FetishCondition
     public override bool Check(FetishConditionContext ctx)
     {
         // Viewer must themselves be "naked" — has a visible organ.
-        if (!ctx.EntMan.TryGetComponent<EroticOrganComponent>(ctx.Viewer, out var organ) || !organ.Visible)
+        if (!HasVisibleOrgan(ctx, ctx.Viewer))
             return false;
 
         // At least one consenting humanoid must be nearby.
@@ -178,16 +237,50 @@ public sealed partial class SelfNudityCondition : FetishCondition
             if (witness == ctx.Viewer)
                 continue;
 
-            if (!ctx.EntMan.HasComponent<HumanoidAppearanceComponent>(witness))
+            if (!ctx.EntMan.TryGetComponent<HumanoidAppearanceComponent>(witness, out var humanoid))
                 continue;
 
             if (ctx.EntMan.TryGetComponent<ErpStatusComponent>(witness, out var status)
                 && status.Preference == ErpPreference.No)
                 continue;
 
+            if (!PassesTargetFilter(ctx, humanoid))
+                continue;
+
             return true;
         }
 
         return false;
+    }
+
+    private static bool HasVisibleOrgan(FetishConditionContext ctx, EntityUid target)
+    {
+        foreach (var organ in ctx.Body.GetBodyOrganEntityComps<EroticOrganComponent>((target, null)))
+        {
+            if (organ.Comp1.Visible)
+                return true;
+        }
+
+        return false;
+    }
+
+    private static bool PassesTargetFilter(FetishConditionContext ctx, HumanoidAppearanceComponent humanoid)
+    {
+        if (ctx.IsLimit)
+            return true;
+
+        if (ctx.DislikedSexes.Contains(humanoid.Sex))
+            return false;
+
+        if (ctx.LikedSexes.Count > 0 && !ctx.LikedSexes.Contains(humanoid.Sex))
+            return false;
+
+        if (ctx.DislikedSpecies.Contains(humanoid.Species))
+            return false;
+
+        if (ctx.LikedSpecies.Count > 0 && !ctx.LikedSpecies.Contains(humanoid.Species))
+            return false;
+
+        return true;
     }
 }

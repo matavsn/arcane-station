@@ -136,9 +136,11 @@ public sealed partial class ErpPanelSystem : EntitySystem
         ProccessMessages(user, target, interaction);
         ProccessSounds(user, interaction);
 
+        var interactionTags = BuildInteractionTags(interaction);
+
         if (user == target)
         {
-            var selfEv = new ErpInteractionOccurredEvent(user, target, interaction.Tags, Transform(user).Coordinates);
+            var selfEv = new ErpInteractionOccurredEvent(user, target, interactionTags, Transform(user).Coordinates);
             RaiseLocalEvent(ref selfEv);
             return;
         }
@@ -155,8 +157,22 @@ public sealed partial class ErpPanelSystem : EntitySystem
             ProccessMoan(user, customMoaning);
         }
 
-        var ev = new ErpInteractionOccurredEvent(user, target, interaction.Tags, Transform(target).Coordinates);
+        var ev = new ErpInteractionOccurredEvent(user, target, interactionTags, Transform(target).Coordinates);
         RaiseLocalEvent(ref ev);
+    }
+
+    private static HashSet<string> BuildInteractionTags(PanelInteractionPrototype interaction)
+    {
+        var tags = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            $"category:{interaction.Category}".ToLowerInvariant(),
+            $"interaction:{interaction.ID}".ToLowerInvariant()
+        };
+
+        foreach (var tag in interaction.Tags)
+            tags.Add(tag.ToLowerInvariant());
+
+        return tags;
     }
 
     private void ProccessMoan(EntityUid uid, float customMoaning)

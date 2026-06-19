@@ -20,15 +20,25 @@ fetish-small-size-desc = You are drawn to partners with more modest anatomy.
 fetish-exhibitionism-name = Exhibitionism
 fetish-exhibitionism-desc = Being naked in front of others arouses you.
 
-# Attraction
-fetish-attraction-male-name = Attraction: Male
-fetish-attraction-male-desc = The presence of male individuals arouses you.
+# Interaction tags
+fetish-oral-interaction-name = Oral
+fetish-oral-interaction-desc = Oral interactions heighten your arousal.
 
-fetish-attraction-female-name = Attraction: Female
-fetish-attraction-female-desc = The presence of female individuals arouses you.
+fetish-foot-interaction-name = Feet
+fetish-foot-interaction-desc = Foot-focused interactions heighten your arousal.
 
-fetish-attraction-futanari-name = Attraction: Futanari
-fetish-attraction-futanari-desc = The presence of futanari individuals arouses you.
+fetish-rough-interaction-name = Rough play
+fetish-rough-interaction-desc = Bites, slaps, and rougher contact excite you.
 
+fetish-tail-interaction-name = Tailplay
+fetish-tail-interaction-desc = Tail-focused interactions heighten your arousal.
+
+fetish-neck-interaction-name = Neck
+fetish-neck-interaction-desc = Attention to the neck excites you.
+
+fetish-intimate-touch-interaction-name = Intimate touch
+fetish-intimate-touch-interaction-desc = Direct intimate touch heightens your arousal.
+
+# Attraction modifiers
 fetish-same-gender-name = Same Gender
 fetish-same-gender-desc = The presence of someone who shares your sex arouses you.

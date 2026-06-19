@@ -1,4 +1,5 @@
 using Content.Server.Preferences.Managers;
+using Content.Server._Arcane.ERP.Fetishes;
 using Content.Shared._Arcane.ERP;
 using Content.Shared.Humanoid;
 using Content.Shared.Preferences;
@@ -22,6 +23,7 @@ public sealed class ErpStatusSystem : EntitySystem
         var preference = profile?.ErpPreference ?? ErpPreference.Ask;
 
         EnsureComp<ArousalComponent>(ent);
+        EnsureComp<FetishComponent>(ent);
 
         var comp = EnsureComp<ErpStatusComponent>(ent);
         var oldPreference = comp.Preference;

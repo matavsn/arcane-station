@@ -1,6 +1,10 @@
 ﻿using Content.Shared.Interaction;
+using Content.Shared.Body.Systems;
+using Content.Shared.Humanoid;
+using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Inventory;
 using JetBrains.Annotations;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared._Arcane.ERP.Fetishes;
@@ -14,9 +18,16 @@ public readonly record struct FetishConditionContext(
     EntityUid? Target,
     IEntityManager EntMan,
     EntityLookupSystem Lookup,
+    SharedBodySystem Body,
     SharedTransformSystem Transform,
     SharedInteractionSystem Interaction,
-    InventorySystem Inventory);
+    InventorySystem Inventory,
+    IReadOnlySet<string> InteractionTags,
+    bool IsLimit,
+    IReadOnlySet<Sex> LikedSexes,
+    IReadOnlySet<Sex> DislikedSexes,
+    IReadOnlySet<ProtoId<SpeciesPrototype>> LikedSpecies,
+    IReadOnlySet<ProtoId<SpeciesPrototype>> DislikedSpecies);
 
 /// <summary>
 /// Base class for all fetish conditions. Subclass and annotate with

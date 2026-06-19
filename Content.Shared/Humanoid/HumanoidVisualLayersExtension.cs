@@ -84,6 +84,7 @@ namespace Content.Shared.Humanoid
                     yield return HumanoidVisualLayers.Chest;
                     yield return HumanoidVisualLayers.Wings; // for IPC wings port from SimpleStation
                     yield return HumanoidVisualLayers.Tail;
+                    yield return HumanoidVisualLayers.Tracheas; // Arcane
                 // Shitmed Change Start
                     yield return HumanoidVisualLayers.Groin;
                     break;

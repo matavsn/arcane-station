@@ -1,0 +1,239 @@
+- type: entity
+  name: cornflower
+  description: A delicate blue wildflower.
+  id: FlowerCornflower
+  parent: ProduceBase
+  components:
+  - type: Sprite
+    sprite: _Arcane/Objects/Specific/Hydroponics/cornflower.rsi
+  - type: Item
+  - type: Clothing
+    slots:
+    - HEAD
+    quickEquip: false
+  - type: Produce
+    seedId: cornflower
+  - type: Tag
+    tags:
+    - Flower
+    - FlowerCornflower
+
+- type: entity
+  name: geranium
+  description: A bright cluster of geranium blossoms.
+  id: FlowerGeranium
+  parent: ProduceBase
+  components:
+  - type: Sprite
+    sprite: _Arcane/Objects/Specific/Hydroponics/geranium.rsi
+  - type: Item
+  - type: Clothing
+    slots:
+    - HEAD
+    quickEquip: false
+  - type: Produce
+    seedId: geranium
+  - type: Tag
+    tags:
+    - Flower
+    - FlowerGeranium
+
+- type: entity
+  name: lily of the valley
+  description: Tiny white bells on a slender stem.
+  id: FlowerLilyOfTheValley
+  parent: ProduceBase
+  components:
+  - type: Sprite
+    sprite: _Arcane/Objects/Specific/Hydroponics/lily_of_the_valley.rsi
+  - type: Item
+  - type: Clothing
+    slots:
+    - HEAD
+    quickEquip: false
+  - type: Produce
+    seedId: lilyOfTheValley
+  - type: Tag
+    tags:
+    - Flower
+    - FlowerLilyOfTheValley
+
+- type: entity
+  name: white lily
+  description: A pure white lily, elegant and fragrant.
+  id: FlowerWhiteLily
+  parent: ProduceBase
+  components:
+  - type: Sprite
+    sprite: _Arcane/Objects/Specific/Hydroponics/white_lily.rsi
+  - type: Item
+  - type: Clothing
+    slots:
+    - HEAD
+    quickEquip: false
+  - type: Produce
+    seedId: whiteLily
+  - type: Tag
+    tags:
+    - Flower
+    - FlowerWhiteLily
+
+- type: entity
+  name: pink lily
+  description: A soft pink lily, gently perfumed.
+  id: FlowerPinkLily
+  parent: ProduceBase
+  components:
+  - type: Sprite
+    sprite: _Arcane/Objects/Specific/Hydroponics/pink_lily.rsi
+  - type: Item
+  - type: Clothing
+    slots:
+    - HEAD
+    quickEquip: false
+  - type: Produce
+    seedId: pinkLily
+  - type: Tag
+    tags:
+    - Flower
+    - FlowerPinkLily
+
+- type: entity
+  name: peony
+  description: A lush, full-petaled peony.
+  id: FlowerPeony
+  parent: ProduceBase
+  components:
+  - type: Sprite
+    sprite: _Arcane/Objects/Specific/Hydroponics/peony.rsi
+  - type: Item
+  - type: Clothing
+    slots:
+    - HEAD
+    quickEquip: false
+  - type: Produce
+    seedId: peony
+  - type: Tag
+    tags:
+    - Flower
+    - FlowerPeony
+
+- type: entity
+  name: sunflower
+  description: A bright sunflower that always faces the light.
+  id: FlowerSunflower
+  parent: ProduceBase
+  components:
+  - type: Sprite
+    sprite: _Arcane/Objects/Specific/Hydroponics/sunflower.rsi
+  - type: Item
+  - type: Clothing
+    slots:
+    - HEAD
+    quickEquip: false
+  - type: Produce
+    seedId: sunflower
+  - type: Tag
+    tags:
+    - Flower
+    - FlowerSunflower
+
+- type: entity
+  name: white rose
+  description: A pristine white rose symbolising purity.
+  id: FlowerWhiteRose
+  parent: ProduceBase
+  components:
+  - type: Sprite
+    sprite: _Arcane/Objects/Specific/Hydroponics/white_rose.rsi
+  - type: Item
+  - type: Clothing
+    slots:
+    - HEAD
+    quickEquip: false
+  - type: Produce
+    seedId: whiteRose
+  - type: Tag
+    tags:
+    - Flower
+    - FlowerWhiteRose
+
+- type: entity
+  name: red rose
+  description: A classic red rose, thorns not included.
+  id: FlowerRedRose
+  parent: ProduceBase
+  components:
+  - type: Sprite
+    sprite: _Arcane/Objects/Specific/Hydroponics/red_rose.rsi
+  - type: Item
+  - type: Clothing
+    slots:
+    - HEAD
+    quickEquip: false
+  - type: Produce
+    seedId: redRose
+  - type: Tag
+    tags:
+    - Flower
+    - FlowerRedRose
+
+- type: entity
+  name: chamomile
+  description: A cheerful daisy-like flower with a faint herbal scent.
+  id: FlowerChamomile
+  parent: ProduceBase
+  components:
+  - type: Sprite
+    sprite: _Arcane/Objects/Specific/Hydroponics/chamomile.rsi
+  - type: Item
+  - type: Clothing
+    slots:
+    - HEAD
+    quickEquip: false
+  - type: Produce
+    seedId: chamomile
+  - type: Tag
+    tags:
+    - Flower
+    - FlowerChamomile
+
+- type: entity
+  name: yellow tulip
+  description: A vibrant yellow tulip standing tall.
+  id: FlowerYellowTulip
+  parent: ProduceBase
+  components:
+  - type: Sprite
+    sprite: _Arcane/Objects/Specific/Hydroponics/yellow_tulip.rsi
+  - type: Item
+  - type: Clothing
+    slots:
+    - HEAD
+    quickEquip: false
+  - type: Produce
+    seedId: yellowTulip
+  - type: Tag
+    tags:
+    - Flower
+    - FlowerYellowTulip
+
+- type: entity
+  name: pink tulip
+  description: A delicate pink tulip fresh from the garden.
+  id: FlowerPinkTulip
+  parent: ProduceBase
+  components:
+  - type: Sprite
+    sprite: _Arcane/Objects/Specific/Hydroponics/pink_tulip.rsi
+  - type: Item
+  - type: Clothing
+    slots:
+    - HEAD
+    quickEquip: false
+  - type: Produce
+    seedId: pinkTulip
+  - type: Tag
+    tags:
+    - Flower
+    - FlowerPinkTulip

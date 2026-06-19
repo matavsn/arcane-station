@@ -3,3 +3,48 @@
 
 - type: Tag
   id: NoXeno
+
+- type: Tag
+  id: FlowerCornflower
+
+- type: Tag
+  id: FlowerGeranium
+
+- type: Tag
+  id: FlowerLilyOfTheValley
+
+- type: Tag
+  id: FlowerWhiteLily
+
+- type: Tag
+  id: FlowerPinkLily
+
+- type: Tag
+  id: FlowerPeony
+
+- type: Tag
+  id: FlowerSunflower
+
+- type: Tag
+  id: FlowerWhiteRose
+
+- type: Tag
+  id: FlowerRedRose
+
+- type: Tag
+  id: FlowerChamomile
+
+- type: Tag
+  id: FlowerYellowTulip
+
+- type: Tag
+  id: FlowerPinkTulip
+
+- type: Tag
+  id: InfiniteDormItem
+
+- type: Tag
+  id: InfiniteDormItemBlock
+ 
+- type: Tag
+  id: Hookahpipe

@@ -1,0 +1,21 @@
+- type: panelInteraction
+  id: ButtNearCock
+  category: Butt
+  name: Водить член по ягодицам
+  userArouse: 10
+  targetArouse: 5
+  range: 1
+  sounds:
+  - /Audio/_Arcane/Interactions/friction1.ogg
+  - /Audio/_Arcane/Interactions/friction2.ogg
+  messages:
+  - водит пенисом по попке $target.
+  - проводит членом по булкам $target.
+  - ласкает булки $target своим членом.
+  - дразнит $target, проводя членом по ягодицам.
+  - трётся членом о булки $target.
+  icon: _Arcane/Interface/ErpPanel/cock_near_ass.png
+  userRequirements:
+  - !type:EroticOrganRequirement
+    organ: penis
+    requireVisible: true

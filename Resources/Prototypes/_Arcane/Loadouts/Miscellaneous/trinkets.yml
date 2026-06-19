@@ -1,0 +1,5 @@
+- type: loadout
+  id: Clothwrap
+  storage:
+    back:
+    - ClothingShoesClothwrap

@@ -1,0 +1,111 @@
+- type: panelInteraction
+  id: Handshake
+  category: Friendship
+  name: Пожать руку
+  range: 1
+  sounds:
+  - /Audio/_Arcane/Interactions/handshake.ogg
+  messages:
+  - пожимает руку $target.
+  - дружески жмёт руку $target.
+  - принимает рукопожатие $target.
+  - жмёт руку $target.
+  - берёт $target за руку и пожимает её.
+  icon: _Arcane/Interface/ErpPanel/friendly.png
+
+- type: panelInteraction
+  id: FingerTap
+  category: Friendship
+  name: Массировать спину
+  range: 1
+  sounds:
+  - /Audio/_Arcane/Interactions/pat1.ogg
+  - /Audio/_Arcane/Interactions/pat2.ogg
+  messages:
+  - тыкает спину $target вдоль позвоночника.
+  - мнёт лопатки $target.
+  - разминает спину $target.
+  - проминает позвоночник $target.
+  - делает $target массаж спины.
+  - легонько "рубит" спину $target.
+  - прогибает спину $target.
+  - мнёт большими пальцами между лопатками $target.
+  icon: _Arcane/Interface/ErpPanel/friendly_finger_tap.png
+
+- type: panelInteraction
+  id: TailPat
+  category: Friendship
+  name: Погладить хвост
+  range: 1
+  sounds:
+  - /Audio/_Arcane/Interactions/friction1.ogg
+  - /Audio/_Arcane/Interactions/friction2.ogg
+  messages:
+  - проводит рукой по хвосту $target.
+  - поглаживает хвост $target.
+  - игриво ласкает хвостик $target.
+  - гладит $target по хвосту.
+  - гладит хвост $target.
+  - водит ладошкой по хвостику $target.
+  - водит рукой вдоль хвоста $target.
+  icon: _Arcane/Interface/ErpPanel/pat_tail.png
+  targetRequirements:
+  - !type:SpeciesRequirement
+    species:
+    - Demon
+    - Felinid
+    - Vulpkanin
+    - Tajaran
+    - HumanoidXeno
+    - Rodentia
+
+- type: panelInteraction
+  id: TailHug
+  category: Friendship
+  name: Сплестись хвостами
+  range: 1
+  sounds:
+  - /Audio/_Arcane/Interactions/friction1.ogg
+  - /Audio/_Arcane/Interactions/friction2.ogg
+  messages:
+  - сплетается хвостиками с $target.
+  - обвивает хвост $target своим.
+  - игриво ласкает хвостик $target своим.
+  - обнимается хвостиками с $target.
+  - оплетает хвост $target своим.
+  icon: _Arcane/Interface/ErpPanel/tail_hug.png
+  targetRequirements:
+  - !type:SpeciesRequirement
+    species:
+    - Demon
+    - Felinid
+    - Vulpkanin
+    - Tajaran
+    - HumanoidXeno
+    - Rodentia
+  userRequirements:
+  - !type:SpeciesRequirement
+    species:
+    - Demon
+    - Felinid
+    - Vulpkanin
+    - Tajaran
+    - HumanoidXeno
+    - Rodentia
+
+- type: panelInteraction
+  id: HighFive
+  category: Friendship
+  name: Дать пять
+  range: 1
+  sounds:
+  - /Audio/_Arcane/Interactions/bang1.ogg
+  - /Audio/_Arcane/Interactions/bang2.ogg
+  - /Audio/_Arcane/Interactions/bang4.ogg
+  - /Audio/_Arcane/Interactions/bang5.ogg
+  - /Audio/_Arcane/Interactions/bang6.ogg
+  messages:
+  - даёт пять $target!
+  - ударяет ладошкой по ладошке $target.
+  - звонко шлёпает $target по ладошке!
+  icon: _Arcane/Interface/ErpPanel/high_five.png

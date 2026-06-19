@@ -1,0 +1,41 @@
+# PuroSlavKing
+- type: customGhost
+  parent: CkeyPersonal
+  id: VecortysGhost
+  restrictions:
+  - !type:CkeyRestriction
+    ckey: [ Vecortys ]
+  entity: MobObserverVecortys
+
+- type: entity
+  id: MobObserverVecortys
+  parent: AdminObserver
+  categories: [ HideSpawnMenu ]
+  description: Тише, тише.
+  components:
+  - type: Sprite
+    sprite: _Arcane/Ghosts/ckey/Vecortys.rsi
+    color: "#ffffff80" # 0.5 alpha
+  - type: MovementSpeedModifier
+    baseSprintSpeed: 22
+
+- type: customGhost
+  parent: CkeyPersonal
+  id: SShvedGhost
+  restrictions:
+  - !type:CkeyRestriction
+    ckey: [ SShved ]
+  entity: MobObserverSShved
+
+- type: entity
+  id: MobObserverSShved
+  parent: AdminObserver
+  categories: [ HideSpawnMenu ]
+  description: Создатель сервера.
+  components:
+  - type: Sprite
+    sprite: _Arcane/Ghosts/ckey/SShved.rsi
+    color: "#ffffff80" # 0.5 alpha
+    scale: 1.4, 1.4
+  - type: MovementSpeedModifier
+    baseSprintSpeed: 18

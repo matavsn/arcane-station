@@ -1,0 +1,42 @@
+# region Goob lobby screens
+
+- type: lobbyBackground
+  id: GOOBamos
+  background: /Textures/LobbyScreens/amos.webp
+  name: Atmos
+  artist: asardonicsailor
+
+- type: lobbyBackground
+  id: GOOBetu-hop
+  background: /Textures/LobbyScreens/fuckingkillHoPalready.webp
+  name: E tu, HoP?
+  artist: MsMunde
+
+- type: lobbyBackground
+  id: GOOBreclaimer-nuke
+  background: /Textures/LobbyScreens/reclaimer-nuke.webp
+  name: Reclaimer Nuke
+  artist: GetOutMarutak
+
+- type: lobbyBackground
+  id: GOOBjanishootout
+  background: /Textures/LobbyScreens/janishootout.webp
+  name: Jani Shootout
+  artist: psychpsyo
+# endregion
+
+# region Arcane lobby screens
+
+- type: lobbyBackground
+  id: ArcaneDorms
+  background: /Textures/_Arcane/LobbyScreens/arcanedorms.webp
+  name: Dorms
+  artist: bulbo44kkey & seraphimttt
+
+- type: lobbyBackground
+  id: ArcaneSpace
+  background: /Textures/_Arcane/LobbyScreens/arcanespace.webp
+  name: Space
+  artist: bulbo44kkey
+
+# endregion

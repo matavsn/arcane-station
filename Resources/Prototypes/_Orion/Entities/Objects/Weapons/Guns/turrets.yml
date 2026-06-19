@@ -6,5 +6,20 @@
   - type: NpcFactionMember
     factions:
     - InteQHostile
+  # Arcane-start
+    - Syndicate
   - type: BallisticAmmoProvider
-    capacity: 1500 # Was 500
+    capacity: 90000
+  - type: HTN
+    rootTask:
+      task: TurretOutLOSCompound
+    blackboard:
+      VisionRadius: !type:Single
+        14
+      AggroVisionRadius: !type:Single
+        14
+      RangedRange: !type:Single
+        14
+      RotateSpeed: !type:Single
+        6.282
+  # Arcane-end

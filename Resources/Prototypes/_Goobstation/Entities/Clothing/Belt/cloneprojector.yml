@@ -126,7 +126,7 @@
     - type: Perishable
     - type: Hunger
     - type: Thirst
-    - type: FootprintOwner
+    # - type: FootprintOwner Arcane
     - type: ItemSlots # No infinite batteries.
 
 - type: entity

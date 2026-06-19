@@ -1,0 +1,29 @@
+- type: loadout
+  id: pantiesSpiderman
+  equipment:
+    underwear: ClothingUnderwearpantiesSpiderman
+
+- type: loadout
+  id: boxerwolf
+  equipment:
+    underwear: ClothingUnderwearboxerwolf
+
+- type: loadout
+  id: boxerelephant
+  equipment:
+    underwear: ClothingUnderwearboxerelephant
+
+- type: loadout
+  id: boxerfrance
+  equipment:
+    underwear: ClothingUnderwearboxerfrance
+
+- type: loadout
+  id: boxermaidwithsuspenders
+  equipment:
+    underwear: ClothingUnderwearboxermaidwithsuspenders
+
+- type: loadout
+  id: WarmThongs
+  equipment:
+    underwear: ClothingUnderwearWarmThongs

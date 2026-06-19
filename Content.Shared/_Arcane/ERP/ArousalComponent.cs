@@ -1,4 +1,4 @@
-using Robust.Shared.GameStates;
+﻿using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared._Arcane.ERP;
@@ -85,14 +85,14 @@ public sealed partial class ArousalComponent : Component
     /// How long the refractory period lasts after orgasm.
     /// </summary>
     [DataField]
-    public TimeSpan RefractoryDuration = TimeSpan.FromSeconds(90);
+    public TimeSpan RefractoryDuration = TimeSpan.FromSeconds(30);
 
     public ArousalPhase ComputePhase(float arousal) => arousal switch
     {
         < 20f => ArousalPhase.Calm,
         < 40f => ArousalPhase.Interested,
         < 70f => ArousalPhase.Aroused,
-        < 95f => ArousalPhase.Heated,
+        < 100f => ArousalPhase.Heated,
         _ => ArousalPhase.Peak,
     };
 }

@@ -1,4 +1,4 @@
-using Content.Shared.Alert;
+﻿using Content.Shared.Alert;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -14,6 +14,8 @@ public sealed class ArousalSystem : EntitySystem
     private static readonly ProtoId<AlertCategoryPrototype> AlertCategory = "Arousal";
     private static readonly ProtoId<AlertPrototype> AlertAroused = "ArousalAroused";
     private static readonly ProtoId<AlertPrototype> AlertHeated = "ArousalHeated";
+    private static readonly ProtoId<AlertCategoryPrototype> AlertCategoryRefractory = "ArousalRefractory";
+    private static readonly ProtoId<AlertPrototype> AlertRefractory = "ArousalRefractory";
 
     public override void Initialize()
     {
@@ -81,6 +83,15 @@ public sealed class ArousalSystem : EntitySystem
         Dirty(uid, comp);
     }
 
+    public bool CanAddArousal(EntityUid uid, ArousalComponent? comp = null)
+    {
+        if (!Resolve(uid, ref comp, false))
+            return false;
+        if (IsErpDisabled(uid))
+            return false;
+        return !IsRefractory(comp);
+    }
+
     public void AddArousal(EntityUid uid, float amount, ArousalComponent? comp = null)
     {
         if (!Resolve(uid, ref comp))
@@ -120,6 +131,7 @@ public sealed class ArousalSystem : EntitySystem
 
             comp.NextPhaseCheckAt = now + PhaseCheckRate;
             UpdatePhase((uid, comp));
+            UpdateRefractoryAlert(uid, comp);
         }
     }
 
@@ -157,6 +169,7 @@ public sealed class ArousalSystem : EntitySystem
             Dirty(entity.Owner, comp);
 
             UpdateAlerts(entity.Owner, ArousalPhase.Calm);
+            _alerts.ShowAlert(entity.Owner, AlertRefractory);
             var orgasmEv = new ArousalOrgasmEvent();
             RaiseLocalEvent(entity.Owner, ref orgasmEv);
             RaiseLocalEvent(entity.Owner, new ArousalPhaseChangedEvent(previous, ArousalPhase.Calm));
@@ -183,6 +196,14 @@ public sealed class ArousalSystem : EntitySystem
                 _alerts.ClearAlertCategory(uid, AlertCategory);
                 break;
         }
+    }
+
+    private void UpdateRefractoryAlert(EntityUid uid, ArousalComponent comp)
+    {
+        if (IsRefractory(comp))
+            _alerts.ShowAlert(uid, AlertRefractory);
+        else
+            _alerts.ClearAlertCategory(uid, AlertCategoryRefractory);
     }
 
     private bool IsErpDisabled(EntityUid uid)

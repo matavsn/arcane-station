@@ -1,0 +1,347 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: WreathCornflower
+  name: cornflower wreath
+  description: A delicate wreath woven from blue cornflowers.
+  components:
+  - type: Sprite
+    sprite: _Arcane/Clothing/Head/Flowers/cornflower.rsi
+  - type: Clothing
+    sprite: _Arcane/Clothing/Head/Flowers/cornflower.rsi
+  - type: Construction
+    graph: ArcaneWreathCornflower
+    node: wreath
+
+- type: entity
+  parent: ClothingHeadBase
+  id: WreathGeranium
+  name: geranium wreath
+  description: A vivid wreath of pink geranium blossoms.
+  components:
+  - type: Sprite
+    sprite: _Arcane/Clothing/Head/Flowers/geranium.rsi
+  - type: Clothing
+    sprite: _Arcane/Clothing/Head/Flowers/geranium.rsi
+  - type: Construction
+    graph: ArcaneWreathGeranium
+    node: wreath
+
+- type: entity
+  parent: ClothingHeadBase
+  id: WreathLilyOfTheValley
+  name: lily of the valley wreath
+  description: A delicate wreath of tiny white lily of the valley bells.
+  components:
+  - type: Sprite
+    sprite: _Arcane/Clothing/Head/Flowers/lily_of_the_valley.rsi
+  - type: Clothing
+    sprite: _Arcane/Clothing/Head/Flowers/lily_of_the_valley.rsi
+  - type: Construction
+    graph: ArcaneWreathLilyOfTheValley
+    node: wreath
+
+- type: entity
+  parent: ClothingHeadBase
+  id: WreathWhiteLily
+  name: white lily wreath
+  description: An elegant wreath of pure white lilies.
+  components:
+  - type: Sprite
+    sprite: _Arcane/Clothing/Head/Flowers/white_lily.rsi
+  - type: Clothing
+    sprite: _Arcane/Clothing/Head/Flowers/white_lily.rsi
+  - type: Construction
+    graph: ArcaneWreathWhiteLily
+    node: wreath
+
+- type: entity
+  parent: ClothingHeadBase
+  id: WreathPinkLily
+  name: pink lily wreath
+  description: A soft and fragrant wreath of pink lilies.
+  components:
+  - type: Sprite
+    sprite: _Arcane/Clothing/Head/Flowers/pink_lily.rsi
+  - type: Clothing
+    sprite: _Arcane/Clothing/Head/Flowers/pink_lily.rsi
+  - type: Construction
+    graph: ArcaneWreathPinkLily
+    node: wreath
+
+- type: entity
+  parent: ClothingHeadBase
+  id: WreathPeony
+  name: peony wreath
+  description: A lush wreath bursting with full peony blooms.
+  components:
+  - type: Sprite
+    sprite: _Arcane/Clothing/Head/Flowers/peony.rsi
+  - type: Clothing
+    sprite: _Arcane/Clothing/Head/Flowers/peony.rsi
+  - type: Construction
+    graph: ArcaneWreathPeony
+    node: wreath
+
+- type: entity
+  parent: ClothingHeadBase
+  id: WreathSunflower
+  name: sunflower wreath
+  description: A cheerful wreath of bright yellow sunflowers.
+  components:
+  - type: Sprite
+    sprite: _Arcane/Clothing/Head/Flowers/sunflower.rsi
+  - type: Clothing
+    sprite: _Arcane/Clothing/Head/Flowers/sunflower.rsi
+  - type: Construction
+    graph: ArcaneWreathSunflower
+    node: wreath
+
+- type: entity
+  parent: ClothingHeadBase
+  id: WreathWhiteRose
+  name: white rose wreath
+  description: A pristine wreath of white roses.
+  components:
+  - type: Sprite
+    sprite: _Arcane/Clothing/Head/Flowers/white_rose.rsi
+  - type: Clothing
+    sprite: _Arcane/Clothing/Head/Flowers/white_rose.rsi
+  - type: Construction
+    graph: ArcaneWreathWhiteRose
+    node: wreath
+
+- type: entity
+  parent: ClothingHeadBase
+  id: WreathRedRose
+  name: red rose wreath
+  description: A passionate wreath of deep red roses.
+  components:
+  - type: Sprite
+    sprite: _Arcane/Clothing/Head/Flowers/red_rose.rsi
+  - type: Clothing
+    sprite: _Arcane/Clothing/Head/Flowers/red_rose.rsi
+  - type: Construction
+    graph: ArcaneWreathRedRose
+    node: wreath
+
+- type: entity
+  parent: ClothingHeadBase
+  id: WreathChamomile
+  name: chamomile wreath
+  description: A sunny wreath of cheerful chamomile daisies.
+  components:
+  - type: Sprite
+    sprite: _Arcane/Clothing/Head/Flowers/chamomile.rsi
+  - type: Clothing
+    sprite: _Arcane/Clothing/Head/Flowers/chamomile.rsi
+  - type: Construction
+    graph: ArcaneWreathChamomile
+    node: wreath
+
+- type: entity
+  parent: ClothingHeadBase
+  id: WreathYellowTulip
+  name: yellow tulip wreath
+  description: A vibrant wreath of golden yellow tulips.
+  components:
+  - type: Sprite
+    sprite: _Arcane/Clothing/Head/Flowers/yellow_tulip.rsi
+  - type: Clothing
+    sprite: _Arcane/Clothing/Head/Flowers/yellow_tulip.rsi
+  - type: Construction
+    graph: ArcaneWreathYellowTulip
+    node: wreath
+
+- type: entity
+  parent: ClothingHeadBase
+  id: WreathPinkTulip
+  name: pink tulip wreath
+  description: A graceful wreath of soft pink tulips.
+  components:
+  - type: Sprite
+    sprite: _Arcane/Clothing/Head/Flowers/pink_tulip.rsi
+  - type: Clothing
+    sprite: _Arcane/Clothing/Head/Flowers/pink_tulip.rsi
+  - type: Construction
+    graph: ArcaneWreathPinkTulip
+    node: wreath
+
+- type: entity
+  parent: BaseItem
+  id: BouquetCornflower
+  name: cornflower bouquet
+  description: A delicate hand-tied bouquet of blue cornflowers.
+  components:
+  - type: Sprite
+    sprite: _Arcane/Clothing/Head/Flowers/cornflower.rsi
+    state: icon
+  - type: Item
+    size: Small
+  - type: Construction
+    graph: ArcaneBouquetCornflower
+    node: bouquet
+
+- type: entity
+  parent: BaseItem
+  id: BouquetGeranium
+  name: geranium bouquet
+  description: A lovely hand-tied bouquet of geraniums.
+  components:
+  - type: Sprite
+    sprite: _Arcane/Clothing/Head/Flowers/geranium.rsi
+    state: bouquet
+  - type: Item
+    size: Small
+  - type: Construction
+    graph: ArcaneBouquetGeranium
+    node: bouquet
+
+- type: entity
+  parent: BaseItem
+  id: BouquetLilyOfTheValley
+  name: lily of the valley bouquet
+  description: A delicate bouquet of lily of the valley.
+  components:
+  - type: Sprite
+    sprite: _Arcane/Clothing/Head/Flowers/lily_of_the_valley.rsi
+    state: bouquet
+  - type: Item
+    size: Small
+  - type: Construction
+    graph: ArcaneBouquetLilyOfTheValley
+    node: bouquet
+
+- type: entity
+  parent: BaseItem
+  id: BouquetWhiteLily
+  name: white lily bouquet
+  description: An elegant bouquet of white lilies.
+  components:
+  - type: Sprite
+    sprite: _Arcane/Clothing/Head/Flowers/white_lily.rsi
+    state: bouquet
+  - type: Item
+    size: Small
+  - type: Construction
+    graph: ArcaneBouquetWhiteLily
+    node: bouquet
+
+- type: entity
+  parent: BaseItem
+  id: BouquetPinkLily
+  name: pink lily bouquet
+  description: A fragrant bouquet of pink lilies.
+  components:
+  - type: Sprite
+    sprite: _Arcane/Clothing/Head/Flowers/pink_lily.rsi
+    state: bouquet
+  - type: Item
+    size: Small
+  - type: Construction
+    graph: ArcaneBouquetPinkLily
+    node: bouquet
+
+- type: entity
+  parent: BaseItem
+  id: BouquetPeony
+  name: peony bouquet
+  description: A lush bouquet of full-petaled peonies.
+  components:
+  - type: Sprite
+    sprite: _Arcane/Clothing/Head/Flowers/peony.rsi
+    state: bouquet
+  - type: Item
+    size: Small
+  - type: Construction
+    graph: ArcaneBouquetPeony
+    node: bouquet
+
+- type: entity
+  parent: BaseItem
+  id: BouquetSunflower
+  name: sunflower bouquet
+  description: A cheerful bouquet of tall sunflowers.
+  components:
+  - type: Sprite
+    sprite: _Arcane/Clothing/Head/Flowers/sunflower.rsi
+    state: bouquet
+  - type: Item
+    size: Small
+  - type: Construction
+    graph: ArcaneBouquetSunflower
+    node: bouquet
+
+- type: entity
+  parent: BaseItem
+  id: BouquetWhiteRose
+  name: white rose bouquet
+  description: A pristine bouquet of white roses.
+  components:
+  - type: Sprite
+    sprite: _Arcane/Clothing/Head/Flowers/white_rose.rsi
+    state: bouquet
+  - type: Item
+    size: Small
+  - type: Construction
+    graph: ArcaneBouquetWhiteRose
+    node: bouquet
+
+- type: entity
+  parent: BaseItem
+  id: BouquetRedRose
+  name: red rose bouquet
+  description: A passionate bouquet of red roses.
+  components:
+  - type: Sprite
+    sprite: _Arcane/Clothing/Head/Flowers/red_rose.rsi
+    state: bouquet
+  - type: Item
+    size: Small
+  - type: Construction
+    graph: ArcaneBouquetRedRose
+    node: bouquet
+
+- type: entity
+  parent: BaseItem
+  id: BouquetChamomile
+  name: chamomile bouquet
+  description: A sunny bouquet of chamomile daisies.
+  components:
+  - type: Sprite
+    sprite: _Arcane/Clothing/Head/Flowers/chamomile.rsi
+    state: bouquet
+  - type: Item
+    size: Small
+  - type: Construction
+    graph: ArcaneBouquetChamomile
+    node: bouquet
+
+- type: entity
+  parent: BaseItem
+  id: BouquetYellowTulip
+  name: yellow tulip bouquet
+  description: A bright bouquet of yellow tulips.
+  components:
+  - type: Sprite
+    sprite: _Arcane/Clothing/Head/Flowers/yellow_tulip.rsi
+    state: bouquet
+  - type: Item
+    size: Small
+  - type: Construction
+    graph: ArcaneBouquetYellowTulip
+    node: bouquet
+
+- type: entity
+  parent: BaseItem
+  id: BouquetPinkTulip
+  name: pink tulip bouquet
+  description: A gentle bouquet of pink tulips.
+  components:
+  - type: Sprite
+    sprite: _Arcane/Clothing/Head/Flowers/pink_tulip.rsi
+    state: bouquet
+  - type: Item
+    size: Small
+  - type: Construction
+    graph: ArcaneBouquetPinkTulip
+    node: bouquet

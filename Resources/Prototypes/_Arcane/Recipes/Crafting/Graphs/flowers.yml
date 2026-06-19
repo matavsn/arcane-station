@@ -1,0 +1,635 @@
+- type: constructionGraph
+  id: ArcaneWreathCornflower
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: wreath
+          steps:
+            - tag: FlowerCornflower
+              name: construction-graph-tag-flower-cornflower
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/cornflower.rsi
+                state: produce
+            - tag: FlowerCornflower
+              name: construction-graph-tag-flower-cornflower
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/cornflower.rsi
+                state: produce
+            - tag: Ambrosia
+              name: construction-graph-tag-ambrosia
+              icon:
+                sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
+                state: produce
+              doAfter: 10
+    - node: wreath
+      entity: WreathCornflower
+
+- type: constructionGraph
+  id: ArcaneWreathGeranium
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: wreath
+          steps:
+            - tag: FlowerGeranium
+              name: construction-graph-tag-flower-geranium
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/geranium.rsi
+                state: produce
+            - tag: FlowerGeranium
+              name: construction-graph-tag-flower-geranium
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/geranium.rsi
+                state: produce
+            - tag: Ambrosia
+              name: construction-graph-tag-ambrosia
+              icon:
+                sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
+                state: produce
+              doAfter: 10
+    - node: wreath
+      entity: WreathGeranium
+
+- type: constructionGraph
+  id: ArcaneWreathLilyOfTheValley
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: wreath
+          steps:
+            - tag: FlowerLilyOfTheValley
+              name: construction-graph-tag-flower-lily-of-the-valley
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/lily_of_the_valley.rsi
+                state: produce
+            - tag: FlowerLilyOfTheValley
+              name: construction-graph-tag-flower-lily-of-the-valley
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/lily_of_the_valley.rsi
+                state: produce
+            - tag: Ambrosia
+              name: construction-graph-tag-ambrosia
+              icon:
+                sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
+                state: produce
+              doAfter: 10
+    - node: wreath
+      entity: WreathLilyOfTheValley
+
+- type: constructionGraph
+  id: ArcaneWreathWhiteLily
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: wreath
+          steps:
+            - tag: FlowerWhiteLily
+              name: construction-graph-tag-flower-white-lily
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/white_lily.rsi
+                state: produce
+            - tag: FlowerWhiteLily
+              name: construction-graph-tag-flower-white-lily
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/white_lily.rsi
+                state: produce
+            - tag: Ambrosia
+              name: construction-graph-tag-ambrosia
+              icon:
+                sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
+                state: produce
+              doAfter: 10
+    - node: wreath
+      entity: WreathWhiteLily
+
+- type: constructionGraph
+  id: ArcaneWreathPinkLily
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: wreath
+          steps:
+            - tag: FlowerPinkLily
+              name: construction-graph-tag-flower-pink-lily
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/pink_lily.rsi
+                state: produce
+            - tag: FlowerPinkLily
+              name: construction-graph-tag-flower-pink-lily
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/pink_lily.rsi
+                state: produce
+            - tag: Ambrosia
+              name: construction-graph-tag-ambrosia
+              icon:
+                sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
+                state: produce
+              doAfter: 10
+    - node: wreath
+      entity: WreathPinkLily
+
+- type: constructionGraph
+  id: ArcaneWreathPeony
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: wreath
+          steps:
+            - tag: FlowerPeony
+              name: construction-graph-tag-flower-peony
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/peony.rsi
+                state: produce
+            - tag: FlowerPeony
+              name: construction-graph-tag-flower-peony
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/peony.rsi
+                state: produce
+            - tag: Ambrosia
+              name: construction-graph-tag-ambrosia
+              icon:
+                sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
+                state: produce
+              doAfter: 10
+    - node: wreath
+      entity: WreathPeony
+
+- type: constructionGraph
+  id: ArcaneWreathSunflower
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: wreath
+          steps:
+            - tag: FlowerSunflower
+              name: construction-graph-tag-flower-sunflower
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/sunflower.rsi
+                state: produce
+            - tag: FlowerSunflower
+              name: construction-graph-tag-flower-sunflower
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/sunflower.rsi
+                state: produce
+            - tag: Ambrosia
+              name: construction-graph-tag-ambrosia
+              icon:
+                sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
+                state: produce
+              doAfter: 10
+    - node: wreath
+      entity: WreathSunflower
+
+- type: constructionGraph
+  id: ArcaneWreathWhiteRose
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: wreath
+          steps:
+            - tag: FlowerWhiteRose
+              name: construction-graph-tag-flower-white-rose
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/white_rose.rsi
+                state: produce
+            - tag: FlowerWhiteRose
+              name: construction-graph-tag-flower-white-rose
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/white_rose.rsi
+                state: produce
+            - tag: Ambrosia
+              name: construction-graph-tag-ambrosia
+              icon:
+                sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
+                state: produce
+              doAfter: 10
+    - node: wreath
+      entity: WreathWhiteRose
+
+- type: constructionGraph
+  id: ArcaneWreathRedRose
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: wreath
+          steps:
+            - tag: FlowerRedRose
+              name: construction-graph-tag-flower-red-rose
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/red_rose.rsi
+                state: produce
+            - tag: FlowerRedRose
+              name: construction-graph-tag-flower-red-rose
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/red_rose.rsi
+                state: produce
+            - tag: Ambrosia
+              name: construction-graph-tag-ambrosia
+              icon:
+                sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
+                state: produce
+              doAfter: 10
+    - node: wreath
+      entity: WreathRedRose
+
+- type: constructionGraph
+  id: ArcaneWreathChamomile
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: wreath
+          steps:
+            - tag: FlowerChamomile
+              name: construction-graph-tag-flower-chamomile
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/chamomile.rsi
+                state: produce
+            - tag: FlowerChamomile
+              name: construction-graph-tag-flower-chamomile
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/chamomile.rsi
+                state: produce
+            - tag: Ambrosia
+              name: construction-graph-tag-ambrosia
+              icon:
+                sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
+                state: produce
+              doAfter: 10
+    - node: wreath
+      entity: WreathChamomile
+
+- type: constructionGraph
+  id: ArcaneWreathYellowTulip
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: wreath
+          steps:
+            - tag: FlowerYellowTulip
+              name: construction-graph-tag-flower-yellow-tulip
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/yellow_tulip.rsi
+                state: produce
+            - tag: FlowerYellowTulip
+              name: construction-graph-tag-flower-yellow-tulip
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/yellow_tulip.rsi
+                state: produce
+            - tag: Ambrosia
+              name: construction-graph-tag-ambrosia
+              icon:
+                sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
+                state: produce
+              doAfter: 10
+    - node: wreath
+      entity: WreathYellowTulip
+
+- type: constructionGraph
+  id: ArcaneWreathPinkTulip
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: wreath
+          steps:
+            - tag: FlowerPinkTulip
+              name: construction-graph-tag-flower-pink-tulip
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/pink_tulip.rsi
+                state: produce
+            - tag: FlowerPinkTulip
+              name: construction-graph-tag-flower-pink-tulip
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/pink_tulip.rsi
+                state: produce
+            - tag: Ambrosia
+              name: construction-graph-tag-ambrosia
+              icon:
+                sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
+                state: produce
+              doAfter: 10
+    - node: wreath
+      entity: WreathPinkTulip
+
+- type: constructionGraph
+  id: ArcaneBouquetCornflower
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: bouquet
+          steps:
+            - tag: FlowerCornflower
+              name: construction-graph-tag-flower-cornflower
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/cornflower.rsi
+                state: produce
+            - tag: FlowerCornflower
+              name: construction-graph-tag-flower-cornflower
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/cornflower.rsi
+                state: produce
+            - tag: FlowerCornflower
+              name: construction-graph-tag-flower-cornflower
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/cornflower.rsi
+                state: produce
+    - node: bouquet
+      entity: BouquetCornflower
+
+- type: constructionGraph
+  id: ArcaneBouquetGeranium
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: bouquet
+          steps:
+            - tag: FlowerGeranium
+              name: construction-graph-tag-flower-geranium
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/geranium.rsi
+                state: produce
+            - tag: FlowerGeranium
+              name: construction-graph-tag-flower-geranium
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/geranium.rsi
+                state: produce
+            - tag: FlowerGeranium
+              name: construction-graph-tag-flower-geranium
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/geranium.rsi
+                state: produce
+    - node: bouquet
+      entity: BouquetGeranium
+
+- type: constructionGraph
+  id: ArcaneBouquetLilyOfTheValley
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: bouquet
+          steps:
+            - tag: FlowerLilyOfTheValley
+              name: construction-graph-tag-flower-lily-of-the-valley
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/lily_of_the_valley.rsi
+                state: produce
+            - tag: FlowerLilyOfTheValley
+              name: construction-graph-tag-flower-lily-of-the-valley
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/lily_of_the_valley.rsi
+                state: produce
+            - tag: FlowerLilyOfTheValley
+              name: construction-graph-tag-flower-lily-of-the-valley
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/lily_of_the_valley.rsi
+                state: produce
+    - node: bouquet
+      entity: BouquetLilyOfTheValley
+
+- type: constructionGraph
+  id: ArcaneBouquetWhiteLily
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: bouquet
+          steps:
+            - tag: FlowerWhiteLily
+              name: construction-graph-tag-flower-white-lily
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/white_lily.rsi
+                state: produce
+            - tag: FlowerWhiteLily
+              name: construction-graph-tag-flower-white-lily
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/white_lily.rsi
+                state: produce
+            - tag: FlowerWhiteLily
+              name: construction-graph-tag-flower-white-lily
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/white_lily.rsi
+                state: produce
+    - node: bouquet
+      entity: BouquetWhiteLily
+
+- type: constructionGraph
+  id: ArcaneBouquetPinkLily
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: bouquet
+          steps:
+            - tag: FlowerPinkLily
+              name: construction-graph-tag-flower-pink-lily
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/pink_lily.rsi
+                state: produce
+            - tag: FlowerPinkLily
+              name: construction-graph-tag-flower-pink-lily
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/pink_lily.rsi
+                state: produce
+            - tag: FlowerPinkLily
+              name: construction-graph-tag-flower-pink-lily
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/pink_lily.rsi
+                state: produce
+    - node: bouquet
+      entity: BouquetPinkLily
+
+- type: constructionGraph
+  id: ArcaneBouquetPeony
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: bouquet
+          steps:
+            - tag: FlowerPeony
+              name: construction-graph-tag-flower-peony
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/peony.rsi
+                state: produce
+            - tag: FlowerPeony
+              name: construction-graph-tag-flower-peony
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/peony.rsi
+                state: produce
+            - tag: FlowerPeony
+              name: construction-graph-tag-flower-peony
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/peony.rsi
+                state: produce
+    - node: bouquet
+      entity: BouquetPeony
+
+- type: constructionGraph
+  id: ArcaneBouquetSunflower
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: bouquet
+          steps:
+            - tag: FlowerSunflower
+              name: construction-graph-tag-flower-sunflower
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/sunflower.rsi
+                state: produce
+            - tag: FlowerSunflower
+              name: construction-graph-tag-flower-sunflower
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/sunflower.rsi
+                state: produce
+            - tag: FlowerSunflower
+              name: construction-graph-tag-flower-sunflower
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/sunflower.rsi
+                state: produce
+    - node: bouquet
+      entity: BouquetSunflower
+
+- type: constructionGraph
+  id: ArcaneBouquetWhiteRose
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: bouquet
+          steps:
+            - tag: FlowerWhiteRose
+              name: construction-graph-tag-flower-white-rose
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/white_rose.rsi
+                state: produce
+            - tag: FlowerWhiteRose
+              name: construction-graph-tag-flower-white-rose
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/white_rose.rsi
+                state: produce
+            - tag: FlowerWhiteRose
+              name: construction-graph-tag-flower-white-rose
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/white_rose.rsi
+                state: produce
+    - node: bouquet
+      entity: BouquetWhiteRose
+
+- type: constructionGraph
+  id: ArcaneBouquetRedRose
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: bouquet
+          steps:
+            - tag: FlowerRedRose
+              name: construction-graph-tag-flower-red-rose
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/red_rose.rsi
+                state: produce
+            - tag: FlowerRedRose
+              name: construction-graph-tag-flower-red-rose
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/red_rose.rsi
+                state: produce
+            - tag: FlowerRedRose
+              name: construction-graph-tag-flower-red-rose
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/red_rose.rsi
+                state: produce
+    - node: bouquet
+      entity: BouquetRedRose
+
+- type: constructionGraph
+  id: ArcaneBouquetChamomile
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: bouquet
+          steps:
+            - tag: FlowerChamomile
+              name: construction-graph-tag-flower-chamomile
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/chamomile.rsi
+                state: produce
+            - tag: FlowerChamomile
+              name: construction-graph-tag-flower-chamomile
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/chamomile.rsi
+                state: produce
+            - tag: FlowerChamomile
+              name: construction-graph-tag-flower-chamomile
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/chamomile.rsi
+                state: produce
+    - node: bouquet
+      entity: BouquetChamomile
+
+- type: constructionGraph
+  id: ArcaneBouquetYellowTulip
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: bouquet
+          steps:
+            - tag: FlowerYellowTulip
+              name: construction-graph-tag-flower-yellow-tulip
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/yellow_tulip.rsi
+                state: produce
+            - tag: FlowerYellowTulip
+              name: construction-graph-tag-flower-yellow-tulip
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/yellow_tulip.rsi
+                state: produce
+            - tag: FlowerYellowTulip
+              name: construction-graph-tag-flower-yellow-tulip
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/yellow_tulip.rsi
+                state: produce
+    - node: bouquet
+      entity: BouquetYellowTulip
+
+- type: constructionGraph
+  id: ArcaneBouquetPinkTulip
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: bouquet
+          steps:
+            - tag: FlowerPinkTulip
+              name: construction-graph-tag-flower-pink-tulip
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/pink_tulip.rsi
+                state: produce
+            - tag: FlowerPinkTulip
+              name: construction-graph-tag-flower-pink-tulip
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/pink_tulip.rsi
+                state: produce
+            - tag: FlowerPinkTulip
+              name: construction-graph-tag-flower-pink-tulip
+              icon:
+                sprite: _Arcane/Objects/Specific/Hydroponics/pink_tulip.rsi
+                state: produce
+    - node: bouquet
+      entity: BouquetPinkTulip

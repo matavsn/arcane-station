@@ -89,6 +89,7 @@
       methods: [Touch]
       effects:
       - !type:WashCreamPieReaction
+      - !type:WashCumOverlayReaction # Arcane
     - reagents: [ PlantBGone ]
       methods: [ Touch ]
       effects:
@@ -137,6 +138,7 @@
       Male: UnisexDiona
       Female: UnisexDiona
       Unsexed: UnisexDiona
+      Futanari: UnisexDiona # Arcane-edit
   - type: TypingIndicator
     proto: diona
   - type: LanguageKnowledge # Einstein Engines - Languages

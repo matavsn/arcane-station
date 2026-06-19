@@ -89,6 +89,7 @@
       methods: [Touch]
       effects:
       - !type:WashCreamPieReaction
+      - !type:WashCumOverlayReaction # Arcane
   # Damage (Self)
   - type: Bloodstream
     bloodReagent: CopperBlood
@@ -117,6 +118,7 @@
       Male: UnisexArachnid
       Female: UnisexArachnid
       Unsexed: UnisexArachnid
+      Futanari: UnisexArachnid # Arcane-edit
   - type: TypingIndicator
     proto: spider
   - type: LanguageKnowledge # Einstein Engines - Language

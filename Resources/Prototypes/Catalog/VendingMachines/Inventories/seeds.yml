@@ -48,6 +48,20 @@
     CocoaSeeds: 3
     CornSeeds: 5
     CottonSeeds: 5
+    # Arcane-Edit-Start
+    ChamomileSeeds: 3
+    CornflowerSeeds: 3
+    GeraniumSeeds: 3
+    LilyOfTheValleySeeds: 3
+    PeonySeeds: 3
+    PinkLilySeeds: 3
+    PinkTulipSeeds: 3
+    RedRoseSeeds: 3
+    SunflowerSeeds: 3
+    WhiteLilySeeds: 3
+    WhiteRoseSeeds: 3
+    YellowTulipSeeds: 3
+    # Arcane-Edit-End
     EggplantSeeds: 5
     GalaxythistleSeeds: 3
     GarlicSeeds: 3

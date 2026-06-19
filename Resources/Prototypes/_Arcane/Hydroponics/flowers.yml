@@ -1,0 +1,276 @@
+- type: seed
+  id: cornflower
+  name: seeds-cornflower-name
+  noun: seeds-noun-seeds
+  displayName: seeds-cornflower-display-name
+  plantRsi: _Arcane/Objects/Specific/Hydroponics/cornflower.rsi
+  packetPrototype: CornflowerSeeds
+  productPrototypes:
+    - FlowerCornflower
+  harvestRepeat: Repeat
+  lifespan: 40
+  maturation: 8
+  production: 4
+  yield: 2
+  potency: 10
+  growthStages: 3
+  waterConsumption: 0.50
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+
+- type: seed
+  id: geranium
+  name: seeds-geranium-name
+  noun: seeds-noun-seeds
+  displayName: seeds-geranium-display-name
+  plantRsi: _Arcane/Objects/Specific/Hydroponics/geranium.rsi
+  packetPrototype: GeraniumSeeds
+  productPrototypes:
+    - FlowerGeranium
+  harvestRepeat: Repeat
+  lifespan: 40
+  maturation: 8
+  production: 4
+  yield: 2
+  potency: 10
+  growthStages: 3
+  waterConsumption: 0.50
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+
+- type: seed
+  id: lilyOfTheValley
+  name: seeds-lily-of-the-valley-name
+  noun: seeds-noun-seeds
+  displayName: seeds-lily-of-the-valley-display-name
+  plantRsi: _Arcane/Objects/Specific/Hydroponics/lily_of_the_valley.rsi
+  packetPrototype: LilyOfTheValleySeeds
+  productPrototypes:
+    - FlowerLilyOfTheValley
+  harvestRepeat: Repeat
+  lifespan: 40
+  maturation: 8
+  production: 4
+  yield: 2
+  potency: 10
+  growthStages: 3
+  waterConsumption: 0.55
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+
+- type: seed
+  id: whiteLily
+  name: seeds-white-lily-name
+  noun: seeds-noun-seeds
+  displayName: seeds-white-lily-display-name
+  plantRsi: _Arcane/Objects/Specific/Hydroponics/white_lily.rsi
+  packetPrototype: WhiteLilySeeds
+  productPrototypes:
+    - FlowerWhiteLily
+  harvestRepeat: Repeat
+  lifespan: 40
+  maturation: 9
+  production: 4
+  yield: 2
+  potency: 10
+  growthStages: 3
+  waterConsumption: 0.55
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+
+- type: seed
+  id: pinkLily
+  name: seeds-pink-lily-name
+  noun: seeds-noun-seeds
+  displayName: seeds-pink-lily-display-name
+  plantRsi: _Arcane/Objects/Specific/Hydroponics/pink_lily.rsi
+  packetPrototype: PinkLilySeeds
+  productPrototypes:
+    - FlowerPinkLily
+  harvestRepeat: Repeat
+  lifespan: 40
+  maturation: 9
+  production: 4
+  yield: 2
+  potency: 10
+  growthStages: 3
+  waterConsumption: 0.55
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+
+- type: seed
+  id: peony
+  name: seeds-peony-name
+  noun: seeds-noun-seeds
+  displayName: seeds-peony-display-name
+  plantRsi: _Arcane/Objects/Specific/Hydroponics/peony.rsi
+  packetPrototype: PeonySeeds
+  productPrototypes:
+    - FlowerPeony
+  harvestRepeat: Repeat
+  lifespan: 45
+  maturation: 10
+  production: 4
+  yield: 2
+  potency: 10
+  growthStages: 3
+  waterConsumption: 0.55
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+
+- type: seed
+  id: sunflower
+  name: seeds-sunflower-name
+  noun: seeds-noun-seeds
+  displayName: seeds-sunflower-display-name
+  plantRsi: _Arcane/Objects/Specific/Hydroponics/sunflower.rsi
+  packetPrototype: SunflowerSeeds
+  productPrototypes:
+    - FlowerSunflower
+  harvestRepeat: Repeat
+  lifespan: 50
+  maturation: 10
+  production: 4
+  yield: 2
+  potency: 10
+  growthStages: 3
+  waterConsumption: 0.60
+  idealLight: 9
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+
+- type: seed
+  id: whiteRose
+  name: seeds-white-rose-name
+  noun: seeds-noun-seeds
+  displayName: seeds-white-rose-display-name
+  plantRsi: _Arcane/Objects/Specific/Hydroponics/white_rose.rsi
+  packetPrototype: WhiteRoseSeeds
+  productPrototypes:
+    - FlowerWhiteRose
+  harvestRepeat: Repeat
+  lifespan: 45
+  maturation: 10
+  production: 4
+  yield: 2
+  potency: 10
+  growthStages: 3
+  waterConsumption: 0.55
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+
+- type: seed
+  id: redRose
+  name: seeds-red-rose-name
+  noun: seeds-noun-seeds
+  displayName: seeds-red-rose-display-name
+  plantRsi: _Arcane/Objects/Specific/Hydroponics/red_rose.rsi
+  packetPrototype: RedRoseSeeds
+  productPrototypes:
+    - FlowerRedRose
+  harvestRepeat: Repeat
+  lifespan: 45
+  maturation: 10
+  production: 4
+  yield: 2
+  potency: 10
+  growthStages: 3
+  waterConsumption: 0.55
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+
+- type: seed
+  id: chamomile
+  name: seeds-chamomile-name
+  noun: seeds-noun-seeds
+  displayName: seeds-chamomile-display-name
+  plantRsi: _Arcane/Objects/Specific/Hydroponics/chamomile.rsi
+  packetPrototype: ChamomileSeeds
+  productPrototypes:
+    - FlowerChamomile
+  harvestRepeat: Repeat
+  lifespan: 40
+  maturation: 8
+  production: 4
+  yield: 3
+  potency: 10
+  growthStages: 3
+  waterConsumption: 0.45
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+
+- type: seed
+  id: yellowTulip
+  name: seeds-yellow-tulip-name
+  noun: seeds-noun-seeds
+  displayName: seeds-yellow-tulip-display-name
+  plantRsi: _Arcane/Objects/Specific/Hydroponics/yellow_tulip.rsi
+  packetPrototype: YellowTulipSeeds
+  productPrototypes:
+    - FlowerYellowTulip
+  harvestRepeat: Repeat
+  lifespan: 40
+  maturation: 8
+  production: 4
+  yield: 2
+  potency: 10
+  growthStages: 3
+  waterConsumption: 0.50
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+
+- type: seed
+  id: pinkTulip
+  name: seeds-pink-tulip-name
+  noun: seeds-noun-seeds
+  displayName: seeds-pink-tulip-display-name
+  plantRsi: _Arcane/Objects/Specific/Hydroponics/pink_tulip.rsi
+  packetPrototype: PinkTulipSeeds
+  productPrototypes:
+    - FlowerPinkTulip
+  harvestRepeat: Repeat
+  lifespan: 40
+  maturation: 8
+  production: 4
+  yield: 2
+  potency: 10
+  growthStages: 3
+  waterConsumption: 0.50
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20

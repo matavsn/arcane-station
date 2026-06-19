@@ -1,0 +1,15 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckBloodMantle
+  components:
+  - type: Sprite
+    sprite: _Arcane/Clothing/Neck/Mantles/blood_mantle.rsi
+  - type: Clothing
+    sprite: _Arcane/Clothing/Neck/Mantles/blood_mantle.rsi
+    equippedPrefix: off
+    slots:
+    - Neck
+  - type: ItemToggle
+  - type: ToggleClothingPrefix
+    prefixOn: on
+    prefixOff: off

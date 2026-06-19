@@ -156,6 +156,7 @@
       Male: UnisexVox
       Female: UnisexVox
       Unsexed: UnisexVox
+      Futanari: UnisexVox # Arcane-edit
   - type: Butcherable
     butcheringType: Spike
     spawned:
@@ -390,7 +391,7 @@
         Asphyxiation: -1.0
   - type: FireVisuals
     alternateState: Standing
-  - type: FootprintOwner # Corvax-Next-Footprints
+  # - type: FootprintOwner Arcane
   - type: Carriable # Goobstation
   - type: CPRTraining # Goobstation - Just give to everyone! This ain't MRP.
   - type: GrabIntent # wilted rose

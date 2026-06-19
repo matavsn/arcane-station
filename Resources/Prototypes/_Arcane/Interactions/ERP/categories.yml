@@ -1,4 +1,28 @@
 - type: panelInteractionCategory
+  id: Face
+  name: Лицо
+
+- type: panelInteractionCategory
+  id: Butt
+  name: Попа
+
+- type: panelInteractionCategory
+  id: Boobs
+  name: Грудь
+
+- type: panelInteractionCategory
+  id: Friendship
+  name: Дружба
+
+- type: panelInteractionCategory
+  id: Tail
+  name: Хвост
+
+- type: panelInteractionCategory
+  id: Anus
+  name: Анус
+
+- type: panelInteractionCategory
   id: Mouth
   name: Рот
 

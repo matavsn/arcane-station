@@ -168,16 +168,23 @@ public sealed partial class NPCCombatSystem
 
             if (!comp.TargetInLOS)
             {
-                comp.ShootAccumulator = 0f;
-                comp.Status = CombatStatus.NotInSight;
-
-                if (TryComp(uid, out steering))
+                // Arcane-start
+                if (comp.RequireLOS)
                 {
-                    steering.ForceMove = true;
+                    comp.ShootAccumulator = 0f;
+                    comp.Status = CombatStatus.NotInSight;
+
+                    if (TryComp(uid, out steering))
+                    {
+                        steering.ForceMove = true;
+                    }
+
+                    UpdatePointerLine(); // Goobstation
+                    continue;
                 }
 
-                UpdatePointerLine(); // Goobstation
-                continue;
+                comp.Status = CombatStatus.Normal;
+                // Arcane-end
             }
 
             if (!oldInLos && comp.SoundTargetInLOS != null)

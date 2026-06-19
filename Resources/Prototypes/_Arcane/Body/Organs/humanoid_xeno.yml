@@ -69,7 +69,7 @@
 
 - type: entity
   id: OrganHumanoidXenoLungs
-  parent: [BaseHumanoidXenoOrgan, OrganHumanLungs]
+  parent: [BaseHumanoidXenoOrgan]
   name: lungs
   description: They filter oxygen from the atmosphere and channel it into the bloodstream, where it is used as an electron carrier.
   components:
@@ -77,17 +77,12 @@
     layers:
       - state: lung-l
       - state: lung-r
-  - type: Lung
-  - type: Metabolizer
   - type: SolutionContainerManager
     solutions:
       organ:
         reagents:
         - ReagentId: Nutriment
           Quantity: 10
-      Lung:
-        maxVol: 100.0
-        canReact: false
       food:
         maxVol: 5
         reagents:

@@ -161,10 +161,11 @@
       Flammable: [ Touch ]
       Extinguish: [ Touch ]
     reactions:
-    - reagents: [ Water, SpaceCleaner ]
+    - reagents: [ Water, SpaceCleaner, SoapReagent ] # Arcane
       methods: [ Touch ]
       effects:
       - !type:WashCreamPieReaction
+      - !type:WashCumOverlayReaction # Arcane
     - reagents: [ Water ]
       methods: [ Touch ]
       effects:

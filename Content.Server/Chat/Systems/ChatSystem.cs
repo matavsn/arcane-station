@@ -159,6 +159,11 @@ using Robust.Shared.Replays;
 using Robust.Shared.Utility;
 using Content.Shared._RMC14.CCVar;
 
+// Goob start - the blind dont see
+using Content.Shared.Eye.Blinding.Components;
+using Content.Shared.Traits.Assorted;
+// Goob end
+
 namespace Content.Server.Chat.Systems;
 
 // TODO refactor whatever active warzone this class and chatmanager have become
@@ -252,7 +257,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             Loc.GetString(val ? "chat-manager-crit-looc-chat-enabled-message" : "chat-manager-crit-looc-chat-disabled-message"));
     }
 
-        private void OnDeadChatEnabledChanged(bool val)
+    private void OnDeadChatEnabledChanged(bool val)
     {
         if (_DeadchatEnabled == val)
             return;
@@ -946,6 +951,8 @@ public sealed partial class ChatSystem : SharedChatSystem
             // Goob edit start
             if (TryComp<DeafComponent>(listener, out var modifier) && language.SpeechOverride.RequireSpeech)
                 continue; // blocks anyone with the deaf component from hearing.
+            if (language.SpeechOverride.RequireSight && (HasComp<PermanentBlindnessComponent>(listener) || HasComp<TemporaryBlindnessComponent>(listener))) // Orion-Edit
+                continue; // block blind people from seeing subtle sign language gestures
             // Goob edit end
 
             // Einstein Engines - Language begin
@@ -1289,11 +1296,10 @@ public sealed partial class ChatSystem : SharedChatSystem
             EntityUid listener = session.AttachedEntity.Value;
 
             // Goob edit start
-            // Raises a event for the deaf component
-            var ev = new ChatMessageOverrideInVoiceRange();
+            // Raises a event for the deaf and blind component
+            var ev = new ChatMessageOverrideInRange(language.SpeechOverride.RequireSpeech, language.SpeechOverride.RequireSight);
             RaiseLocalEvent(listener, ref ev);
             if (channel == ChatChannel.Local
-                && language.SpeechOverride.RequireSpeech // Check for whether speech is required.
                 && ev.Cancelled)
                 continue;
             //Goob edit end
@@ -1428,7 +1434,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     }
 
     // Einstein Engines - Language begin
-       /// <summary>
+    /// <summary>
     ///     Wraps a message sent by the specified entity into an "x says y" string.
     /// </summary>
     public string WrapPublicMessage(EntityUid source, string name, string message, LanguagePrototype? language = null, Color? colorOverride = null)
@@ -1471,6 +1477,13 @@ public sealed partial class ChatSystem : SharedChatSystem
         var languageDisplay = language.IsVisibleLanguage
             ? Loc.GetString("chat-manager-language-prefix", ("language", language.ChatName))
             : "";
+        // goob start - font modifiers
+        var fontModifierEv = new TransformSpeakerFontEvent(source);
+        RaiseLocalEvent(source, fontModifierEv);
+        string? modFontId = fontModifierEv.FontId;
+        int? modFontSize = fontModifierEv.FontSize;
+        Color? modFontColor = fontModifierEv.Color;
+        // goob end - font modifiers
 
         // goob start - loudspeakers
 
@@ -1495,11 +1508,11 @@ public sealed partial class ChatSystem : SharedChatSystem
         // goob end
 
         return Loc.GetString(wrapId,
-            ("color", color),
+            ("color", modFontColor ?? color),
             ("entityName", entityName),
             ("verb", Loc.GetString(verbId)),
-            ("fontType", language.SpeechOverride.FontId ?? speech.FontId),
-            ("fontSize", loudSpeakFont ?? language.SpeechOverride.FontSize ?? speech.FontSize), // goob edit - "loudSpeakFont"
+            ("fontType", modFontId ?? language.SpeechOverride.FontId ?? speech.FontId),
+            ("fontSize", loudSpeakFont ?? modFontSize ?? language.SpeechOverride.FontSize ?? speech.FontSize), // goob edit - "loudSpeakFont"
             ("boldFontType", language.SpeechOverride.BoldFontId ?? language.SpeechOverride.FontId ?? speech.FontId), // Goob Edit - Custom Bold Fonts
             ("message", message),
             ("language", languageDisplay));
@@ -1651,6 +1664,8 @@ public sealed class EntitySpokeEvent : EntityEventArgs
     ///     message gets sent on this channel, this should be set to null to prevent duplicate messages.
     /// </summary>
     public RadioChannelPrototype? Channel;
+
+    public bool RadioMessageSent; // Art-TTS
 
     public EntitySpokeEvent(EntityUid source, string message, RadioChannelPrototype? channel, bool isWhisper, LanguagePrototype language) // Einstein Engines - Language
     {

@@ -1,0 +1,14 @@
+ent-ClothingUnderwearpantiesSpiderman = трусики "спайдермен"
+    .desc = Мужицкие трусы с принтом древнего героя.
+ent-ClothingUnderwearboxerwolf = боксеры с волком
+    .desc = Брутальные боксеры с принтом волка.
+ent-ClothingUnderwearboxerelephant = трусы "слоник"
+    .desc = Это точно не стринги?!
+ent-ClothingUnderwearboxerfrance = французские боксеры
+    .desc = Боксеры с принтом флага древней страны "Франция".
+ent-ClothingUnderwearboxermaidwithsuspenders = боксеры горничной с подтяжками
+    .desc = Боксеры для настоящих мужчин.
+ent-ClothingUnderwearWarmThongs = тёплые стринги
+    .desc = Тёплые стринги с шерстяной прокладкой.
+ent-ClothingUnderwearPussystickers = наклейка на киску
+    .desc = Наклейка на самое интимное место для ваших самых извращенных утех.

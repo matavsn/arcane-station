@@ -1,0 +1,131 @@
+- type: entity
+  parent: SeedBase
+  name: packet of cornflower seeds
+  id: CornflowerSeeds
+  components:
+  - type: Seed
+    seedId: cornflower
+  - type: Sprite
+    sprite: _Arcane/Objects/Specific/Hydroponics/cornflower.rsi
+    state: seed
+
+- type: entity
+  parent: SeedBase
+  name: packet of geranium seeds
+  id: GeraniumSeeds
+  components:
+  - type: Seed
+    seedId: geranium
+  - type: Sprite
+    sprite: _Arcane/Objects/Specific/Hydroponics/geranium.rsi
+    state: seed
+
+- type: entity
+  parent: SeedBase
+  name: packet of lily of the valley seeds
+  id: LilyOfTheValleySeeds
+  components:
+  - type: Seed
+    seedId: lilyOfTheValley
+  - type: Sprite
+    sprite: _Arcane/Objects/Specific/Hydroponics/lily_of_the_valley.rsi
+    state: seed
+
+- type: entity
+  parent: SeedBase
+  name: packet of white lily seeds
+  id: WhiteLilySeeds
+  components:
+  - type: Seed
+    seedId: whiteLily
+  - type: Sprite
+    sprite: _Arcane/Objects/Specific/Hydroponics/white_lily.rsi
+    state: seed
+
+- type: entity
+  parent: SeedBase
+  name: packet of pink lily seeds
+  id: PinkLilySeeds
+  components:
+  - type: Seed
+    seedId: pinkLily
+  - type: Sprite
+    sprite: _Arcane/Objects/Specific/Hydroponics/pink_lily.rsi
+    state: seed
+
+- type: entity
+  parent: SeedBase
+  name: packet of peony seeds
+  id: PeonySeeds
+  components:
+  - type: Seed
+    seedId: peony
+  - type: Sprite
+    sprite: _Arcane/Objects/Specific/Hydroponics/peony.rsi
+    state: seed
+
+- type: entity
+  parent: SeedBase
+  name: packet of sunflower seeds
+  id: SunflowerSeeds
+  components:
+  - type: Seed
+    seedId: sunflower
+  - type: Sprite
+    sprite: _Arcane/Objects/Specific/Hydroponics/sunflower.rsi
+    state: seed
+
+- type: entity
+  parent: SeedBase
+  name: packet of white rose seeds
+  id: WhiteRoseSeeds
+  components:
+  - type: Seed
+    seedId: whiteRose
+  - type: Sprite
+    sprite: _Arcane/Objects/Specific/Hydroponics/white_rose.rsi
+    state: seed
+
+- type: entity
+  parent: SeedBase
+  name: packet of red rose seeds
+  id: RedRoseSeeds
+  components:
+  - type: Seed
+    seedId: redRose
+  - type: Sprite
+    sprite: _Arcane/Objects/Specific/Hydroponics/red_rose.rsi
+    state: seed
+
+- type: entity
+  parent: SeedBase
+  name: packet of chamomile seeds
+  id: ChamomileSeeds
+  components:
+  - type: Seed
+    seedId: chamomile
+  - type: Sprite
+    sprite: _Arcane/Objects/Specific/Hydroponics/chamomile.rsi
+    state: seed
+
+- type: entity
+  parent: SeedBase
+  name: packet of yellow tulip seeds
+  id: YellowTulipSeeds
+  components:
+  - type: Seed
+    seedId: yellowTulip
+  - type: Sprite
+    sprite: _Arcane/Objects/Specific/Hydroponics/yellow_tulip.rsi
+    state: seed
+
+- type: entity
+  parent: SeedBase
+  name: packet of pink tulip seeds
+  id: PinkTulipSeeds
+  components:
+  - type: Seed
+    seedId: pinkTulip
+  - type: Sprite
+    sprite: _Arcane/Objects/Specific/Hydroponics/pink_tulip.rsi
+    state: seed

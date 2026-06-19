@@ -1033,6 +1033,10 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("text")
                         .HasColumnName("char_name");
 
+                    b.Property<int>("ErpPreference")
+                        .HasColumnType("integer")
+                        .HasColumnName("erp_preference");
+
                     b.Property<string>("EyeColor")
                         .IsRequired()
                         .HasColumnType("text")
@@ -1152,6 +1156,11 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("text")
                         .HasColumnName("tags_flavor_text");
 
+                    b.Property<string>("Voice")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("voice");
+
                     b.Property<float>("Width")
                         .HasColumnType("real")
                         .HasColumnName("width");
@@ -1262,6 +1271,14 @@ namespace Content.Server.Database.Migrations.Postgres
                         .ValueGeneratedOnAdd()
                         .HasColumnType("numeric(20,0)")
                         .HasColumnName("rmc_discord_accounts_id");
+
+                    b.Property<bool>("HasPlayerRole")
+                        .HasColumnType("boolean")
+                        .HasColumnName("has_player_role");
+
+                    b.Property<DateTime?>("PlayerRoleUpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("player_role_updated_at");
 
                     b.HasKey("Id")
                         .HasName("PK_rmc_discord_accounts");

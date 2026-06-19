@@ -1,0 +1,27 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made by bulbo44kkey (Discord)",
+    "size": {
+        "x": 64,
+        "y": 64
+    },
+    "states": [
+        {
+            "name": "crusher_tail",
+            "directions": 4
+        },
+        {
+            "name": "crusher_tail_grad",
+            "directions": 4
+        },
+        {
+            "name": "queen_long_tail",
+            "directions": 4
+        },
+        {
+            "name": "queen_long_tail_grad",
+            "directions": 4
+        }
+    ]
+}

@@ -1,0 +1,19 @@
+- type: cargoProduct
+  id: ArcaneFlowerBouquets
+  icon:
+    sprite: _Arcane/Clothing/Head/Flowers/red_rose.rsi
+    state: bouquet
+  product: CrateArcaneFlowerBouquets
+  cost: 1200
+  category: cargoproduct-category-name-hydroponics
+  group: market
+
+- type: cargoProduct
+  id: ArcaneFlowerWreaths
+  icon:
+    sprite: _Arcane/Clothing/Head/Flowers/red_rose.rsi
+    state: icon
+  product: CrateArcaneFlowerWreaths
+  cost: 1800
+  category: cargoproduct-category-name-hydroponics
+  group: market

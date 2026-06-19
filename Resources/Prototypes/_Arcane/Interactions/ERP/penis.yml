@@ -55,3 +55,129 @@
   - !type:EroticOrganRequirement
     organ: penis
     requireVisible: true
+
+- type: panelInteraction
+  id: CockFap
+  category: Penis
+  name: Подрочить член
+  userArouse: 10
+  targetArouse: 10
+  range: 1
+  sounds:
+  - /Audio/_Arcane/Interactions/champ_fingering.ogg
+  selfMessages:
+  - водит рукой по своему члену.
+  - дрочит свой пенис.
+  - ласкает свой член.
+  - надрачивает свой член.
+  - быстро водит рукой по пенису вверх-вниз.
+  - наяривает свой пенис.
+  - обхватывает член рукой и активно ласкает его.
+  icon: _Arcane/Interface/ErpPanel/cock_fap.png
+  userRequirements:
+  - !type:EroticOrganRequirement
+    organ: penis
+    requireVisible: true
+
+- type: panelInteraction
+  id: CockFootjob
+  category: Penis
+  name: Подрочить член ногой
+  targetArouse: 10
+  range: 1
+  sounds:
+  - /Audio/_Arcane/Interactions/bang1.ogg
+  - /Audio/_Arcane/Interactions/bang2.ogg
+  - /Audio/_Arcane/Interactions/bang4.ogg
+  - /Audio/_Arcane/Interactions/bang5.ogg
+  - /Audio/_Arcane/Interactions/bang6.ogg
+  messages:
+  - проталкивает член $target между пальчиками.
+  - дрочит член $target ногой.
+  - водит ногой по члену $target.
+  - обхыватывает ногами член $target.
+  - плавно водит ножкой по пенису $target.
+  - гладит ступнёй пенис $target.
+  icon: _Arcane/Interface/ErpPanel/cock_footjob.png
+  targetRequirements:
+  - !type:EroticOrganRequirement
+    organ: penis
+    requireVisible: true
+
+- type: panelInteraction
+  id: CockSwordmanship
+  category: Penis
+  name: Фехтовать членами
+  userArouse: 10
+  targetArouse: 10
+  range: 1
+  sounds:
+  - /Audio/_Arcane/Interactions/bang1.ogg
+  - /Audio/_Arcane/Interactions/bang2.ogg
+  - /Audio/_Arcane/Interactions/bang4.ogg
+  - /Audio/_Arcane/Interactions/bang5.ogg
+  - /Audio/_Arcane/Interactions/bang6.ogg
+  messages:
+  - скрещивает свой член с членом $target.
+  - фехтует членами с $target.
+  - ударяет пенисом по члену $target.
+  - борется членами с $target, как на мечах.
+  icon: _Arcane/Interface/ErpPanel/cock_swordmanship.png
+  targetRequirements:
+  - !type:EroticOrganRequirement
+    organ: penis
+    requireVisible: true
+  userRequirements:
+  - !type:EroticOrganRequirement
+    organ: penis
+    requireVisible: true
+
+- type: panelInteraction
+  id: CockFapTail
+  category: Penis
+  name: Подрочить член хвостом
+  targetArouse: 10
+  range: 1
+  sounds:
+  - /Audio/_Arcane/Interactions/champ_fingering.ogg
+  messages:
+  - обвивает хвостиком член $target.
+  - надрачивает хвостом член $target.
+  icon: _Arcane/Interface/ErpPanel/cock_tail_fap.png
+  targetRequirements:
+  - !type:EroticOrganRequirement
+    organ: penis
+    requireVisible: true
+  userRequirements:
+  - !type:SpeciesRequirement
+    species:
+    - Demon
+    - Felinid
+    - Vulpkanin
+    - Tajaran
+    - HumanoidXeno
+    - Rodentia
+
+- type: panelInteraction
+  id: CockFuckLegs
+  category: Penis
+  name: Трахнуть член ляжками
+  userArouse: 5
+  targetArouse: 10
+  range: 1
+  sounds:
+  - /Audio/_Arcane/Interactions/bang1.ogg
+  - /Audio/_Arcane/Interactions/bang2.ogg
+  - /Audio/_Arcane/Interactions/bang4.ogg
+  - /Audio/_Arcane/Interactions/bang5.ogg
+  - /Audio/_Arcane/Interactions/bang6.ogg
+  messages:
+  - трахает ляжками член $target.
+  - душит пенис $target своими ляжками!
+  - проталкивает член $target между ляжками.
+  - трётся ляжками о член $target.
+  icon: _Arcane/Interface/ErpPanel/legs_cock_fuck.png
+  targetRequirements:
+  - !type:EroticOrganRequirement
+    organ: penis
+    requireVisible: true

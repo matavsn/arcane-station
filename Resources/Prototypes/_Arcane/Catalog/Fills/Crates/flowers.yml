@@ -1,0 +1,41 @@
+- type: entity
+  id: CrateArcaneFlowerBouquets
+  parent: CrateHydroponics
+  name: flower bouquets crate
+  description: A crate of assorted hand-tied bouquets for decorating the station.
+  components:
+  - type: StorageFill
+    contents:
+      - id: BouquetCornflower
+      - id: BouquetGeranium
+      - id: BouquetLilyOfTheValley
+      - id: BouquetWhiteLily
+      - id: BouquetPinkLily
+      - id: BouquetPeony
+      - id: BouquetSunflower
+      - id: BouquetWhiteRose
+      - id: BouquetRedRose
+      - id: BouquetChamomile
+      - id: BouquetYellowTulip
+      - id: BouquetPinkTulip
+
+- type: entity
+  id: CrateArcaneFlowerWreaths
+  parent: CrateHydroponics
+  name: flower wreaths crate
+  description: A crate of assorted flower wreaths for festive occasions.
+  components:
+  - type: StorageFill
+    contents:
+      - id: WreathCornflower
+      - id: WreathGeranium
+      - id: WreathLilyOfTheValley
+      - id: WreathWhiteLily
+      - id: WreathPinkLily
+      - id: WreathPeony
+      - id: WreathSunflower
+      - id: WreathWhiteRose
+      - id: WreathRedRose
+      - id: WreathChamomile
+      - id: WreathYellowTulip
+      - id: WreathPinkTulip

@@ -676,11 +676,13 @@ namespace Content.Server.Database
         // Orion-End
         public int Age { get; set; }
         public string Sex { get; set; } = null!;
+        public string Voice { get; set; } = null!; // Art-TTS
         public string Gender { get; set; } = null!;
         public string Species { get; set; } = null!;
         public float Height { get; set; } = 1f; // Goobstation: port EE height/width sliders
         public float Width { get; set; } = 1f; // Goobstation: port EE height/width sliders
         public string BarkVoice { get; set; } = null!; // Goob Station - Barks
+        public int ErpPreference { get; set; } = 1; // Arcane
         [Column(TypeName = "jsonb")] public JsonDocument? Markings { get; set; } = null!;
         public string HairName { get; set; } = null!;
         public string HairColor { get; set; } = null!;

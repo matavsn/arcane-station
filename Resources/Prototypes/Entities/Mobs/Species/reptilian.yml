@@ -167,6 +167,7 @@
       Male: MaleReptilian
       Female: FemaleReptilian
       Unsexed: MaleReptilian
+      Futanari: FemaleReptilian # Arcane-edit
   - type: LanguageKnowledge # Einstein Engines - Languages
     speaks:
     - TauCetiBasic

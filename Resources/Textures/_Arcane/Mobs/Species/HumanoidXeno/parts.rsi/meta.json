@@ -51,15 +51,7 @@
       "directions": 4
     },
     {
-      "name": "shine",
-      "directions": 4
-    },
-    {
       "name": "tail_drone",
-      "directions": 4
-    },
-    {
-      "name": "teeth_drone",
       "directions": 4
     },
     {

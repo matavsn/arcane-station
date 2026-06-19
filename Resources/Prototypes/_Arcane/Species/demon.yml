@@ -12,6 +12,12 @@
   sexes: [Male, Female, Futanari]
   category: Unusual
   description: "/ServerInfo/_Arcane/SpeciesDescriptions/Demon.xml"
+  minHeight: 0.90
+  defaultHeight: 1
+  maxHeight: 1.20
+  minWidth: 0.90
+  defaultWidth: 1
+  maxWidth: 1.10
   pros:
   - Получают на 80% меньше урона от огня и тепла.
   - Получают на 20% меньше тупого, режущего и колющего урона.

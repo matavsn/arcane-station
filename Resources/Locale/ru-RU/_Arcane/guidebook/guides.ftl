@@ -1,0 +1,9 @@
+﻿guide-entry-arcane-server-rules = Правила сервера
+guide-entry-arcane-server-rules-rule-0 = 0. Возрастное ограничение
+guide-entry-arcane-server-rules-rule-1 = 1. Мудачество
+guide-entry-arcane-server-rules-rule-2 = 2. Выход из роли
+guide-entry-arcane-server-rules-rule-3 = 3. Нарушение игровой атмосферы
+guide-entry-arcane-server-rules-rule-4 = 4. Память персонажа
+guide-entry-arcane-server-rules-rule-5 = 5. Нечестная игра
+guide-entry-arcane-server-rules-rule-6 = 6. Ответственная игра за антагониста
+guide-entry-arcane-server-rules-rule-7 = 7. ERP

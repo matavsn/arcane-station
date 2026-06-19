@@ -1,0 +1,12 @@
+construction-graph-tag-flower-cornflower = василёк
+construction-graph-tag-flower-geranium = герань
+construction-graph-tag-flower-lily-of-the-valley = ландыш
+construction-graph-tag-flower-white-lily = белая лилия
+construction-graph-tag-flower-pink-lily = розовая лилия
+construction-graph-tag-flower-peony = пион
+construction-graph-tag-flower-sunflower = подсолнух
+construction-graph-tag-flower-white-rose = белая роза
+construction-graph-tag-flower-red-rose = красная роза
+construction-graph-tag-flower-chamomile = ромашка
+construction-graph-tag-flower-yellow-tulip = жёлтый тюльпан
+construction-graph-tag-flower-pink-tulip = розовый тюльпан

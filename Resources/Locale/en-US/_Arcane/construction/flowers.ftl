@@ -1,0 +1,12 @@
+construction-graph-tag-flower-cornflower = cornflower
+construction-graph-tag-flower-geranium = geranium
+construction-graph-tag-flower-lily-of-the-valley = lily of the valley
+construction-graph-tag-flower-white-lily = white lily
+construction-graph-tag-flower-pink-lily = pink lily
+construction-graph-tag-flower-peony = peony
+construction-graph-tag-flower-sunflower = sunflower
+construction-graph-tag-flower-white-rose = white rose
+construction-graph-tag-flower-red-rose = red rose
+construction-graph-tag-flower-chamomile = chamomile
+construction-graph-tag-flower-yellow-tulip = yellow tulip
+construction-graph-tag-flower-pink-tulip = pink tulip

@@ -163,6 +163,7 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Server._Art.TTS; // Art-TTS
 using Content.Server._Goobstation.Antag;
 using Content.Server._Orion.ServerProtection;
 using Content.Server._Orion.ServerProtection.Administration;
@@ -257,6 +258,7 @@ namespace Content.Server.IoC
             IoCManager.Register<EmoteProtectionSystem>();
             IoCManager.Register<AdminActionProtectionSystem>();
             // Orion-End
+            IoCManager.Register<TTSManager>(); // Art-TTS
         }
     }
 }

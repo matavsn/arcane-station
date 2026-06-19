@@ -1,0 +1,191 @@
+- type: construction
+  id: ArcaneWreathCornflower
+  graph: ArcaneWreathCornflower
+  startNode: start
+  targetNode: wreath
+  category: construction-category-clothing
+  objectType: Item
+
+- type: construction
+  id: ArcaneWreathGeranium
+  graph: ArcaneWreathGeranium
+  startNode: start
+  targetNode: wreath
+  category: construction-category-clothing
+  objectType: Item
+
+- type: construction
+  id: ArcaneWreathLilyOfTheValley
+  graph: ArcaneWreathLilyOfTheValley
+  startNode: start
+  targetNode: wreath
+  category: construction-category-clothing
+  objectType: Item
+
+- type: construction
+  id: ArcaneWreathWhiteLily
+  graph: ArcaneWreathWhiteLily
+  startNode: start
+  targetNode: wreath
+  category: construction-category-clothing
+  objectType: Item
+
+- type: construction
+  id: ArcaneWreathPinkLily
+  graph: ArcaneWreathPinkLily
+  startNode: start
+  targetNode: wreath
+  category: construction-category-clothing
+  objectType: Item
+
+- type: construction
+  id: ArcaneWreathPeony
+  graph: ArcaneWreathPeony
+  startNode: start
+  targetNode: wreath
+  category: construction-category-clothing
+  objectType: Item
+
+- type: construction
+  id: ArcaneWreathSunflower
+  graph: ArcaneWreathSunflower
+  startNode: start
+  targetNode: wreath
+  category: construction-category-clothing
+  objectType: Item
+
+- type: construction
+  id: ArcaneWreathWhiteRose
+  graph: ArcaneWreathWhiteRose
+  startNode: start
+  targetNode: wreath
+  category: construction-category-clothing
+  objectType: Item
+
+- type: construction
+  id: ArcaneWreathRedRose
+  graph: ArcaneWreathRedRose
+  startNode: start
+  targetNode: wreath
+  category: construction-category-clothing
+  objectType: Item
+
+- type: construction
+  id: ArcaneWreathChamomile
+  graph: ArcaneWreathChamomile
+  startNode: start
+  targetNode: wreath
+  category: construction-category-clothing
+  objectType: Item
+
+- type: construction
+  id: ArcaneWreathYellowTulip
+  graph: ArcaneWreathYellowTulip
+  startNode: start
+  targetNode: wreath
+  category: construction-category-clothing
+  objectType: Item
+
+- type: construction
+  id: ArcaneWreathPinkTulip
+  graph: ArcaneWreathPinkTulip
+  startNode: start
+  targetNode: wreath
+  category: construction-category-clothing
+  objectType: Item
+
+- type: construction
+  id: ArcaneBouquetCornflower
+  graph: ArcaneBouquetCornflower
+  startNode: start
+  targetNode: bouquet
+  category: construction-category-misc
+  objectType: Item
+
+- type: construction
+  id: ArcaneBouquetGeranium
+  graph: ArcaneBouquetGeranium
+  startNode: start
+  targetNode: bouquet
+  category: construction-category-misc
+  objectType: Item
+
+- type: construction
+  id: ArcaneBouquetLilyOfTheValley
+  graph: ArcaneBouquetLilyOfTheValley
+  startNode: start
+  targetNode: bouquet
+  category: construction-category-misc
+  objectType: Item
+
+- type: construction
+  id: ArcaneBouquetWhiteLily
+  graph: ArcaneBouquetWhiteLily
+  startNode: start
+  targetNode: bouquet
+  category: construction-category-misc
+  objectType: Item
+
+- type: construction
+  id: ArcaneBouquetPinkLily
+  graph: ArcaneBouquetPinkLily
+  startNode: start
+  targetNode: bouquet
+  category: construction-category-misc
+  objectType: Item
+
+- type: construction
+  id: ArcaneBouquetPeony
+  graph: ArcaneBouquetPeony
+  startNode: start
+  targetNode: bouquet
+  category: construction-category-misc
+  objectType: Item
+
+- type: construction
+  id: ArcaneBouquetSunflower
+  graph: ArcaneBouquetSunflower
+  startNode: start
+  targetNode: bouquet
+  category: construction-category-misc
+  objectType: Item
+
+- type: construction
+  id: ArcaneBouquetWhiteRose
+  graph: ArcaneBouquetWhiteRose
+  startNode: start
+  targetNode: bouquet
+  category: construction-category-misc
+  objectType: Item
+
+- type: construction
+  id: ArcaneBouquetRedRose
+  graph: ArcaneBouquetRedRose
+  startNode: start
+  targetNode: bouquet
+  category: construction-category-misc
+  objectType: Item
+
+- type: construction
+  id: ArcaneBouquetChamomile
+  graph: ArcaneBouquetChamomile
+  startNode: start
+  targetNode: bouquet
+  category: construction-category-misc
+  objectType: Item
+
+- type: construction
+  id: ArcaneBouquetYellowTulip
+  graph: ArcaneBouquetYellowTulip
+  startNode: start
+  targetNode: bouquet
+  category: construction-category-misc
+  objectType: Item
+
+- type: construction
+  id: ArcaneBouquetPinkTulip
+  graph: ArcaneBouquetPinkTulip
+  startNode: start
+  targetNode: bouquet
+  category: construction-category-misc
+  objectType: Item

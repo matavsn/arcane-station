@@ -976,6 +976,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("char_name");
 
+                    b.Property<int>("ErpPreference")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("erp_preference");
+
                     b.Property<string>("EyeColor")
                         .IsRequired()
                         .HasColumnType("TEXT")
@@ -1095,6 +1099,11 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("tags_flavor_text");
 
+                    b.Property<string>("Voice")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("voice");
+
                     b.Property<float>("Width")
                         .HasColumnType("REAL")
                         .HasColumnName("width");
@@ -1199,6 +1208,14 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")
                         .HasColumnName("rmc_discord_accounts_id");
+
+                    b.Property<bool>("HasPlayerRole")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("has_player_role");
+
+                    b.Property<DateTime?>("PlayerRoleUpdatedAt")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("player_role_updated_at");
 
                     b.HasKey("Id")
                         .HasName("PK_rmc_discord_accounts");

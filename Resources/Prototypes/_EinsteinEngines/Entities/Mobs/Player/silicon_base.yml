@@ -22,6 +22,7 @@
   parent: [BaseMob, MobDamageable, MobCombat, MobAtmosExposed, MobFlammable]
   abstract: true
   components:
+    - type: TTS # Arcane
     - type: ContentEye
     - type: CameraRecoil
     - type: Reactive
@@ -30,10 +31,11 @@
         Extinguish: [Touch]
         Acidic: [Touch]
       reactions:
-        - reagents: [Water, SpaceCleaner]
+        - reagents: [Water, SpaceCleaner, SoapReagent] # Arcane
           methods: [Touch]
           effects:
             - !type:WashCreamPieReaction
+            - !type:WashCumOverlayReaction # Arcane
     - type: DamageOnHighSpeedImpact
       damage:
         types:

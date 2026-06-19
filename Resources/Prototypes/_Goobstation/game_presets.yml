@@ -160,10 +160,14 @@
   name: sleeper-title
   description: sleeper-description
   showInVote: true
-  minPlayers: 5
+  # Arcane-start
+  # minPlayers: 5
   rules:
-    - CalmDynamic
-    - SubGamemodesRule
+    # - CalmDynamic
+    - SubGamemodesCalmRule #
+    - BasicStationEventSchedulerNoAntag
+    - BasicRoundstartVariation
+  # Arcane-end
     - RareIonStormScheduler
     - SpaceTrafficControlFriendlyEventScheduler
 
@@ -193,6 +197,7 @@
   showInVote: true
   rules:
     - SecretPlusLow
+    - BasicRoundstartVariation # Arcane
 
 - type: gamePreset
   id: SecretPlusMid
@@ -205,6 +210,7 @@
   showInVote: true
   rules:
     - SecretPlusMid
+    - BasicRoundstartVariation # Arcane
 
 - type: gamePreset
   id: SecretPlusAdmeme
@@ -227,7 +233,7 @@
     - survivalnew
   name: survivalplus-title
   description: survivalplus-description
-  showInVote: true
+  showInVote: false # Arcane
   rules:
     - SecretPlusRampingMid
 
@@ -269,7 +275,7 @@
     - Bare
   name: secretplus-lowpop-title
   description: secretplus-lowpop-description
-  showInVote: true
+  showInVote: false # Arcane
   maxPlayers: 40
   rules:
     - SecretPlusLowpop

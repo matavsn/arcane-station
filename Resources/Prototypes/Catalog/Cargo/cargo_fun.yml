@@ -282,7 +282,7 @@
     state: cash_1000000
   product: CrateCargoGambling
   cost: 10000
-  #cooldown: 600 LET'S GO GAMBLING
+  cooldown: 300
   category: cargoproduct-category-name-fun
   group: market
 

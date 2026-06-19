@@ -62,5 +62,6 @@ namespace Content.Shared.Humanoid
         Ensnare,
         Fire,
 
+        Tracheas, // Arcane edit
     }
 }

@@ -57,9 +57,12 @@ namespace Content.Server.Nutrition.EntitySystems
             var exploded = false;
 
             if (!args.CanReach
+                // Arcane-start
                 || !_solutionContainerSystem.TryGetRefillableSolution(entity.Owner, out _, out var solution)
-                || !HasComp<BloodstreamComponent>(args.Target)
-                || _ingestion.HasMouthAvailable(args.Target.Value, args.User)
+                || args.Target == null
+                || !HasComp<BloodstreamComponent>(args.Target.Value)
+                || (args.Target != args.User && _ingestion.HasMouthAvailable(args.Target.Value, args.User))
+                // Arcane-end
                 )
             {
                 return;

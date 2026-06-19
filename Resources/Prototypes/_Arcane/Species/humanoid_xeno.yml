@@ -13,12 +13,12 @@
   sexes: [Unsexed, Male, Female]
   category: Unusual
   description: "/ServerInfo/_Arcane/SpeciesDescriptions/HumanoidXeno.xml"
-  defaultHeight: 1.1
-  defaultWidth: 1.2
-  maxHeight: 1.15
-  maxWidth: 1.25
-  minHeight: 0.95
-  minWidth: 1.05
+  minHeight: 0.90
+  defaultHeight: 1
+  maxHeight: 1.20
+  minWidth: 0.90
+  defaultWidth: 1
+  maxWidth: 1.10
   pros:
   - Иммунитет к давлению открытого космоса.
   - Кислотная кровь — ранения обжигают всех, кроме ксеноморфов.
@@ -86,6 +86,10 @@
     Arms:
       points: 1
       required: false
+    Tracheas:
+      points: 1
+      required: true
+      defaultMarkings: [ HumanoidXenoTracheasDrone ]
 
 - type: humanoidBaseSprite
   id: MobHumanoidXenoHead

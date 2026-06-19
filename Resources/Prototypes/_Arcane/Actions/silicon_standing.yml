@@ -1,9 +1,9 @@
-﻿- type: entity
+- type: entity
   parent: BaseAction
   id: ActionToggleSiliconResting
   categories: [ HideSpawnMenu ]
-  name: action-toggle-silicon-resting-name
-  description: action-toggle-silicon-resting-desc
+  name: Toggle Rest
+  description: Lie down or stand up.
   components:
   - type: Action
     itemIconStyle: NoItem

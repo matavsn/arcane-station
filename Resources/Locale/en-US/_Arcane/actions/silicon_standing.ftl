@@ -1,2 +1,2 @@
-﻿action-toggle-silicon-resting-name = Toggle Rest
-action-toggle-silicon-resting-desc = Lie down or stand up.
+ent-ActionToggleSiliconResting = Toggle Rest
+ent-ActionToggleSiliconResting-desc = Lie down or stand up.

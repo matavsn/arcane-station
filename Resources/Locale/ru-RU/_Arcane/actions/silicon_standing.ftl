@@ -1,2 +1,2 @@
-﻿action-toggle-silicon-resting-name = Лечь/встать
-action-toggle-silicon-resting-desc = Лечь на пол или встать.
+ent-ActionToggleSiliconResting = Лечь/встать
+ent-ActionToggleSiliconResting-desc = Лечь на пол или встать.

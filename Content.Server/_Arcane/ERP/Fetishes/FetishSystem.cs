@@ -1,10 +1,12 @@
-﻿using Content.Shared._Arcane.ERP;
+using System.Linq;
+using Content.Shared._Arcane.ERP;
 using Content.Shared._Arcane.ERP.Fetishes;
 using Content.Shared.Body.Systems;
 using Content.Shared.Humanoid;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server._Arcane.ERP.Fetishes;
@@ -19,42 +21,42 @@ public sealed class FetishSystem : EntitySystem
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
-    private const float TickInterval = 4f;
     private const float MaxTotalPassiveRate = 3.0f;
     private const float FatigueFullDuration = 120f; // seconds until rate → 0
 
     private static readonly IReadOnlySet<string> EmptyInteractionTags = new HashSet<string>();
 
-    private float _accumulator;
-
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<FetishComponent, ComponentInit>(OnFetishInit);
         SubscribeLocalEvent<FetishComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<ErpInteractionOccurredEvent>(OnErpInteraction);
     }
+
+    private void OnFetishInit(Entity<FetishComponent> ent, ref ComponentInit args)
+    {
+        // Stagger initial update across the interval so all players don't tick in the same frame.
+        ent.Comp.NextUpdate = _timing.CurTime + TimeSpan.FromSeconds(_random.NextFloat(0f, ent.Comp.UpdateInterval));
+    }
+
+    // ── Tick ─────────────────────────────────────────────────────────────────
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        _accumulator += frameTime;
-        if (_accumulator < TickInterval)
-            return;
-
-        _accumulator -= TickInterval;
-        TickAll();
-    }
-
-    // ── Tick ─────────────────────────────────────────────────────────────────
-
-    private void TickAll()
-    {
         var now = _timing.CurTime;
         var query = EntityQueryEnumerator<FetishComponent, ArousalComponent>();
-        while (query.MoveNext(out var uid, out var fetish, out var arousal))
+        while (query.MoveNext(out var uid, out var fetish, out _))
         {
+            if (now < fetish.NextUpdate)
+                continue;
+
+            fetish.NextUpdate = now + TimeSpan.FromSeconds(fetish.UpdateInterval);
+
             if (IsErpDisabled(uid))
             {
                 ClearAllSources(uid, fetish);
@@ -71,6 +73,9 @@ public sealed class FetishSystem : EntitySystem
         var newSources = new Dictionary<string, float>();
         var totalPositive = 0f;
 
+        // One EntityLookup for all proximity conditions this tick.
+        var candidates = CollectCandidates(uid, fetish);
+
         // Fetishes (positive) — apply rate cap, highest rate first
         foreach (var protoId in fetish.Fetishes)
         {
@@ -83,7 +88,7 @@ public sealed class FetishSystem : EntitySystem
             if (totalPositive >= MaxTotalPassiveRate)
                 break;
 
-            if (!TryFetish(proto, uid, fetish, ctx, isLimit: false))
+            if (!TryFetish(proto, uid, fetish, ctx, isLimit: false, candidates))
                 continue;
 
             var rate = Math.Min(proto.PassiveRate, MaxTotalPassiveRate - totalPositive);
@@ -106,7 +111,7 @@ public sealed class FetishSystem : EntitySystem
             if (proto.IsEventBased || proto.Condition == null)
                 continue;
 
-            if (!TryFetish(proto, uid, fetish, ctx, isLimit: true))
+            if (!TryFetish(proto, uid, fetish, ctx, isLimit: true, candidates))
                 continue;
 
             if (proto.IsPersistent)
@@ -118,23 +123,24 @@ public sealed class FetishSystem : EntitySystem
         SyncSources(uid, fetish, newSources, now);
     }
 
-    // ── Condition evaluation ─────────────────────────────────────────────────
+    // ── Candidate collection ──────────────────────────────────────────────────
 
-    private bool TryFetish(FetishPrototype proto, EntityUid uid, FetishComponent fetish, FetishConditionContext ctx, bool isLimit)
+    /// <summary>
+    /// Performs a single EntityLookup at the widest range needed by any proximity condition,
+    /// then pre-filters to humanoids with ERP consent. Individual conditions still filter by
+    /// their own range, LoS, and attraction rules.
+    /// </summary>
+    private HashSet<EntityUid> CollectCandidates(EntityUid uid, FetishComponent fetish)
     {
-        var cond = proto.Condition!;
-        ctx = ctx with { IsLimit = isLimit };
+        var maxRange = ComputeMaxProximityRange(fetish);
+        if (maxRange <= 0f)
+            return [];
 
-        if (!cond.RequiresTarget)
-            return cond.Check(ctx with { Target = null });
+        var all = new HashSet<EntityUid>();
+        _lookup.GetEntitiesInRange(uid, maxRange, all);
 
-        var range = cond is ProximityFetishCondition prox ? prox.Range : 6f;
-        var requiresLoS = cond is ProximityFetishCondition p && p.RequiresLoS;
-
-        var nearby = new HashSet<EntityUid>();
-        _lookup.GetEntitiesInRange(uid, range, nearby);
-
-        foreach (var target in nearby)
+        var result = new HashSet<EntityUid>();
+        foreach (var target in all)
         {
             if (target == uid)
                 continue;
@@ -145,7 +151,71 @@ public sealed class FetishSystem : EntitySystem
             if (!IsErpConsenting(target))
                 continue;
 
+            result.Add(target);
+        }
+
+        return result;
+    }
+
+    private float ComputeMaxProximityRange(FetishComponent fetish)
+    {
+        var max = 0f;
+
+        foreach (var protoId in fetish.Fetishes)
+        {
+            if (!_proto.TryIndex(protoId, out var proto) || proto.Condition == null || proto.IsEventBased)
+                continue;
+
+            if (!proto.Condition.RequiresTarget)
+                continue;
+
+            var range = proto.Condition is ProximityFetishCondition prox ? prox.Range : 6f;
+            if (range > max)
+                max = range;
+        }
+
+        foreach (var protoId in fetish.Limits)
+        {
+            if (!_proto.TryIndex(protoId, out var proto) || proto.Condition == null || proto.IsEventBased)
+                continue;
+
+            if (!proto.Condition.RequiresTarget)
+                continue;
+
+            var range = proto.Condition is ProximityFetishCondition prox ? prox.Range : 6f;
+            if (range > max)
+                max = range;
+        }
+
+        return max;
+    }
+
+    // ── Condition evaluation ─────────────────────────────────────────────────
+
+    private bool TryFetish(
+        FetishPrototype proto,
+        EntityUid uid,
+        FetishComponent fetish,
+        FetishConditionContext ctx,
+        bool isLimit,
+        HashSet<EntityUid> candidates)
+    {
+        var cond = proto.Condition!;
+        ctx = ctx with { IsLimit = isLimit };
+
+        if (!cond.RequiresTarget)
+            return cond.Check(ctx with { Target = null });
+
+        var range = cond is ProximityFetishCondition prox ? prox.Range : 6f;
+        var requiresLoS = cond is ProximityFetishCondition p && p.RequiresLoS;
+
+        foreach (var target in candidates)
+        {
             if (!PassesTargetFilter(target, fetish, isLimit))
+                continue;
+
+            // candidates are already pre-filtered to max range; re-check condition's own range.
+            if (!_transform.InRange(uid, target, range))
                 continue;
 
             if (requiresLoS && !_interaction.InRangeUnobstructed(uid, target, range))
@@ -314,7 +384,7 @@ public sealed class FetishSystem : EntitySystem
     private bool IsErpDisabled(EntityUid uid) =>
         TryComp<ErpStatusComponent>(uid, out var s) && s.Preference == ErpPreference.No;
 
-    // Ask currently counts as opt-in for fetish checks.
+    // Ask counts as opt-in for passive visibility checks.
     // If Ask becomes a per-interaction consent UI in the future, revisit: passive fetishes may need Yes-only.
     private bool IsErpConsenting(EntityUid uid) =>
         !TryComp<ErpStatusComponent>(uid, out var s)

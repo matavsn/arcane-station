@@ -41,7 +41,14 @@ public sealed partial class FetishComponent : Component
     [DataField]
     public HashSet<ProtoId<SpeciesPrototype>> DislikedSpecies = new();
 
+    /// <summary>Seconds between proximity evaluations. Staggered on init to spread server load.</summary>
+    [DataField]
+    public float UpdateInterval = 4f;
+
     // Runtime state (not serialized)
+
+    /// <summary>Next server time at which this entity should be evaluated.</summary>
+    public TimeSpan NextUpdate;
 
     /// <summary>Currently active passive sources. Key = "fetish:{id}", Value = effective rate/s after fatigue.</summary>
     public Dictionary<string, float> ActiveSources = new();

@@ -17,7 +17,11 @@ public sealed partial class FetishComponent : Component
     [DataField]
     public List<ProtoId<FetishPrototype>> Fetishes = new();
 
-    /// <summary>Limits/turn-offs that reduce arousal when their condition is met (passiveRate is negative).</summary>
+    /// <summary>
+    /// Turn-offs that actively drain arousal when their condition is met.
+    /// PassiveRate must be negative. Drain stacks with normal decay — this is intentional.
+    /// Attraction dislikes (sex/species) are handled separately as filters, not as limits.
+    /// </summary>
     [DataField]
     public List<ProtoId<FetishPrototype>> Limits = new();
 

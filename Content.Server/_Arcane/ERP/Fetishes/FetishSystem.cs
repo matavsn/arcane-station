@@ -95,7 +95,9 @@ public sealed class FetishSystem : EntitySystem
                 _arousal.AddArousal(uid, proto.Impulse);
         }
 
-        // Limits (negative) — no cap, processed after fetishes
+        // Limits — turn-offs that actively drain arousal (passiveRate < 0) on top of normal decay.
+        // DislikedSexes/DislikedSpecies are separate attraction filters handled in PassesTargetFilter.
+        // If a limit should block gain rather than drain, that requires a suppress-multiplier path — future work.
         foreach (var limitId in fetish.Limits)
         {
             if (!_proto.TryIndex(limitId, out var proto))
@@ -312,6 +314,9 @@ public sealed class FetishSystem : EntitySystem
     private bool IsErpDisabled(EntityUid uid) =>
         TryComp<ErpStatusComponent>(uid, out var s) && s.Preference == ErpPreference.No;
 
+    // Ask currently counts as opt-in for fetish checks.
+    // If Ask becomes a per-interaction consent UI in the future, revisit: passive fetishes may need Yes-only.
     private bool IsErpConsenting(EntityUid uid) =>
-        !TryComp<ErpStatusComponent>(uid, out var s) || s.Preference != ErpPreference.No;
+        !TryComp<ErpStatusComponent>(uid, out var s)
+        || s.Preference is ErpPreference.Yes or ErpPreference.Ask;
 }

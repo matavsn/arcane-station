@@ -77,3 +77,78 @@
   - !type:EroticOrganRequirement
     organ: vagina
     requireVisible: true
+
+- type: panelInteraction
+  id: PussyTouch
+  category: Pussy
+  name: Потрогать вагину
+  targetArouse: 5
+  range: 1
+  sounds:
+  - /Audio/_Arcane/Interactions/champ_fingering.ogg
+  messages:
+  - осторожно трогает вагину $target.
+  - лёгонько касается вагины $target.
+  - проводит пальцем по губам вагины $target.
+  - нежно трогает влажную вагину $target.
+  - аккуратно касается вагины $target.
+  icon: _Arcane/Interface/ErpPanel/pussy_touch.png
+  targetRequirements:
+  - !type:EroticOrganRequirement
+    organ: vagina
+    requireVisible: true
+
+- type: panelInteraction
+  id: PussyTailFuck
+  category: Pussy
+  name: Трахать вагину хвостом
+  userArouse: 5
+  targetArouse: 15
+  range: 1
+  sounds:
+  - /Audio/_Arcane/Interactions/champ_fingering.ogg
+  messages:
+  - вводит хвостик в вагину $target.
+  - проникает кончиком хвоста в вагину $target.
+  - ритмично двигает хвостом внутри вагины $target.
+  - медленно вводит хвост в мокрую вагину $target.
+  - страстно трахает вагину $target хвостом.
+  icon: _Arcane/Interface/ErpPanel/pussy_tail_fuck.png
+  targetRequirements:
+  - !type:EroticOrganRequirement
+    organ: vagina
+    requireVisible: true
+  userRequirements:
+  - !type:SpeciesRequirement
+    species:
+    - Demon
+    - Felinid
+    - Vulpkanin
+    - Tajaran
+    - HumanoidXeno
+    - Rodentia
+
+- type: panelInteraction
+  id: ToyPussy
+  category: Pussy
+  name: Использовать игрушку
+  targetArouse: 15
+  range: 1
+  sounds:
+  - /Audio/_Arcane/Interactions/champ_fingering.ogg
+  messages:
+  - вставляет игрушку в вагину $target.
+  - двигает вибратором внутри вагины $target.
+  - ритмично использует игрушку во влагалище $target.
+  - медленно вводит игрушку в мокрую вагину $target.
+  - аккуратно работает игрушкой во влагалище $target.
+  icon: _Arcane/Interface/ErpPanel/toy_pussy.png
+  targetRequirements:
+  - !type:EroticOrganRequirement
+    organ: vagina
+    requireVisible: true
+  userRequirements:
+  - !type:HeldItemRequirement
+    tags:
+    - SexToyDildo
+    - SexToyVibrator

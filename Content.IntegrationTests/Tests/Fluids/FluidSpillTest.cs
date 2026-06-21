@@ -114,7 +114,7 @@ public sealed class FluidSpill
             Assert.That(puddle, Is.Not.Null);
 
             // Arcane-start
-            var puddleProto = prototypeManager.Index<ReagentPrototype>("ReagentPrototype");
+            var puddleProto = prototypeManager.Index<ReagentPrototype>("Blood");
             Assert.That(puddleSystem.CurrentVolume(puddle!.Value.Owner, puddle), Is.EqualTo(FixedPoint2.New(100 - (float) puddleProto.EvaporationSpeed)));
             // Arcane-end
 #pragma warning restore NUnit2045

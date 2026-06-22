@@ -1,4 +1,4 @@
-﻿using Content.Server.Chat.Systems;
+using Content.Server.Chat.Systems;
 using Content.Server.Interaction;
 using Content.Shared._Arcane.ERP;
 using Content.Shared._Arcane.ErpPanel;
@@ -233,9 +233,6 @@ public sealed partial class ErpPanelSystem : EntitySystem
         if (!HasComp<ArousalComponent>(user) || !HasComp<ArousalComponent>(target))
             return false;
 
-        if (TryComp<ErpStatusComponent>(target, out var targetStatus) && targetStatus.Preference == ErpPreference.No)
-            return false;
-
         return true;
     }
 
@@ -259,7 +256,28 @@ public sealed partial class ErpPanelSystem : EntitySystem
         if (!HasComp<ArousalComponent>(user) || !HasComp<ArousalComponent>(target))
             return false;
 
+        if (IsErpInteraction(interaction) && !CanUseErp(user, target))
+            return false;
+
         if (userPanel.Cooldowns.TryGetValue(interaction.ID, out var lastUse) && lastUse + interaction.Cooldown > _ticking.CurTime)
+            return false;
+
+        return true;
+    }
+
+    private bool IsErpInteraction(PanelInteractionPrototype interaction)
+    {
+        return interaction.Tags.Contains(ErpPanelConstants.ErpInteractionTag);
+    }
+
+    private bool CanUseErp(EntityUid user, EntityUid target)
+    {
+        if (TryComp<ErpStatusComponent>(user, out var userStatus) && userStatus.Preference == ErpPreference.No)
+            return false;
+
+        if (user != target &&
+            TryComp<ErpStatusComponent>(target, out var targetStatus) &&
+            targetStatus.Preference == ErpPreference.No)
             return false;
 
         return true;

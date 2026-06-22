@@ -11,10 +11,6 @@
   name: Грудь
 
 - type: panelInteractionCategory
-  id: Friendship
-  name: Дружба
-
-- type: panelInteractionCategory
   id: Tail
   name: Хвост
 
@@ -25,6 +21,26 @@
 - type: panelInteractionCategory
   id: Mouth
   name: Рот
+
+- type: panelInteractionCategory
+  id: Head
+  name: Голова
+
+- type: panelInteractionCategory
+  id: Hands
+  name: Руки
+
+- type: panelInteractionCategory
+  id: Back
+  name: Спина
+
+- type: panelInteractionCategory
+  id: Shoulders
+  name: Плечи
+
+- type: panelInteractionCategory
+  id: Feet
+  name: Ступни
 
 - type: panelInteractionCategory
   id: Ears

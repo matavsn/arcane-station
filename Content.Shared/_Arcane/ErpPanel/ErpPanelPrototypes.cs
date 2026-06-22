@@ -5,6 +5,11 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared._Arcane.ErpPanel;
 
+public static class ErpPanelConstants
+{
+    public const string ErpInteractionTag = "RequiresERP";
+}
+
 [Prototype]
 public sealed partial class PanelInteractionPrototype : IPrototype
 {
@@ -28,6 +33,9 @@ public sealed partial class PanelInteractionPrototype : IPrototype
 
     [DataField]
     public List<ResPath> Sounds = new();
+
+    [DataField]
+    public HashSet<string> Tags = new();
 
     [DataField]
     public TimeSpan Cooldown = TimeSpan.FromSeconds(3);

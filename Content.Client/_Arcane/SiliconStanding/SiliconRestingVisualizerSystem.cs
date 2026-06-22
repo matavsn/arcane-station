@@ -2,6 +2,7 @@ using Content.Shared._Arcane.SiliconStanding;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Silicons.Borgs;
 using Content.Shared.Silicons.Borgs.Components;
+using Content.Shared.Toggleable;
 using Robust.Client.GameObjects;
 
 namespace Content.Client._Arcane.SiliconStanding;
@@ -53,7 +54,13 @@ public sealed class SiliconRestingVisualizerSystem : EntitySystem
         _sprite.LayerSetVisible(spriteEnt, BorgVisualLayers.Light, lightVisible);
 
         if (_sprite.LayerMapTryGet(spriteEnt, BorgVisualLayers.LightStatus, out _, false))
-            _sprite.LayerSetVisible(spriteEnt, BorgVisualLayers.LightStatus, lightVisible);
+        {
+            var lightStatusVisible = false;
+            if (!isResting)
+                _appearance.TryGetData<bool>(uid, ToggleableVisuals.Enabled, out lightStatusVisible);
+
+            _sprite.LayerSetVisible(spriteEnt, BorgVisualLayers.LightStatus, lightStatusVisible);
+        }
 
         var lightState = hasPlayer ? borg.HasMindState : borg.NoMindState;
         _sprite.LayerSetRsiState(spriteEnt, BorgVisualLayers.Light, lightState);

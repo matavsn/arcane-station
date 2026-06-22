@@ -1,3 +1,14 @@
+# Generic subtypes
+
+- type: borgSubtype
+  parentBorgType: generic
+  id: generic_dullahan
+  spritePath: _Arcane/Mobs/Silicon/Generic/dullahan.rsi
+  visuals:
+    restBodyState: robot-rest
+    disableMovementVisuals: true
+  dummyPrototype: BorgChassisGenericDullahan
+
 # Engineering subtypes
 
 - type: borgSubtype
@@ -44,6 +55,15 @@
     restBodyState: engineer-rest
     disableMovementVisuals: true
   dummyPrototype: BorgChassisEngineerMMeka
+
+- type: borgSubtype
+  parentBorgType: engineering
+  id: engineer_dullahan
+  spritePath: _Arcane/Mobs/Silicon/Engineering/dullahaneng.rsi
+  visuals:
+    restBodyState: engineer-rest
+    disableMovementVisuals: true
+  dummyPrototype: BorgChassisEngineerDullahan
 
 # Janitor subtypes
 
@@ -92,6 +112,15 @@
     disableMovementVisuals: true
   dummyPrototype: BorgChassisJanitorMMeka
 
+- type: borgSubtype
+  parentBorgType: janitor
+  id: janitor_dullahan
+  spritePath: _Arcane/Mobs/Silicon/Janitor/dullahanjani.rsi
+  visuals:
+    restBodyState: janitor-rest
+    disableMovementVisuals: true
+  dummyPrototype: BorgChassisJanitorDullahan
+
 # Medical subtypes
 
 - type: borgSubtype
@@ -138,6 +167,15 @@
     restBodyState: medical-rest
     disableMovementVisuals: true
   dummyPrototype: BorgChassisMedicalMMeka
+
+- type: borgSubtype
+  parentBorgType: medical
+  id: medical_dullahan
+  spritePath: _Arcane/Mobs/Silicon/Medical/dullahanmed.rsi
+  visuals:
+    restBodyState: medical-rest
+    disableMovementVisuals: true
+  dummyPrototype: BorgChassisMedicalDullahan
 
 # Mining subtypes
 
@@ -190,6 +228,15 @@
     noMindState: miner_e
     disableMovementVisuals: true
   dummyPrototype: BorgChassisMiningMMeka
+
+- type: borgSubtype
+  parentBorgType: mining
+  id: mining_dullahan
+  spritePath: _Arcane/Mobs/Silicon/Mining/dullahanmine.rsi
+  visuals:
+    restBodyState: miner-rest
+    disableMovementVisuals: true
+  dummyPrototype: BorgChassisMiningDullahan
 
 # Service subtypes
 
@@ -255,3 +302,12 @@
     restBodyState: service-rest
     disableMovementVisuals: true
   dummyPrototype: BorgChassisServiceMMeka
+
+- type: borgSubtype
+  parentBorgType: service
+  id: service_dullahan
+  spritePath: _Arcane/Mobs/Silicon/Service/dullahanserv.rsi
+  visuals:
+    restBodyState: service-rest
+    disableMovementVisuals: true
+  dummyPrototype: BorgChassisServiceDullahan

@@ -302,12 +302,3 @@
     restBodyState: service-rest
     disableMovementVisuals: true
   dummyPrototype: BorgChassisServiceMMeka
-
-- type: borgSubtype
-  parentBorgType: service
-  id: service_dullahan
-  spritePath: _Arcane/Mobs/Silicon/Service/dullahanserv.rsi
-  visuals:
-    restBodyState: service-rest
-    disableMovementVisuals: true
-  dummyPrototype: BorgChassisServiceDullahan

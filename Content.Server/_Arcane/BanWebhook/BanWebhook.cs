@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Threading.Tasks;
 using Content.Server.Discord;
 using Content.Server.GameTicking;
 using Content.Shared.Database;
@@ -48,10 +49,10 @@ public sealed partial class BanWebhooks : IPostInjectInit
             },
         };
 
-        SendBanWebhook(payload, url);
+        await Task.Run(async () => SendBanWebhook(payload, url));
     }
 
-    private async void SendBanWebhook(WebhookPayload payload, string url)
+    private async Task SendBanWebhook(WebhookPayload payload, string url)
     {
         try
         {

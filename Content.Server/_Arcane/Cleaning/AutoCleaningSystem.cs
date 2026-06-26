@@ -26,7 +26,7 @@ public sealed partial class AutoCleaningSystem : EntitySystem
     private static TimeSpan _updateInterval = TimeSpan.FromMinutes(20);
     private static TimeSpan _warningWaiting = TimeSpan.FromSeconds(10);
     private static HashSet<ProtoId<TagPrototype>> _cleaningTags = ["Trash", "Cartridge"];
-    private static HashSet<ProtoId<TagPrototype>> _disallowedTags = ["Cigarette", "CigPack", "Syringe", "LightTube", "LightBulb"];
+    private static HashSet<ProtoId<TagPrototype>> _disallowedTags = ["Cigarette", "CigPack", "Syringe", "LightTube", "LightBulb", "VimPilot"];
 
     public override void Initialize()
     {

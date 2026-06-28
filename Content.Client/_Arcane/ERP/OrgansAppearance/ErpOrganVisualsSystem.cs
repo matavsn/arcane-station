@@ -6,7 +6,9 @@ using Content.Shared._Arcane.ERP.Organs;
 using Content.Shared._Arcane.ERP.OrgansAppearance;
 using Content.Shared._Arcane.ERP.Preferences;
 using Content.Shared._Shitmed.Humanoid.Events;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Humanoid;
+using Content.Shared.Inventory;
 using Robust.Client.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -20,6 +22,10 @@ public sealed class ErpOrganVisualsSystem : EntitySystem
     [Dependency] private readonly ClientErpOrganPreferencesManager _erpPrefs = default!;
     [Dependency] private readonly IClientPreferencesManager _prefs = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
+
+    private const SlotFlags GroinCovering = SlotFlags.INNERCLOTHING | SlotFlags.OUTERCLOTHING | SlotFlags.LEGS | SlotFlags.UNDERWEAR;
+    private const SlotFlags ChestCovering = SlotFlags.INNERCLOTHING | SlotFlags.OUTERCLOTHING | SlotFlags.UNDERSHIRT;
 
     // (slot, species) → prototype; built from erpOrganVisual prototypes at Initialize.
     private readonly Dictionary<(string slot, string species), ErpOrganVisualPrototype> _speciesLookup = new();
@@ -97,6 +103,7 @@ public sealed class ErpOrganVisualsSystem : EntitySystem
         var humanoid = CompOrNull<HumanoidAppearanceComponent>(uid);
         var visuals = EnsureComp<ErpOrganVisualsComponent>(uid);
         visuals.Organs = FilterOrgansBySex(prefs.Organs, humanoid?.Sex ?? Sex.Male);
+        visuals.CoveredSlots = GetPreviewCoveredSlots(uid);
 
         ApplyOrganLayers((uid, visuals), humanoid, sprite, phase);
     }
@@ -114,6 +121,7 @@ public sealed class ErpOrganVisualsSystem : EntitySystem
 
         var visuals = EnsureComp<ErpOrganVisualsComponent>(ent);
         visuals.Organs = FilterOrgansBySex(organPrefs.Organs, ent.Comp.Sex);
+        visuals.CoveredSlots = GetPreviewCoveredSlots(ent);
 
         if (TryComp<SpriteComponent>(ent, out var sprite))
             ApplyOrganLayers((ent, visuals), ent.Comp, sprite);
@@ -130,6 +138,33 @@ public sealed class ErpOrganVisualsSystem : EntitySystem
             result[slotId] = cfg;
         }
         return result;
+    }
+
+    private HashSet<string> GetPreviewCoveredSlots(EntityUid uid)
+    {
+        var coverage = SlotFlags.NONE;
+        var enumerator = _inventory.GetSlotEnumerator(uid, GroinCovering | ChestCovering);
+        while (enumerator.NextItem(out var item))
+        {
+            if (TryComp<ClothingComponent>(item, out var clothing))
+                coverage |= clothing.Slots;
+        }
+
+        var covered = new HashSet<string>();
+
+        if ((coverage & GroinCovering) != SlotFlags.NONE)
+        {
+            covered.Add(ErpOrganSlots.Penis);
+            covered.Add(ErpOrganSlots.Testicles);
+            covered.Add(ErpOrganSlots.Vagina);
+            covered.Add(ErpOrganSlots.Anus);
+            covered.Add(ErpOrganSlots.Butt);
+        }
+
+        if ((coverage & ChestCovering) != SlotFlags.NONE)
+            covered.Add(ErpOrganSlots.Breasts);
+
+        return covered;
     }
 
     private void OnOrganState(Entity<ErpOrganVisualsComponent> ent, ref AfterAutoHandleStateEvent args)

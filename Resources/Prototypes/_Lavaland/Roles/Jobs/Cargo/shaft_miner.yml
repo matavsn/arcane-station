@@ -20,6 +20,10 @@
   - Salvage
   - Maintenance
   - External
+  # Arcane-start
+  contracts:
+  - DocumentContractEmploymentCargo
+  # Arcane-end
 
 - type: startingGear
   id: ShaftMinerGear

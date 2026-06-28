@@ -53,8 +53,6 @@
     penetrateDamage: 25
     damagePenalty: 0.1
   - type: Structure # WD EDIT. TODO: Kill me pls
-  - type: TTS # Arcane
-    voice: Fact_core
 
 - type: entity
   # This means that it's not anchored on spawn.

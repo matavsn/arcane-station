@@ -250,3 +250,59 @@
   components:
   - type: BorgSwitchableSubtype
     borgSubtype: service_mmekaserv
+
+# Dullahan
+
+- type: entity
+  parent: BorgChassisGeneric
+  id: BorgChassisGenericDullahan
+  categories: [ HideSpawnMenu ]
+  name: dullahan generic cyborg
+  components:
+  - type: BorgSwitchableSubtype
+    borgSubtype: generic_dullahan
+
+- type: entity
+  parent: BorgChassisEngineer
+  id: BorgChassisEngineerDullahan
+  categories: [ HideSpawnMenu ]
+  name: dullahan engineer cyborg
+  components:
+  - type: BorgSwitchableSubtype
+    borgSubtype: engineer_dullahan
+
+- type: entity
+  parent: BorgChassisJanitor
+  id: BorgChassisJanitorDullahan
+  categories: [ HideSpawnMenu ]
+  name: dullahan janitor cyborg
+  components:
+  - type: BorgSwitchableSubtype
+    borgSubtype: janitor_dullahan
+
+- type: entity
+  parent: BorgChassisMedical
+  id: BorgChassisMedicalDullahan
+  categories: [ HideSpawnMenu ]
+  name: dullahan medical cyborg
+  components:
+  - type: BorgSwitchableSubtype
+    borgSubtype: medical_dullahan
+
+- type: entity
+  parent: BorgChassisMining
+  id: BorgChassisMiningDullahan
+  categories: [ HideSpawnMenu ]
+  name: dullahan mining cyborg
+  components:
+  - type: BorgSwitchableSubtype
+    borgSubtype: mining_dullahan
+
+- type: entity
+  parent: BorgChassisService
+  id: BorgChassisServiceDullahan
+  categories: [ HideSpawnMenu ]
+  name: dullahan service cyborg
+  components:
+  - type: BorgSwitchableSubtype
+    borgSubtype: service_dullahan

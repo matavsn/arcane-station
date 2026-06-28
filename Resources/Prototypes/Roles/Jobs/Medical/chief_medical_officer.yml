@@ -182,6 +182,10 @@
     components:
     - type: SurgerySpeedModifier
       speedModifier: 2
+  # Arcane-start
+  contracts:
+  - DocumentContractEmploymentMedical
+  # Arcane-end
 
 - type: startingGear
   id: CMOGear

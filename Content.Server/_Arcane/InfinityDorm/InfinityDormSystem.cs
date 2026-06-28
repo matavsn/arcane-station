@@ -28,6 +28,7 @@ using Content.Shared._Arcane.CCVars;
 using Content.Shared._Arcane.InfinityDorm;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.Chat;
 using Robust.Shared.Configuration;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Map;
@@ -67,7 +68,10 @@ public sealed partial class InfinityDormSystem : EntitySystem
     {
         var station = _station.GetOwningStation(uid);
         if (station != null && _alertLevel.GetLevel(station.Value) != component.NeedAlertLevel)
+        {
+            _chat.TrySendInGameICMessage(uid, Loc.GetString("infinity-dorm-warning-alert-level"), InGameICChatType.Speak, false);
             return;
+        }
 
         EnsureDormsMap();
 
@@ -98,7 +102,7 @@ public sealed partial class InfinityDormSystem : EntitySystem
 
     private void EnsureDormsMap()
     {
-        if (_map.TryGetMap(_dormsMapId, out _) || _dormsMapId != MapId.Nullspace)
+        if (_map.MapExists(_dormsMapId) || _dormsMapId != MapId.Nullspace)
             return;
 
         _map.CreateMap(out _dormsMapId);

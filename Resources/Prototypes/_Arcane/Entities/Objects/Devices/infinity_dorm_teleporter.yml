@@ -6,6 +6,7 @@
   suffix: InfDorm
   components:
   - type: InfinityDormTeleporter
+  - type: Speech
   - type: InteractionOutline
   - type: Physics
     canCollide: false

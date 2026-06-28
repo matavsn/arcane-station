@@ -32,9 +32,11 @@ using Content.Server.Connection;
 using Content.Goobstation.Common.CCVar;
 using Content.Server.Database;
 using Content.Shared.CCVar;
+using Content.Shared._Arcane.Sponsor;
 using Content.Shared._Arcane.LinkAccount;
 using Content.Shared._RMC14.LinkAccount;
 using Robust.Server.Player;
+using Robust.Shared.Asynchronous;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -57,6 +59,7 @@ public sealed class LinkAccountManager : IPostInjectInit
     // arcane discord link start
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
+    [Dependency] private readonly ITaskManager _task = default!;
     // arcane discord link end
 
     private readonly Dictionary<NetUserId, TimeSpan> _lastRequest = new();
@@ -232,6 +235,35 @@ public sealed class LinkAccountManager : IPostInjectInit
         args.Deny(new NetDenyReason(reason, properties));
     }
     // arcane discord link end
+
+    // arcane sponsor start
+    private void OnSponsorUpdated(DatabaseNotification notification)
+    {
+        if (notification.Channel != ArcaneSponsorTiers.UpdatedNotificationChannel ||
+            notification.Payload == null ||
+            !Guid.TryParse(notification.Payload, out var playerId))
+        {
+            return;
+        }
+
+        _task.RunOnMainThread(() => ReloadSponsor(playerId));
+    }
+
+    private async void ReloadSponsor(Guid playerId)
+    {
+        if (_player.TryGetSessionById(new NetUserId(playerId), out var session))
+        {
+            await LoadData(session, CancellationToken.None);
+            SendPatronStatus(session);
+
+            if (_connected.TryGetValue(session.UserId, out var patron))
+                PatronUpdated?.Invoke((session.UserId, patron));
+        }
+
+        await RefreshAllPatrons();
+        SendPatronsToAll();
+    }
+    // arcane sponsor end
 
     private void OnClearGhostColor(RMCClearGhostColorMsg message)
     {
@@ -434,6 +466,7 @@ public sealed class LinkAccountManager : IPostInjectInit
         _net.RegisterNetMessage<RMCChangeNTShoutoutMsg>(OnChangeNTShoutout);
         // arcane discord link start
         _serverNet.Connecting += OnConnecting;
+        _db.SubscribeToNotifications(OnSponsorUpdated);
         // arcane discord link end
         _userDb.AddOnLoadPlayer(LoadData);
         _userDb.AddOnFinishLoad(FinishLoad);

@@ -1,0 +1,54 @@
+- type: entity
+  parent: PrintedDocument
+  id: DocumentContractEmploymentSecurity
+  name: work contract
+  categories: [HideSpawnMenu]
+  components:
+    - type: Paper
+      content: doc-text-employment-contract-security
+
+- type: entity
+  parent: PrintedDocument
+  id: DocumentContractEmploymentCargo
+  name: work contract
+  categories: [HideSpawnMenu]
+  components:
+    - type: Paper
+      content: doc-text-employment-contract-cargo
+
+- type: entity
+  parent: PrintedDocument
+  id: DocumentContractEmploymentEngineering
+  name: work contract
+  categories: [HideSpawnMenu]
+  components:
+    - type: Paper
+      content: doc-text-employment-contract-engineering
+
+- type: entity
+  parent: PrintedDocument
+  id: DocumentContractEmploymentMedical
+  name: work contract
+  categories: [HideSpawnMenu]
+  components:
+    - type: Paper
+      content: doc-text-employment-contract-medical
+
+- type: entity
+  parent: PrintedDocument
+  id: DocumentContractEmploymentRnd
+  name: work contract
+  categories: [HideSpawnMenu]
+  components:
+    - type: Paper
+      content: doc-text-employment-contract-rnd
+
+- type: entity
+  parent: PrintedDocument
+  id: DocumentContractEmploymentService
+  name: work contract
+  categories: [HideSpawnMenu]
+  components:
+    - type: Paper
+      content: doc-text-employment-contract-service
+

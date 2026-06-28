@@ -2101,6 +2101,14 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             if (linkingCode != null)
                 db.DbContext.RMCLinkingCodes.Remove(linkingCode);
 
+            // arcane sponsor start
+            var patron = await db.DbContext.RMCPatrons
+                .FirstOrDefaultAsync(p => p.PlayerId == player, cancel);
+
+            if (patron != null)
+                db.DbContext.RMCPatrons.Remove(patron);
+            // arcane sponsor end
+
             await db.DbContext.SaveChangesAsync(cancel);
             return true;
         }

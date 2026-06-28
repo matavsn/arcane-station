@@ -61,8 +61,8 @@
     - Chest
   # Arcane-start: hide erp chest organs when worn
   - type: HideLayerClothing
-    slots:
-    - ErpChest
+    layers:
+      ErpChest: UNDERSHIRT
   # Arcane-end
 
 - type: entity

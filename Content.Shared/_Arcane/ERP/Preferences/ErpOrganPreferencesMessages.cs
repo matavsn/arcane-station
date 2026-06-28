@@ -17,6 +17,8 @@ public sealed class MsgErpOrganPreferences : NetMessage
     {
         Slot = buffer.ReadInt32();
         var length = buffer.ReadVariableInt32();
+        if (length < 0 || length > 65_536)
+            throw new InvalidOperationException($"ERP prefs payload size out of range: {length}");
         using var stream = new MemoryStream(length);
         buffer.ReadAlignedMemory(stream, length);
         stream.Position = 0;
@@ -46,6 +48,8 @@ public sealed class MsgUpdateErpOrganPreferences : NetMessage
     {
         Slot = buffer.ReadInt32();
         var length = buffer.ReadVariableInt32();
+        if (length < 0 || length > 65_536)
+            throw new InvalidOperationException($"ERP prefs payload size out of range: {length}");
         using var stream = new MemoryStream(length);
         buffer.ReadAlignedMemory(stream, length);
         stream.Position = 0;

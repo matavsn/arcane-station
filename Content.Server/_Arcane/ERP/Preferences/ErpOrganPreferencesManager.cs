@@ -13,6 +13,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Log;
+using Robust.Shared.Timing;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server._Arcane.ERP.Preferences;
@@ -28,10 +29,13 @@ public sealed class ErpOrganPreferencesManager : IPostInjectInit
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     private ISawmill _log = default!;
 
     private readonly Dictionary<NetUserId, Dictionary<int, ErpOrganPreferences>> _cache = new();
+    // (userId, slot) → timestamp of last DB write; throttles DB writes to once per 5 seconds per slot.
+    private readonly Dictionary<(NetUserId, int), TimeSpan> _lastSave = new();
 
     private static readonly JsonSerializerOptions JsonOpts = new() { IncludeFields = true };
 
@@ -56,7 +60,8 @@ public sealed class ErpOrganPreferencesManager : IPostInjectInit
         {
             cancel.ThrowIfCancellationRequested();
             var json = await _db.GetErpOrganPreferencesAsync(session.UserId, slot);
-            slots[slot] = Normalize(Deserialize(json), session.UserId, slot);
+            // Species-aware normalize happens in OnFinishLoad after ServerPreferencesManager is ready.
+            slots[slot] = ErpOrganPreferencesNormalizer.Normalize(Deserialize(json));
         }
     }
 
@@ -65,13 +70,22 @@ public sealed class ErpOrganPreferencesManager : IPostInjectInit
         if (!_cache.TryGetValue(session.UserId, out var slots))
             return;
 
-        foreach (var slot in slots.Keys)
+        // Re-normalize with species now that ServerPreferencesManager has loaded all character data.
+        var maxSlots = _cfg.GetCVar(CCVars.GameMaxCharacterSlots);
+        for (var slot = 0; slot < maxSlots; slot++)
+        {
+            if (slots.TryGetValue(slot, out var prefs))
+                slots[slot] = Normalize(prefs, session.UserId, slot);
             SendToClient(session, slot);
+        }
     }
 
     private void OnPlayerDisconnected(ICommonSession session)
     {
         _cache.Remove(session.UserId);
+        var maxSlots = _cfg.GetCVar(CCVars.GameMaxCharacterSlots);
+        for (var i = 0; i < maxSlots; i++)
+            _lastSave.Remove((session.UserId, i));
     }
 
     public void SendToClient(ICommonSession session, int slot)
@@ -91,6 +105,8 @@ public sealed class ErpOrganPreferencesManager : IPostInjectInit
         return null;
     }
 
+    private static readonly TimeSpan SaveThrottle = TimeSpan.FromSeconds(5);
+
     private void HandleUpdate(MsgUpdateErpOrganPreferences msg)
     {
         if (!_players.TryGetSessionByChannel(msg.MsgChannel, out var session))
@@ -108,6 +124,13 @@ public sealed class ErpOrganPreferencesManager : IPostInjectInit
 
         slots[slot] = prefs;
 
+        // Throttle DB writes to once per 5 s per slot to prevent spam.
+        var key = (session.UserId, slot);
+        var now = _timing.RealTime;
+        if (_lastSave.TryGetValue(key, out var last) && now - last < SaveThrottle)
+            return;
+
+        _lastSave[key] = now;
         SaveAsync(session.UserId, slot, prefs);
     }
 

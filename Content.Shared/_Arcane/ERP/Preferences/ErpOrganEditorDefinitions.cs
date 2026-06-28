@@ -23,12 +23,14 @@ public static class ErpOrganEditorDefinitions
         IPrototypeManager prototype,
         IComponentFactory componentFactory)
     {
-        if (string.IsNullOrEmpty(species) ||
-            !prototype.TryIndex<SpeciesPrototype>(species, out var speciesPrototype) ||
+        if (string.IsNullOrEmpty(species))
+            return GetFallbackDefinitions(sex);
+
+        if (!prototype.TryIndex<SpeciesPrototype>(species, out var speciesPrototype) ||
             !prototype.TryIndex<EntityPrototype>(speciesPrototype.Prototype, out var entityPrototype) ||
             !entityPrototype.TryGetComponent<EroticOrgansComponent>(out var organs, componentFactory))
         {
-            return GetFallbackDefinitions(species);
+            return []; // Species exists but has no EroticOrgans — editor shows nothing
         }
 
         var result = new Dictionary<string, ErpOrganEditorDefinition>();
@@ -116,13 +118,16 @@ public static class ErpOrganEditorDefinitions
         return organ.EditorDefaultVariant;
     }
 
-    private static IReadOnlyList<ErpOrganEditorDefinition> GetFallbackDefinitions(string? species)
+    // Fallback used when species is null/empty — respects sex so incompatible slots are not shown.
+    private static IReadOnlyList<ErpOrganEditorDefinition> GetFallbackDefinitions(Sex sex)
     {
         var result = new List<ErpOrganEditorDefinition>();
         foreach (var slotId in ErpOrganSlots.EditorVisible)
         {
-            var variants = ErpOrganSlots.Variants.GetValueOrDefault(slotId) ?? [];
+            if (ErpOrganSlots.SexFilter.TryGetValue(slotId, out var allowed) && !allowed.Contains(sex))
+                continue;
 
+            var variants = ErpOrganSlots.Variants.GetValueOrDefault(slotId) ?? [];
             result.Add(new ErpOrganEditorDefinition
             {
                 SlotId = slotId,

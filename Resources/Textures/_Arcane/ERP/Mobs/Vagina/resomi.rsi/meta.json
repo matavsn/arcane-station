@@ -1,26 +1,26 @@
 {
     "version": 1,
-    "license": "CC-BY-SA-4.0",
-    "copyright": "bulbo44kkey",
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Ported from S.P.L.U.R.T-Station-13 vagina_onmob.rsi; renamed states for Arcane ERP organ visuals.",
     "size": {
         "x": 32,
         "y": 32
     },
     "states": [
         {
-            "name": "aa",
+            "name": "human",
             "directions": 4
         },
         {
-            "name": "b",
+            "name": "gaping",
             "directions": 4
         },
         {
-            "name": "c",
+            "name": "hairy",
             "directions": 4
         },
         {
-            "name": "d",
+            "name": "spade",
             "directions": 4
         }
     ]

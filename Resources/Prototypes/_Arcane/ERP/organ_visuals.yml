@@ -137,6 +137,15 @@
   sizeStates: [aa, b, c, d]
 
 - type: erpOrganVisual
+  id: BreastsResomi
+  slot: breasts
+  drawOrder: 10
+  species: [Resomi]
+  rsi: /Textures/_Arcane/ERP/Mobs/Breasts/resomi.rsi
+  stateMode: SizeIndexed
+  sizeStates: [aa, b, c, d]
+
+- type: erpOrganVisual
   id: BreastsFallback
   slot: breasts
   drawOrder: 10
@@ -144,6 +153,14 @@
   rsi: /Textures/_Arcane/ERP/Mobs/Breasts/human.rsi
   stateMode: SizeIndexed
   sizeStates: [aa, b, c, d]
+
+- type: erpOrganVisual
+  id: VaginaResomi
+  slot: vagina
+  drawOrder: 30
+  species: [Resomi]
+  rsi: /Textures/_Arcane/ERP/Mobs/Vagina/resomi.rsi
+  stateMode: Variant
 
 - type: erpOrganVisual
   id: VaginaFallback

@@ -2,6 +2,7 @@ using Content.Shared._Arcane.ERP;
 using Content.Shared._Arcane.ERP.Organs;
 using Content.Shared._Arcane.ERP.OrgansAppearance;
 using Content.Shared._Arcane.ERP.Preferences;
+using Content.Shared.Body.Components;
 using Content.Shared.Body.Organ;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Systems;
@@ -59,7 +60,10 @@ public sealed class EroticCoverageSystem : EntitySystem
 
         var newCovered = new HashSet<string>();
 
-        foreach (var organ in _body.GetBodyOrganEntityComps<EroticOrganComponent>((uid, null)))
+        if (!TryComp<BodyComponent>(uid, out var body)) // Arcane: standalone entities have no body
+            return;
+
+        foreach (var organ in _body.GetBodyOrganEntityComps<EroticOrganComponent>((uid, body)))
         {
             if (!_containers.TryGetContainingContainer(organ.Owner, out var container))
                 continue;

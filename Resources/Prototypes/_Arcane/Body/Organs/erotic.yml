@@ -98,6 +98,10 @@
   parent: OrganPenis
 
 - type: entity
+  id: OrganPenisResomi
+  parent: OrganPenis
+
+- type: entity
   id: OrganPenisHumanoidXeno
   parent: OrganPenis
   name: xenomorph penis

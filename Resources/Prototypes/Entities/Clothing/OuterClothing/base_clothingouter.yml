@@ -169,8 +169,8 @@
     state: icon
   # Arcane-start: hide erp chest organs under outer clothing
   - type: HideLayerClothing
-    slots:
-    - ErpChest
+    layers:
+      ErpChest: OUTERCLOTHING
   # Arcane-end
 
 - type: entity
@@ -371,9 +371,9 @@
     - jumpsuit
   # Arcane-start: full body suit hides all erp organs
   - type: HideLayerClothing
-    slots:
-    - ErpGroin
-    - ErpChest
+    layers:
+      ErpGroin: OUTERCLOTHING
+      ErpChest: OUTERCLOTHING
   # Arcane-end
 
 - type: entity
@@ -419,9 +419,9 @@
     - jumpsuit
   # Arcane-start: full body suit hides all erp organs
   - type: HideLayerClothing
-    slots:
-    - ErpGroin
-    - ErpChest
+    layers:
+      ErpGroin: OUTERCLOTHING
+      ErpChest: OUTERCLOTHING
   # Arcane-end
   - type: Tag
     tags:

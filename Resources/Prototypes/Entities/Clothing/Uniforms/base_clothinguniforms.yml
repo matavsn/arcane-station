@@ -75,9 +75,9 @@
     - Skirt # Goobstation
   # Arcane-start: hide erp organs under jumpsuit
   - type: HideLayerClothing
-    slots:
-    - ErpGroin
-    - ErpChest
+    layers:
+      ErpGroin: INNERCLOTHING
+      ErpChest: INNERCLOTHING
   # Arcane-end
 
 - type: entity

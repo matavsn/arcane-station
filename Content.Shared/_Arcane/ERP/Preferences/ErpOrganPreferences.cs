@@ -20,6 +20,14 @@ public sealed class ErpOrganPreferences
         => Organs[slotId] = cfg;
 
     public static ErpOrganPreferences Default() => new();
+
+    public ErpOrganPreferences Clone()
+    {
+        var copy = new ErpOrganPreferences();
+        foreach (var (slot, cfg) in Organs)
+            copy.Organs[slot] = new ErpOrganConfig { Variant = cfg.Variant, Size = cfg.Size, Color = cfg.Color };
+        return copy;
+    }
 }
 
 [Serializable, NetSerializable]

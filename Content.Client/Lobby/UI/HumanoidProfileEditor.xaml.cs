@@ -360,7 +360,10 @@ namespace Content.Client.Lobby.UI
                 Save?.Invoke();
                 // Arcane-Start: save ERP prefs after profile so server normalization sees the updated species/sex
                 if (CharacterSlot != null)
+                {
                     IoCManager.Resolve<ClientErpOrganPreferencesManager>().SaveSlot(CharacterSlot.Value, _erpOrganPrefs);
+                    _erpOrganPrefsDirty = false; // Arcane-edit: reset after confirmed save
+                }
                 // Arcane-End
             };
 
@@ -734,6 +737,8 @@ namespace Content.Client.Lobby.UI
             _erpPrefsReceivedHandler = (slot, prefs) =>
             {
                 if (slot != CharacterSlot)
+                    return;
+                if (_erpOrganPrefsDirty) // Arcane-edit: don't overwrite in-progress edits
                     return;
                 _erpOrganPrefs = prefs;
                 UpdateErpOrganSection();

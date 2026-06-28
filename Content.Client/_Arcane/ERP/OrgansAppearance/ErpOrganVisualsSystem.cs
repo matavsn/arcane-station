@@ -235,14 +235,7 @@ public sealed class ErpOrganVisualsSystem : EntitySystem
         if (!TryComp<SpriteComponent>(ent, out var sprite))
             return;
 
-        foreach (var layerKey in _slotToLayerKey.Values)
-        {
-            if (!_sprite.LayerMapTryGet((ent, sprite), layerKey, out var index, false))
-                continue;
-
-            _sprite.LayerSetVisible((ent, sprite), index, false);
-            _sprite.RemoveLayer((ent, sprite), index);
-        }
+        RemoveOrganLayers(ent, sprite);
     }
 
     private void ApplyOrganLayers(
@@ -265,10 +258,12 @@ public sealed class ErpOrganVisualsSystem : EntitySystem
             var proto = GetProto(slotId, species);
             if (proto == null)
             {
-                // No RSI registered — remove any stale layer.
+                // No RSI registered — remove any stale layer (index is stable here since we process in slot order,
+                // not sprite index order; caller rebuilds from scratch after OrganLayerOrderMatches fails).
                 if (_sprite.LayerMapTryGet((ent, sprite), layerKey, out var staleIdx, false))
                 {
                     _sprite.LayerSetVisible((ent, sprite), staleIdx, false);
+                    _sprite.LayerMapRemove((ent, sprite), layerKey);
                     _sprite.RemoveLayer((ent, sprite), staleIdx);
                 }
                 continue;
@@ -361,12 +356,18 @@ public sealed class ErpOrganVisualsSystem : EntitySystem
 
     private void RemoveOrganLayers(Entity<ErpOrganVisualsComponent> ent, SpriteComponent sprite)
     {
+        var toRemove = new List<(string Key, int Index)>();
         foreach (var layerKey in _slotToLayerKey.Values)
         {
-            if (!_sprite.LayerMapTryGet((ent, sprite), layerKey, out var index, false))
-                continue;
-
+            if (_sprite.LayerMapTryGet((ent, sprite), layerKey, out var index, false))
+                toRemove.Add((layerKey, index));
+        }
+        // Remove highest indices first so lower indices are not shifted by earlier removals.
+        toRemove.Sort(static (a, b) => b.Index.CompareTo(a.Index));
+        foreach (var (key, index) in toRemove)
+        {
             _sprite.LayerSetVisible((ent, sprite), index, false);
+            _sprite.LayerMapRemove((ent, sprite), key);
             _sprite.RemoveLayer((ent, sprite), index);
         }
     }

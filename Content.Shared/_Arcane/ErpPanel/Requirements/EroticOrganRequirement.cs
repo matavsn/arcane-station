@@ -45,9 +45,13 @@ public sealed partial class EroticOrganRequirement : ErpRequirement
 
             if (RequireVisible)
             {
-                // CoveredSlots and HideWhenFlaccid are networked for the client; Visible is authoritative on the server.
+                // Authoritative server flag (set by EroticCoverageSystem) — always checked first.
+                if (!organ.Comp1.Visible)
+                    return false;
+
+                // CoveredSlots and HideWhenFlaccid are networked for the client side.
                 if (!entityManager.TryGetComponent<ErpOrganVisualsComponent>(uid, out var visuals))
-                    return organ.Comp1.Visible;
+                    return true;
 
                 if (visuals.CoveredSlots.Contains(Organ))
                     return false;

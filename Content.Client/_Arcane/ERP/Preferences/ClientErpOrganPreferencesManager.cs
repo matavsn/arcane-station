@@ -24,7 +24,7 @@ public sealed class ClientErpOrganPreferencesManager : IPostInjectInit
     }
 
     public ErpOrganPreferences GetSlot(int slot)
-        => _slots.TryGetValue(slot, out var p) ? p : ErpOrganPreferences.Default();
+        => (_slots.TryGetValue(slot, out var p) ? p : ErpOrganPreferences.Default()).Clone();
 
     public void SaveSlot(int slot, ErpOrganPreferences prefs)
     {

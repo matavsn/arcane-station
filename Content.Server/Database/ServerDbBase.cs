@@ -371,7 +371,18 @@ namespace Content.Server.Database
                 row.Data = data;
             }
 
-            await db.DbContext.SaveChangesAsync();
+            try
+            {
+                await db.DbContext.SaveChangesAsync();
+            }
+            catch (DbUpdateException) // Arcane: concurrent insert race — retry as update
+            {
+                db.DbContext.Entry(row).State = EntityState.Detached;
+                row = await db.DbContext.ErpOrganPreferences
+                    .FirstAsync(e => e.UserId == userId.UserId && e.Slot == slot);
+                row.Data = data;
+                await db.DbContext.SaveChangesAsync();
+            }
         }
         // Arcane-End
 

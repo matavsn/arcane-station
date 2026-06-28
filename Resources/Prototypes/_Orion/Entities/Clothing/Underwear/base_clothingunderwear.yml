@@ -63,6 +63,6 @@
     - Groin
   # Arcane-start: hide erp groin organs when worn
   - type: HideLayerClothing
-    slots:
-    - ErpGroin
+    layers:
+      ErpGroin: UNDERWEAR
   # Arcane-end

@@ -39,6 +39,7 @@ using System.Numerics;
 using Content.Shared._EinsteinEngines.Contests;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Mind.Components;
+using Robust.Shared.Map;
 
 namespace Content.Shared._DV.Carrying;
 
@@ -135,6 +136,9 @@ public sealed class CarryingSystem : EntitySystem
     /// </summary>
     private void OnVirtualItemDeleted(Entity<CarryingComponent> ent, ref VirtualItemDeletedEvent args)
     {
+        if (_net.IsClient) // Arcane - virtual items are never spawned on the client (see Carry()), so don't try to drop from client-side container events
+            return;
+
         // Goobstation - VirtualItemDeletedEvent is raised on both the blocking entity and the user,
         //               so we need to check that the item being deleted is the carried person item and
         //               not something unrelated like the virtual item for pulling another player.
@@ -325,20 +329,51 @@ public sealed class CarryingSystem : EntitySystem
 
     public void DropCarried(EntityUid carrier, EntityUid carried)
     {
-        Drop(carried);
+        var dropCoordinates = GetDropCoordinates(carrier, carried);
+
         RemComp<CarryingComponent>(carrier); // get rid of this first so we don't recursively fire that event
         RemComp<CarryingSlowdownComponent>(carrier);
+
+        Drop(carried, dropCoordinates);
+
+        if (TerminatingOrDeleted(carrier))
+            return;
+
         _virtualItem.DeleteInHandsMatching(carrier, carried);
         _movementSpeed.RefreshMovementSpeedModifiers(carrier);
     }
 
-    private void Drop(EntityUid carried)
+    private void Drop(EntityUid carried, MapCoordinates? dropCoordinates = null)
     {
+        if (TerminatingOrDeleted(carried))
+            return;
+
         RemComp<BeingCarriedComponent>(carried);
         RemComp<KnockedDownComponent>(carried); // TODO SHITMED: make sure this doesnt let you make someone with no legs walk
         _actionBlocker.UpdateCanMove(carried);
-        Transform(carried).AttachToGridOrMap();
+
+        if (dropCoordinates is { } coordinates)
+            _transform.SetMapCoordinates(carried, coordinates);
+        else
+            Transform(carried).AttachToGridOrMap();
+
         _standingState.Stand(carried);
+    }
+
+    private MapCoordinates? GetDropCoordinates(EntityUid carrier, EntityUid carried)
+    {
+        if (!Deleted(carrier))
+        {
+            var carrierCoordinates = _transform.GetMapCoordinates(carrier);
+            if (carrierCoordinates.MapId != MapId.Nullspace)
+                return carrierCoordinates;
+        }
+
+        if (Deleted(carried))
+            return null;
+
+        var carriedCoordinates = _transform.GetMapCoordinates(carried);
+        return carriedCoordinates.MapId == MapId.Nullspace ? null : carriedCoordinates;
     }
 
     private void ApplyCarrySlowdown(EntityUid carrier, EntityUid carried)

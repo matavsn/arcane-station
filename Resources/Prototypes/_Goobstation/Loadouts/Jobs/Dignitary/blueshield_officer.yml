@@ -184,8 +184,8 @@
   equipment:
     neck: ClothingNeckEnsembleBlueshield
 
-# Arcane-Start    
-- type: loadout 
+# Arcane-Start
+- type: loadout
   id: BlueShieldOfficerCape
   equipment:
     neck: ClothingCapeBlueShield 

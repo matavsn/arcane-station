@@ -377,7 +377,7 @@ namespace Content.Server.Database
             }
             catch (DbUpdateException) // Arcane: concurrent insert race — retry as update
             {
-                db.DbContext.Entry(row).State = EntityState.Detached;
+                db.DbContext.Entry(row).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
                 row = await db.DbContext.ErpOrganPreferences
                     .FirstAsync(e => e.UserId == userId.UserId && e.Slot == slot);
                 row.Data = data;

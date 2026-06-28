@@ -35,7 +35,10 @@ public sealed class ErpOrganPreferencesManager : IPostInjectInit
 
     private readonly Dictionary<NetUserId, Dictionary<int, ErpOrganPreferences>> _cache = new();
     // (userId, slot) → timestamp of last DB write; throttles DB writes to once per 5 seconds per slot.
-    private readonly Dictionary<(NetUserId, int), TimeSpan> _lastSave = new();
+    private readonly Dictionary<(NetUserId UserId, int Slot), TimeSpan> _lastSave = new();
+    private readonly Dictionary<(NetUserId UserId, int Slot), ErpOrganPreferences> _pendingSaves = new();
+    private readonly Dictionary<(NetUserId UserId, int Slot), CancellationTokenSource> _pendingSaveTokens = new();
+    private readonly object _saveLock = new();
 
     private static readonly JsonSerializerOptions JsonOpts = new() { IncludeFields = true };
 
@@ -83,9 +86,14 @@ public sealed class ErpOrganPreferencesManager : IPostInjectInit
     private void OnPlayerDisconnected(ICommonSession session)
     {
         _cache.Remove(session.UserId);
+        FlushPendingSaves(session.UserId);
+
         var maxSlots = _cfg.GetCVar(CCVars.GameMaxCharacterSlots);
-        for (var i = 0; i < maxSlots; i++)
-            _lastSave.Remove((session.UserId, i));
+        lock (_saveLock)
+        {
+            for (var i = 0; i < maxSlots; i++)
+                _lastSave.Remove((session.UserId, i));
+        }
     }
 
     public void SendToClient(ICommonSession session, int slot)
@@ -127,11 +135,100 @@ public sealed class ErpOrganPreferencesManager : IPostInjectInit
         // Throttle DB writes to once per 5 s per slot to prevent spam.
         var key = (session.UserId, slot);
         var now = _timing.RealTime;
-        if (_lastSave.TryGetValue(key, out var last) && now - last < SaveThrottle)
+        lock (_saveLock)
+        {
+            if (_lastSave.TryGetValue(key, out var last) && now - last < SaveThrottle)
+            {
+                QueuePendingSave(key, prefs, SaveThrottle - (now - last));
+                return;
+            }
+
+            CancelPendingSave(key);
+            _lastSave[key] = now;
+        }
+
+        SaveAsync(session.UserId, slot, prefs);
+    }
+
+    private void QueuePendingSave((NetUserId UserId, int Slot) key, ErpOrganPreferences prefs, TimeSpan delay)
+    {
+        _pendingSaves[key] = prefs;
+        if (_pendingSaveTokens.ContainsKey(key))
             return;
 
-        _lastSave[key] = now;
-        SaveAsync(session.UserId, slot, prefs);
+        var token = new CancellationTokenSource();
+        _pendingSaveTokens[key] = token;
+        _ = SavePendingAfterDelay(key, delay, token);
+    }
+
+    private async Task SavePendingAfterDelay((NetUserId UserId, int Slot) key, TimeSpan delay, CancellationTokenSource token)
+    {
+        try
+        {
+            await Task.Delay(delay, token.Token);
+        }
+        catch (OperationCanceledException)
+        {
+            return;
+        }
+
+        ErpOrganPreferences? prefs;
+        lock (_saveLock)
+        {
+            if (!_pendingSaveTokens.TryGetValue(key, out var current) || current != token)
+                return;
+
+            _pendingSaveTokens.Remove(key);
+            _pendingSaves.Remove(key, out prefs);
+            _lastSave[key] = _timing.RealTime;
+        }
+
+        token.Dispose();
+
+        if (prefs != null)
+            SaveAsync(key.UserId, key.Slot, prefs);
+    }
+
+    private void FlushPendingSaves(NetUserId userId)
+    {
+        var toSave = new List<((NetUserId UserId, int Slot) Key, ErpOrganPreferences Prefs)>();
+
+        lock (_saveLock)
+        {
+            foreach (var (key, prefs) in _pendingSaves)
+            {
+                if (key.UserId != userId)
+                    continue;
+
+                toSave.Add((key, prefs));
+            }
+
+            foreach (var (key, _) in toSave)
+            {
+                if (_pendingSaveTokens.Remove(key, out var token))
+                {
+                    token.Cancel();
+                    token.Dispose();
+                }
+
+                _pendingSaves.Remove(key);
+                _lastSave.Remove(key);
+            }
+        }
+
+        foreach (var (key, prefs) in toSave)
+            SaveAsync(key.UserId, key.Slot, prefs);
+    }
+
+    private void CancelPendingSave((NetUserId UserId, int Slot) key)
+    {
+        if (_pendingSaveTokens.Remove(key, out var token))
+        {
+            token.Cancel();
+            token.Dispose();
+        }
+
+        _pendingSaves.Remove(key);
     }
 
     private ErpOrganPreferences Normalize(ErpOrganPreferences? input, NetUserId userId, int slot)

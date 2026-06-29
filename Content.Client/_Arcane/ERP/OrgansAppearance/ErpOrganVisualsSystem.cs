@@ -6,6 +6,7 @@ using Content.Shared._Arcane.ERP.Organs;
 using Content.Shared._Arcane.ERP.OrgansAppearance;
 using Content.Shared._Arcane.ERP.Preferences;
 using Content.Shared._Shitmed.Humanoid.Events;
+using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
@@ -50,6 +51,9 @@ public sealed class ErpOrganVisualsSystem : EntitySystem
         SubscribeLocalEvent<ErpOrganVisualsComponent, ComponentShutdown>(OnOrganShutdown);
 
         SubscribeLocalEvent<HumanoidAppearanceComponent, HumanoidVisualStateUpdatedEvent>(OnHumanoidState);
+        SubscribeLocalEvent<HumanoidAppearanceComponent, ClothingDidEquippedEvent>(OnCoverageChanged);
+        SubscribeLocalEvent<HumanoidAppearanceComponent, ClothingDidUnequippedEvent>(OnCoverageChanged);
+        SubscribeLocalEvent<HumanoidAppearanceComponent, WearerMaskToggledEvent>(OnCoverageChanged);
         SubscribeLocalEvent<ArousalComponent, AfterAutoHandleStateEvent>(OnArousalState);
 
         // Editor preview: client-side dummy entity, no server state.
@@ -112,6 +116,18 @@ public sealed class ErpOrganVisualsSystem : EntitySystem
         visuals.HideWhenFlaccid = GetPreviewHideWhenFlaccid(uid);
 
         ApplyOrganLayers((uid, visuals), humanoid, sprite, phase);
+    }
+
+    private void OnCoverageChanged<TEvent>(Entity<HumanoidAppearanceComponent> ent, ref TEvent args)
+    {
+        if (!TryComp<ErpOrganVisualsComponent>(ent, out var visuals))
+            return;
+
+        if (!TryComp<SpriteComponent>(ent, out var sprite))
+            return;
+
+        visuals.CoveredSlots = GetPreviewCoveredSlots(ent);
+        ApplyOrganLayers((ent, visuals), ent.Comp, sprite);
     }
 
     private void OnPreviewProfileLoaded(Entity<HumanoidAppearanceComponent> ent, ref ProfileLoadFinishedEvent args)

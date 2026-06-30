@@ -1,6 +1,8 @@
+using Content.Shared._Arcane.JoinQueue;
 using Lidgren.Network;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
+using System.IO; // Arcane
 
 namespace Content.Goobstation.Shared.JoinQueue;
 
@@ -10,6 +12,10 @@ namespace Content.Goobstation.Shared.JoinQueue;
 /// </summary>
 public sealed class QueueUpdateMessage : NetMessage
 {
+    // Arcane-edit-start
+    private const int MaxQueuePlayerEntries = 1000;
+    private const int MaxMiniGameLeaderboardEntries = 1000;
+    // Arcane-edit-end
     public override MsgGroups MsgGroup => MsgGroups.Command;
 
     // Queue info
@@ -31,6 +37,10 @@ public sealed class QueueUpdateMessage : NetMessage
     public string YourName { get; set; } = string.Empty;
     public List<string> PlayerNames { get; set; } = new();
 
+    // Arcane-edit-start
+    public List<float> PlayerWaitSeconds { get; set; } = new();
+    public List<QueueMiniGameLeaderboardEntry> MiniGameLeaderboard { get; set; } = new();
+    // Arcane-edit-end
     public override void ReadFromBuffer(NetIncomingMessage buffer, IRobustSerializer serializer)
     {
         Total = buffer.ReadInt32();
@@ -46,11 +56,34 @@ public sealed class QueueUpdateMessage : NetMessage
 
         YourName = buffer.ReadString();
         var count = buffer.ReadInt32();
+        // Arcane-edit-start
+        if (count < 0 || count > MaxQueuePlayerEntries)
+            throw new InvalidDataException("Queue player count out of range.");
+        // Arcane-edit-end
+
         PlayerNames = new List<string>(count);
+        PlayerWaitSeconds = new List<float>(count); // Arcane-edit
         for (var i = 0; i < count; i++)
         {
             PlayerNames.Add(buffer.ReadString());
+            PlayerWaitSeconds.Add(buffer.ReadFloat()); // Arcane-edit
         }
+
+        var leaderboardCount = buffer.ReadInt32();
+
+        // Arcane-edit-start
+        if (leaderboardCount < 0 || leaderboardCount > MaxMiniGameLeaderboardEntries)
+            throw new InvalidDataException("Queue mini-game leaderboard count out of range.");
+
+        MiniGameLeaderboard = new List<QueueMiniGameLeaderboardEntry>(leaderboardCount);
+        for (var i = 0; i < leaderboardCount; i++)
+        {
+            MiniGameLeaderboard.Add(new QueueMiniGameLeaderboardEntry(
+                (QueueMiniGameKind) buffer.ReadByte(),
+                buffer.ReadString(),
+                buffer.ReadInt32()));
+        }
+        // Arcane-edit-end
     }
 
     public override void WriteToBuffer(NetOutgoingMessage buffer, IRobustSerializer serializer)
@@ -68,9 +101,20 @@ public sealed class QueueUpdateMessage : NetMessage
 
         buffer.Write(YourName);
         buffer.Write(PlayerNames.Count);
-        foreach (var name in PlayerNames)
+        // Arcane-edit-start
+        for (var i = 0; i < PlayerNames.Count; i++)
         {
-            buffer.Write(name);
+            buffer.Write(PlayerNames[i]);
+            buffer.Write(i < PlayerWaitSeconds.Count ? PlayerWaitSeconds[i] : 0f);
         }
+
+        buffer.Write(MiniGameLeaderboard.Count);
+        foreach (var entry in MiniGameLeaderboard)
+        {
+            buffer.Write((byte) entry.Game);
+            buffer.Write(entry.PlayerName);
+            buffer.Write(entry.Score);
+        }
+        // Arcane-edit-end
     }
 }
